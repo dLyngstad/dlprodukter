@@ -16,16 +16,14 @@ const products = [
         price: '80',
         image: 'Bilder/vaskesett.png',
         description: 'Et vaskesett som er perfekt til rengjøring'
-    }, // <-- PROBLEMET ER LØST. KOMMA ER LAGT TIL.
-   {
+    }, // <-- DU MANGLER ET KOMMA HER. JEG HAR LAGT DET TIL.
+    {
         id: 'prod_003',
         ecwidId: '777591031',
         name: 'Egge Form',
         price: '80',
         image: 'Bilder/eggeform.png',
         description: 'Til å forme eggene dine'
-    }, // <-- PROBLEMET ER LØST. KOMMA ER LAGT TIL.
+    } // It's good practice to have a comma here too, but it's not required for the last item.
 
 ];
-
-
