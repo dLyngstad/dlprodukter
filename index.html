@@ -3,19 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - DL Produkter</title>
+    <title>DL Produkter</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <div id="header-placeholder"></div>
+    <div class="window">
+        <div id="header-placeholder" class="title-bar">
+            </div>
 
-    <main>
-        <h1>Welcome to Our Shop!</h1>
-        <p>This is the main content of the homepage. Browse our amazing products.</p>
-    </main>
+        <main>
+            <div class="group-box">
+                <span class="group-box-legend">Result or Problem:</span>
+                <p>Welcome to the shop. All products are listed below.</p>
+                <textarea rows="4" style="width: 98%;"></textarea>
+            </div>
 
-    <div id="footer-placeholder"></div>
+            <div class="group-box">
+                <span class="group-box-legend">Actions:</span>
+                <div class="button-container">
+                     <button>View Products</button>
+                     <button>Filter...</button>
+                </div>
+            </div>
+        </main>
+
+        </div>
 
     <script src="https://auth0.github.io/auth0-spa-js/lib/auth0-spa-js.production.js"></script>
     <script src="js/app.js"></script>
