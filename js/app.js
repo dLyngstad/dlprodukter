@@ -1,5 +1,5 @@
 // Fil: app.js
-// Versjon: Detaljerte produktkort
+// Versjon: Endelig og korrekt
 
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
@@ -69,10 +69,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ecwidScript.setAttribute('src', 'https://app.ecwid.com/script.js?123196506&data_platform=singleproduct_v2');
     ecwidScript.setAttribute('charset', 'utf-8');
     
+    // VIKTIG ENDRING HER: Kaller på xProduct() istedenfor Ecwid.init()
     ecwidScript.onload = () => {
-        if (typeof Ecwid != 'undefined') {
-            Ecwid.init();
+        if (typeof xProduct === 'function') {
+            xProduct();
         }
     };
+    
     document.body.appendChild(ecwidScript);
 });
