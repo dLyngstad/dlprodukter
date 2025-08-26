@@ -1,5 +1,5 @@
 // Fil: app.js
-// Versjon: Endelig og korrekt
+// Versjon: Endelig med fungerende handlevogn
 
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
@@ -59,6 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
     loadHTML('partials/header.html', 'header-placeholder');
     renderProducts();
 
+    // NY KODE FOR Å AKTIVERE HANDLEKURVEN
+    window.Ecwid.OnAPILoaded.add(function() {
+        Ecwid.init();
+    });
+    // SLUTT PÅ NY KODE
+
     window.ec = window.ec || {};
     window.ec.config = window.ec.config || {};
     window.ec.config.store_main_page_url = window.location.href;
@@ -69,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ecwidScript.setAttribute('src', 'https://app.ecwid.com/script.js?123196506&data_platform=singleproduct_v2');
     ecwidScript.setAttribute('charset', 'utf-8');
     
-    // VIKTIG ENDRING HER: Kaller på xProduct() istedenfor Ecwid.init()
     ecwidScript.onload = () => {
         if (typeof xProduct === 'function') {
             xProduct();
