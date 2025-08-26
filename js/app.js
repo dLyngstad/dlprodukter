@@ -1,26 +1,34 @@
+// Fil: app.js
+// Versjon: Detaljerte produktkort
+
+/**
+ * Laster inn gjenbrukbare HTML-deler som header og footer.
+ */
+const loadHTML = (filePath, elementId) => {
+    fetch(filePath)
+        .then(response => response.text())
+        .then(data => {
+            const element = document.getElementById(elementId);
+            if (element) element.innerHTML = data;
+        });
+};
+
 /**
  * Bygger et detaljert og egendefinert produktkort.
- * Dette er din "designer" - endre HTML og klasser her for å style med CSS.
- * @param {object} product - Et produktobjekt fra din products.js-fil.
- * @returns {string} - HTML-strengen for det komplette produktkortet.
  */
 const createProductHTML = (product) => {
-    // Sjekker om produktet har en gyldig Ecwid-ID før det vises.
     if (!product.ecwidId || product.ecwidId.includes('YOUR_ECWID_ID')) {
         console.warn(`Produktet "${product.name}" mangler en gyldig ecwidId og vil ikke bli vist.`);
         return '';
     }
 
-    // Dette er den nye, detaljerte malen for hvert produkt.
     return `
         <div class="product-card">
             <img src="${product.image}" alt="${product.name}" class="product-image">
-            
             <div class="product-details">
                 <h3 class="product-title">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
                 <p class="product-price">kr ${product.price}</p>
-
                 <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${product.ecwidId}" 
                      itemtype="http://schema.org/Product" 
                      data-single-product-id="${product.ecwidId}">
@@ -30,3 +38,41 @@ const createProductHTML = (product) => {
         </div>
     `;
 };
+
+/**
+ * Viser alle produktene fra products.js på siden.
+ */
+const renderProducts = () => {
+    const productGrid = document.getElementById('product-grid');
+    if (productGrid && typeof products !== 'undefined') {
+        productGrid.innerHTML = '';
+        products.forEach(product => {
+            productGrid.innerHTML += createProductHTML(product);
+        });
+    } else if (!productGrid) {
+        console.error('Finner ikke element med id="product-grid". Sørg for at det finnes i din HTML.');
+    }
+};
+
+// --- Hovedskriptet kjører når siden er ferdig lastet ---
+document.addEventListener("DOMContentLoaded", () => {
+    loadHTML('partials/header.html', 'header-placeholder');
+    renderProducts();
+
+    window.ec = window.ec || {};
+    window.ec.config = window.ec.config || {};
+    window.ec.config.store_main_page_url = window.location.href;
+
+    const ecwidScript = document.createElement('script');
+    ecwidScript.setAttribute('data-cfasync', 'false');
+    ecwidScript.setAttribute('type', 'text/javascript');
+    ecwidScript.setAttribute('src', 'https://app.ecwid.com/script.js?123196506&data_platform=singleproduct_v2');
+    ecwidScript.setAttribute('charset', 'utf-8');
+    
+    ecwidScript.onload = () => {
+        if (typeof Ecwid != 'undefined') {
+            Ecwid.init();
+        }
+    };
+    document.body.appendChild(ecwidScript);
+});
