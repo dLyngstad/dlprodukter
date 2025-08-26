@@ -16,5 +16,5 @@ const products = [
         price: '80',
         image: 'Bilder/kar2.png',
         description: 'Et vaskesett som er perfekt til rengjøring'
-    } // <-- KOMMA MANGLER HER ETTER SISTE PRODUKT
+    }, // <-- PROBLEMET ER LØST. KOMMA ER LAGT TIL.
 ];
