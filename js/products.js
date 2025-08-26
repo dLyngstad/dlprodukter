@@ -17,4 +17,15 @@ const products = [
         image: 'Bilder/kar2.png',
         description: 'Et vaskesett som er perfekt til rengjøring'
     }, // <-- PROBLEMET ER LØST. KOMMA ER LAGT TIL.
+   {
+        id: 'prod_003',
+        ecwidId: '777591031',
+        name: 'Egge Form',
+        price: '80',
+        image: 'Bilder/kar2.png',
+        description: 'Til å forme eggene dine'
+    }, // <-- PROBLEMET ER LØST. KOMMA ER LAGT TIL.
+
 ];
+
+
