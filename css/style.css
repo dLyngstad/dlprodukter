@@ -137,3 +137,54 @@ input[type="text"], textarea {
     text-decoration: none;
     margin-left: 10px;
 }
+
+/* --- Top Header Bar Styles --- */
+
+.top-bar {
+    background-color: #C0C0C0; /* Classic grey */
+    border-bottom: 2px solid #000000;
+    border-top: 2px solid #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px;
+    margin-bottom: 20px; /* Pushes the main window down */
+}
+
+.top-bar-left, .top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.top-bar-link {
+    color: #000000;
+    text-decoration: none;
+    font-family: "Tahoma", sans-serif;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.top-bar-link:hover {
+    text-decoration: underline;
+}
+
+.icon {
+    font-size: 16px; /* Makes icons slightly larger */
+}
+
+/* Adjust the main body margin to remove the top space */
+body {
+    background-color: #008080;
+    font-family: "Tahoma", "Geneva", sans-serif;
+    font-size: 13px;
+    margin: 0; /* Remove margin to let the top bar be full-width */
+}
+
+/* Add margin back to the window container */
+.window {
+    /* ... (keep existing styles) ... */
+    margin: 0 auto 20px auto; /* Center it and add bottom margin */
+}
