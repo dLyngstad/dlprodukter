@@ -1,37 +1,29 @@
-// Function to load HTML content from a file into an element
+// --- START: ECWID & PRODUCT DISPLAY CODE ---
+
+// This function loads reusable HTML parts like your header
 const loadHTML = (filePath, elementId) => {
     fetch(filePath)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
+        .then(response => response.text())
         .then(data => {
-            document.getElementById(elementId).innerHTML = data;
-        })
-        .catch(error => {
-            console.error('Error fetching HTML:', error);
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = data;
+            }
         });
 };
 
-// When the DOM is fully loaded, load the header and footer
-document.addEventListener("DOMContentLoaded", () => {
-    loadHTML('partials/header.html', 'header-placeholder');
-    loadHTML('partials/footer.html', 'footer-placeholder');
-    
-    // We will put the Auth0 code here later, after the header is loaded
-});
-
-// --- Your Auth0 configuration and functions will go below this line ---
-// (We can re-integrate this in the next step)
-
-
-
-// --- Product Listing Logic ---
-
-// Function to generate the HTML for a single product
+// This function is the "factory" that builds one product card
 const createProductHTML = (product) => {
+    // This part generates the special div that Ecwid needs for the "Add to Bag" button
+    const ecwidButtonCode = `
+        <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${product.ecwidId}" 
+             itemtype="http://schema.org/Product" 
+             data-single-product-id="${product.ecwidId}">
+            <div customprop="addtobag"></div>
+        </div>
+    `;
+
+    // This is the full HTML for one product card, including the Ecwid button code
     return `
         <div class="product-card group-box">
             <span class="group-box-legend">${product.name}</span>
@@ -39,36 +31,46 @@ const createProductHTML = (product) => {
             <div class="product-info">
                 <p><strong>Price:</strong> ${product.price} NOK</p>
                 <p><strong>Description:</strong> ${product.description}</p>
-                <button class="product-button" data-id="${product.id}">Add to Cart</button>
+                ${ecwidButtonCode}
             </div>
         </div>
     `;
 };
 
-// Function to display all products on the page
+// This function takes all your products and displays them on the page
 const renderProducts = () => {
-    // Find the container on the page where we want to put the products
     const productGrid = document.getElementById('product-grid');
-    
-    // Only run this code if we are on a page that actually has a product-grid
     if (productGrid) {
-        // Clear any existing content
-        productGrid.innerHTML = ''; 
-        
-        // Loop through our products array (from products.js) and generate HTML for each one
+        // The 'products' variable comes from the products.js file
         products.forEach(product => {
             productGrid.innerHTML += createProductHTML(product);
         });
     }
 };
 
-// When the DOM is fully loaded, in addition to loading the header, also render the products
+// This is the main function that runs when your page loads
 document.addEventListener("DOMContentLoaded", () => {
+    // Load the header
     loadHTML('partials/header.html', 'header-placeholder');
-    // We can remove the footer for now to match the classic UI
-    // loadHTML('partials/footer.html', 'footer-placeholder');
     
-    renderProducts(); // <-- ADD THIS LINE
+    // Build and display the product cards on the page
+    renderProducts();
     
-    // We will put the Auth0 code here later
+    // --- Ecwid's Main Scripts ---
+    // This adds the main Ecwid script to your page. It only needs to be loaded once.
+    const ecwidScript = document.createElement('script');
+    ecwidScript.setAttribute('data-cfasync', 'false');
+    ecwidScript.setAttribute('type', 'text/javascript');
+    ecwidScript.setAttribute('src', 'https://app.ecwid.com/script.js?123196506&data_platform=singleproduct_v2');
+    ecwidScript.setAttribute('charset', 'utf-8');
+    document.body.appendChild(ecwidScript);
+
+    // This small script is also needed to activate the buttons.
+    const xProductScript = document.createElement('script');
+    xProductScript.setAttribute('type', 'text/javascript');
+    xProductScript.innerText = 'xProduct()';
+    document.body.appendChild(xProductScript);
 });
+
+
+// --- NOTE: Your Auth0 login code should go below this line if you need it ---
