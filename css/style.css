@@ -1,24 +1,91 @@
+/* --- Windows Classic Theme --- */
+
+/* 1. General Body Styles */
 body {
-    font-family: sans-serif;
-    margin: 0;
+    background-color: #008080; /* The classic teal desktop background */
+    font-family: "Tahoma", "Geneva", sans-serif;
+    font-size: 13px;
+    margin: 20px;
+}
+
+/* 2. The Main "Window" Container */
+.window {
+    background-color: #C0C0C0; /* The main silver-grey color */
+    border-top: 2px solid #FFFFFF;
+    border-left: 2px solid #FFFFFF;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    max-width: 800px;
+    margin: auto;
+    padding: 3px;
+}
+
+/* 3. The Blue Title Bar (Header) */
+.title-bar {
+    background: #000080; /* Solid dark blue, no gradient */
+    color: white;
+    font-weight: bold;
+    padding: 4px 5px;
+    margin-bottom: 10px;
+}
+
+/* 4. Main Content Area */
+main {
+    padding: 10px;
+}
+
+/* 5. Group Box for sectioning content */
+.group-box {
+    border: 1px solid #808080;
+    border-top-color: #FFFFFF;
+    border-left-color: #FFFFFF;
+    padding: 15px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.group-box-legend {
+    background-color: #C0C0C0; /* Same as window background */
+    padding: 0 5px;
+    position: absolute;
+    top: -8px; /* Lifts the legend up onto the border */
+    left: 10px;
+}
+
+/* 6. Classic Buttons */
+button, .button {
+    background-color: #C0C0C0;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 5px 15px;
+    font-family: "Tahoma", sans-serif;
+    box-shadow: 1px 1px 0px #000000;
+}
+
+button:active, .button:active {
+    border-top: 1px solid #000000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    box-shadow: none;
+}
+
+/* 7. Input Fields and Text Areas */
+input[type="text"], textarea {
+    background-color: #FFFFFF;
+    border: 1px solid #808080;
+    border-top-color: #000000;
+    border-left-color: #000000;
+    padding: 4px;
+    font-family: "Tahoma", sans-serif;
+}
+
+/* 8. Utility: Button container */
+.button-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-}
-
-main {
-    flex-grow: 1; /* This makes the main content take up available space */
-    padding: 20px;
-}
-
-header, footer {
-    background-color: #f2f2f2;
-    padding: 10px 20px;
-    text-align: center;
-}
-
-nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #333;
+    gap: 10px;
 }
