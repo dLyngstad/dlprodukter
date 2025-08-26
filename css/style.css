@@ -122,3 +122,18 @@ input[type="text"], textarea {
     width: 100%;
     margin-top: 10px;
 }
+
+
+/* --- Title Bar Navigation --- */
+.title-bar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.title-bar-nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+}
