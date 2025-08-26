@@ -14,7 +14,7 @@ const products = [
         ecwidId: '777573842',
         name: 'Vaske Sett',
         price: '80',
-        image: 'Bilder/kar2.png',
+        image: 'Bilder/vaskesett.png',
         description: 'Et vaskesett som er perfekt til rengjøring'
     }, // <-- PROBLEMET ER LØST. KOMMA ER LAGT TIL.
    {
@@ -22,7 +22,7 @@ const products = [
         ecwidId: '777591031',
         name: 'Egge Form',
         price: '80',
-        image: 'Bilder/kar2.png',
+        image: 'Bilder/eggeform.png',
         description: 'Til å forme eggene dine'
     }, // <-- PROBLEMET ER LØST. KOMMA ER LAGT TIL.
 
