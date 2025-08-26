@@ -1,5 +1,5 @@
 // Fil: app.js
-// Versjon: Endelig med fungerende handlevogn
+// Versjon: Forenklet og korrekt med handlevogn
 
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
@@ -29,6 +29,7 @@ const createProductHTML = (product) => {
                 <h3 class="product-title">${product.name}</h3>
                 <p class="product-description">${product.description}</p>
                 <p class="product-price">kr ${product.price}</p>
+                
                 <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${product.ecwidId}" 
                      itemtype="http://schema.org/Product" 
                      data-single-product-id="${product.ecwidId}">
@@ -49,8 +50,6 @@ const renderProducts = () => {
         products.forEach(product => {
             productGrid.innerHTML += createProductHTML(product);
         });
-    } else if (!productGrid) {
-        console.error('Finner ikke element med id="product-grid". Sørg for at det finnes i din HTML.');
     }
 };
 
@@ -59,27 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
     loadHTML('partials/header.html', 'header-placeholder');
     renderProducts();
 
-    // NY KODE FOR Å AKTIVERE HANDLEKURVEN
-    window.Ecwid.OnAPILoaded.add(function() {
-        Ecwid.init();
-    });
-    // SLUTT PÅ NY KODE
-
-    window.ec = window.ec || {};
-    window.ec.config = window.ec.config || {};
-    window.ec.config.store_main_page_url = window.location.href;
-
+    // Laster Ecwid-scriptet. Det vil automatisk finne
+    // produkt-plassholderne og handlevogn-widgeten.
     const ecwidScript = document.createElement('script');
     ecwidScript.setAttribute('data-cfasync', 'false');
     ecwidScript.setAttribute('type', 'text/javascript');
     ecwidScript.setAttribute('src', 'https://app.ecwid.com/script.js?123196506&data_platform=singleproduct_v2');
     ecwidScript.setAttribute('charset', 'utf-8');
-    
-    ecwidScript.onload = () => {
-        if (typeof xProduct === 'function') {
-            xProduct();
-        }
-    };
-    
     document.body.appendChild(ecwidScript);
 });
