@@ -1,3 +1,5 @@
+// --- START: CLEAN APP.JS CODE (NO AUTH0) ---
+
 // This function loads reusable HTML parts like your header
 const loadHTML = (filePath, elementId) => {
     fetch(filePath)
@@ -8,15 +10,12 @@ const loadHTML = (filePath, elementId) => {
         });
 };
 
-// This function builds one product card with a real Ecwid button
+// This function builds one product card with the Ecwid placeholder
 const createProductHTML = (product) => {
-    const ecwidButtonCode = `
-        <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${product.ecwidId}" 
-             itemtype="http://schema.org/Product" 
-             data-single-product-id="${product.ecwidId}">
-            <div customprop="addtobag"></div>
-        </div>
-    `;
+    if (!product.ecwidId || product.ecwidId.includes('YOUR_ECWID_ID')) {
+        console.warn(`Product "${product.name}" is missing a valid ecwidId.`);
+        return ''; // Don't render products without a valid ID
+    }
 
     return `
         <div class="product-card group-box">
@@ -25,7 +24,12 @@ const createProductHTML = (product) => {
             <div class="product-info">
                 <p><strong>Price:</strong> ${product.price} NOK</p>
                 <p><strong>Description:</strong> ${product.description}</p>
-                ${ecwidButtonCode}
+                
+                <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${product.ecwidId}" 
+                     itemtype="http://schema.org/Product" 
+                     data-single-product-id="${product.ecwidId}">
+                    <div customprop="addtobag"></div>
+                </div>
             </div>
         </div>
     `;
@@ -34,30 +38,35 @@ const createProductHTML = (product) => {
 // This function displays all your products on the page
 const renderProducts = () => {
     const productGrid = document.getElementById('product-grid');
-    if (productGrid) {
-        productGrid.innerHTML = ''; // Clear existing content
+    if (productGrid && typeof products !== 'undefined') {
+        productGrid.innerHTML = '';
         products.forEach(product => {
             productGrid.innerHTML += createProductHTML(product);
         });
     }
 };
 
-// This is the main function that runs when your page loads
+// --- Main execution starts here ---
 document.addEventListener("DOMContentLoaded", () => {
     loadHTML('partials/header.html', 'header-placeholder');
     renderProducts();
-    
-    // Add Ecwid's main script to the page once
+
+    // The safest way to load and initialize Ecwid
+    window.ec = window.ec || {};
+    window.ec.config = window.ec.config || {};
+    window.ec.config.store_main_page_url = window.location.href;
+
     const ecwidScript = document.createElement('script');
     ecwidScript.setAttribute('data-cfasync', 'false');
     ecwidScript.setAttribute('type', 'text/javascript');
     ecwidScript.setAttribute('src', 'https://app.ecwid.com/script.js?123196506&data_platform=singleproduct_v2');
     ecwidScript.setAttribute('charset', 'utf-8');
-    document.body.appendChild(ecwidScript);
+    
+    ecwidScript.onload = () => {
+        if(typeof Ecwid != 'undefined'){
+            Ecwid.init();
+        }
+    };
 
-    // Add the activation script once
-    const xProductScript = document.createElement('script');
-    xProductScript.setAttribute('type', 'text/javascript');
-    xProductScript.innerText = 'xProduct()';
-    document.body.appendChild(xProductScript);
+    document.body.appendChild(ecwidScript);
 });
