@@ -1,15 +1,15 @@
 const products = [
     {
         id: 'prod_001',
-        ecwidId: '777515903', // <-- Get ID for Classic Wooden Chair
+        ecwidId: '777515903', // <-- The ID for Karabin krok
         name: 'Classic Wooden Chair',
         price: '999.00',
-        image: 'https://via.placeholder.com/150', // Placeholder image URL
+        image: 'https://via.placeholder.com/150',
         description: '--------------------'
     },
     {
         id: 'prod_002',
-        ecwidId: 'PASTE_ID_HERE', // <-- Get ID for Modern Table Lamp
+        ecwidId: 'YOUR_ECWID_ID_HERE', // <-- Find and paste the ID for this product
         name: 'Modern Table Lamp',
         price: '450.00',
         image: 'https://via.placeholder.com/150',
@@ -17,7 +17,7 @@ const products = [
     },
     {
         id: 'prod_003',
-        ecwidId: 'PASTE_ID_HERE', // <-- Get ID for Minimalist Bookshelf
+        ecwidId: 'YOUR_ECWID_ID_HERE', // <-- Find and paste the ID for this product
         name: 'Minimalist Bookshelf',
         price: '1499.00',
         image: 'https://via.placeholder.com/150',
@@ -25,7 +25,7 @@ const products = [
     },
     {
         id: 'prod_004',
-        ecwidId: 'PASTE_ID_HERE', // <-- Get ID for Cozy Wool Blanket
+        ecwidId: 'YOUR_ECWID_ID_HERE', // <-- Find and paste the ID for this product
         name: 'Cozy Wool Blanket',
         price: '799.00',
         image: 'https://via.placeholder.com/150',
