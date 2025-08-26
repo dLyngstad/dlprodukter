@@ -1,10 +1,8 @@
 // Fil: app.js
-// Versjon: Minimalistisk (kun navn og kjøp-knapp)
+// Versjon: Detaljerte produktkort
 
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
- * @param {string} filePath - Stien til HTML-filen (f.eks. 'partials/header.html').
- * @param {string} elementId - ID-en til elementet der innholdet skal plasseres.
  */
 const loadHTML = (filePath, elementId) => {
     fetch(filePath)
@@ -16,17 +14,65 @@ const loadHTML = (filePath, elementId) => {
 };
 
 /**
- * Bygger HTML for ett enkelt produkt med kun navn og "Kjøp nå"-knapp.
- * Dette er den minimalistiske malen din.
- * @param {object} product - Et produktobjekt fra din products.js-fil.
- * @returns {string} - HTML-strengen for produkt-raden.
+ * Bygger et detaljert og egendefinert produktkort.
  */
 const createProductHTML = (product) => {
-    // Sjekker om produktet har en gyldig Ecwid-ID før det vises.
     if (!product.ecwidId || product.ecwidId.includes('YOUR_ECWID_ID')) {
         console.warn(`Produktet "${product.name}" mangler en gyldig ecwidId og vil ikke bli vist.`);
-        return ''; // Returnerer en tom streng for å ikke vise produktet.
+        return '';
     }
 
-    // Returnerer en enkel container med produktnavn og knappe-koden.
-    // Du kan style ".buy-container" med CSS for å endre ut
+    return `
+        <div class="product-card">
+            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <div class="product-details">
+                <h3 class="product-title">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <p class="product-price">kr ${product.price}</p>
+                <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${product.ecwidId}" 
+                     itemtype="http://schema.org/Product" 
+                     data-single-product-id="${product.ecwidId}">
+                    <div customprop="addtobag"></div>
+                </div>
+            </div>
+        </div>
+    `;
+};
+
+/**
+ * Viser alle produktene fra products.js på siden.
+ */
+const renderProducts = () => {
+    const productGrid = document.getElementById('product-grid');
+    if (productGrid && typeof products !== 'undefined') {
+        productGrid.innerHTML = '';
+        products.forEach(product => {
+            productGrid.innerHTML += createProductHTML(product);
+        });
+    } else if (!productGrid) {
+        console.error('Finner ikke element med id="product-grid". Sørg for at det finnes i din HTML.');
+    }
+};
+
+// --- Hovedskriptet kjører når siden er ferdig lastet ---
+document.addEventListener("DOMContentLoaded", () => {
+    loadHTML('partials/header.html', 'header-placeholder');
+    renderProducts();
+
+    window.ec = window.ec || {};
+    window.ec.config = window.ec.config || {};
+    window.ec.config.store_main_page_url = window.location.href;
+
+    const ecwidScript = document.createElement('script');
+    ecwidScript.setAttribute('data-cfasync', 'false');
+    ecwidScript.setAttribute('type', 'text/javascript');
+    ecwidScript.setAttribute('src', 'https://app.ecwid.com/script.js?123196506&data_platform=singleproduct_v2');
+    ecwidScript.setAttribute('charset', 'utf-8');
+    
+    ecwidScript.onload = () => {
+        if (typeof Ecwid != 'undefined') {
+            Ecwid.init();
+        }
+    };
+    document.body.appendChild(ecwidScript);
+});
