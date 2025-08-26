@@ -1,7 +1,7 @@
 const products = [
     {
         id: 'prod_001',
-        ecwidId: 'PASTE_ID_HERE', // <-- Get ID for Classic Wooden Chair
+        ecwidId: '777515903', // <-- Get ID for Classic Wooden Chair
         name: 'Classic Wooden Chair',
         price: '999.00',
         image: 'https://via.placeholder.com/150', // Placeholder image URL
