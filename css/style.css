@@ -5,151 +5,44 @@ body {
     background-color: #008080; /* The classic teal desktop background */
     font-family: "Tahoma", "Geneva", sans-serif;
     font-size: 13px;
-    margin: 20px;
+    margin: 0; /* Remove default margin */
 }
 
-/* 2. The Main "Window" Container */
+/* 2. Top Header Bar (assumes this is for a future header/footer) */
+.top-bar {
+    background-color: #C0C0C0;
+    border-bottom: 2px solid #000000;
+    border-top: 2px solid #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px;
+}
+/* You can add more .top-bar styles here if needed */
+
+/* 3. The Main "Window" Container */
 .window {
-    background-color: #C0C0C0; /* The main silver-grey color */
+    background-color: #C0C0C0;
     border-top: 2px solid #FFFFFF;
     border-left: 2px solid #FFFFFF;
     border-right: 2px solid #000000;
     border-bottom: 2px solid #000000;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
     max-width: 800px;
-    margin: auto;
+    margin: 20px auto; /* Adds space above and below, and centers it */
     padding: 3px;
 }
 
-/* 3. The Blue Title Bar (Header) */
+/* 4. The Blue Title Bar */
 .title-bar {
-    background: #000080; /* Solid dark blue, no gradient */
+    background: #000080;
     color: white;
     font-weight: bold;
     padding: 4px 5px;
     margin-bottom: 10px;
-}
-
-/* 4. Main Content Area */
-main {
-    padding: 10px;
-}
-
-/* 5. Group Box for sectioning content */
-.group-box {
-    border: 1px solid #808080;
-    border-top-color: #FFFFFF;
-    border-left-color: #FFFFFF;
-    padding: 15px;
-    margin-bottom: 15px;
-    position: relative;
-}
-
-.group-box-legend {
-    background-color: #C0C0C0; /* Same as window background */
-    padding: 0 5px;
-    position: absolute;
-    top: -8px; /* Lifts the legend up onto the border */
-    left: 10px;
-}
-
-/* 6. Classic Buttons */
-button, .button {
-    background-color: #C0C0C0;
-    border-top: 1px solid #FFFFFF;
-    border-left: 1px solid #FFFFFF;
-    border-right: 1px solid #000000;
-    border-bottom: 1px solid #000000;
-    padding: 5px 15px;
-    font-family: "Tahoma", sans-serif;
-    box-shadow: 1px 1px 0px #000000;
-}
-
-button:active, .button:active {
-    border-top: 1px solid #000000;
-    border-left: 1px solid #000000;
-    border-right: 1px solid #FFFFFF;
-    border-bottom: 1px solid #FFFFFF;
-    box-shadow: none;
-}
-
-/* 7. Input Fields and Text Areas */
-input[type="text"], textarea {
-    background-color: #FFFFFF;
-    border: 1px solid #808080;
-    border-top-color: #000000;
-    border-left-color: #000000;
-    padding: 4px;
-    font-family: "Tahoma", sans-serif;
-}
-
-/* 8. Utility: Button container */
-.button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-
-
-
-/* --- Product Card Styles --- */
-/* Styling for produktkort */
-
-#product-grid {
-    /* Optional: Legger til litt luft rundt hele produktlisten */
-    padding: 20px;
-}
-
-.product-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 30px;
-    padding: 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    max-width: 600px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.product-image {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #eee;
-}
-
-.product-details {
-    display: flex;
-    flex-direction: column;
-}
-
-.product-title {
-    margin: 0 0 10px 0;
-    font-size: 20px;
-}
-
-.product-description {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 15px;
-}
-
-.product-price {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0 0 15px 0;
-}
-
-/* --- Title Bar Navigation --- */
-.title-bar-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
 }
 
 .title-bar-nav a {
@@ -158,53 +51,52 @@ input[type="text"], textarea {
     margin-left: 10px;
 }
 
-/* --- Top Header Bar Styles --- */
+/* 5. Main Content Area */
+main {
+    padding: 10px;
+}
 
-.top-bar {
-    background-color: #C0C0C0; /* Classic grey */
-    border-bottom: 2px solid #000000;
-    border-top: 2px solid #FFFFFF;
+#product-grid {
+    padding: 10px 0; /* A little space top and bottom inside the main area */
+}
+
+/* 6. Product Cards (using the Group Box style) */
+.group-box {
+    border: 1px solid #808080;
+    border-top-color: #FFFFFF;
+    border-left-color: #FFFFFF;
+    padding: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    background-color: #C0C0C0; /* Ensures background matches window */
+    padding-top: 20px; /* Extra space for the legend */
+}
+
+.group-box-legend {
+    background-color: #C0C0C0;
+    padding: 0 5px;
+    position: absolute;
+    top: -8px; /* Lifts the legend up onto the border */
+    left: 10px;
+}
+
+.product-content-wrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 15px;
-    margin-bottom: 20px; /* Pushes the main window down */
+    align-items: flex-start;
+    gap: 15px;
 }
 
-.top-bar-left, .top-bar-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.product-image-retro {
+    width: 175px;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #808080;
+    border-top-color: #000000;
+    border-left-color: #000000;
 }
 
-.top-bar-link {
-    color: #000000;
-    text-decoration: none;
-    font-family: "Tahoma", sans-serif;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.product-details-retro .product-description {
+    margin-bottom: 10px;
 }
 
-.top-bar-link:hover {
-    text-decoration: underline;
-}
-
-.icon {
-    font-size: 16px; /* Makes icons slightly larger */
-}
-
-/* Adjust the main body margin to remove the top space */
-body {
-    background-color: #008080;
-    font-family: "Tahoma", "Geneva", sans-serif;
-    font-size: 13px;
-    margin: 0; /* Remove margin to let the top bar be full-width */
-}
-
-/* Add margin back to the window container */
-.window {
-    /* ... (keep existing styles) ... */
-    margin: 0 auto 20px auto; /* Center it and add bottom margin */
-}
+.product-details-retro .product-price {
