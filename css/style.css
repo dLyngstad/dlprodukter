@@ -57,7 +57,10 @@ main {
 }
 
 #product-grid {
-    padding: 10px 0; /* A little space top and bottom inside the main area */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px; /* This creates space between the cards */
+    padding: 20px;
 }
 
 /* 6. Product Cards (using the Group Box style) */
