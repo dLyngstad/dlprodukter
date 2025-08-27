@@ -23,7 +23,7 @@ const products = [
         name: 'Egge Form',
         price: '80',
         image: 'Bilder/eggeform.png',
-        description: 'Til å forme eggene dine'
+        description: 'Til å forme egg i stekepanne'
     }, // <-- DU MANGLER ET KOMMA HER. JEG HAR LAGT DET TIL.
     {
         id: 'prod_004',
@@ -31,7 +31,7 @@ const products = [
         name: 'Glass',
         price: '160',
         image: 'Bilder/lupe.png',
-        description: 'Til a se maur'
+        description: 'Til a se maur eller andre insekter'
     },
 ];
 
