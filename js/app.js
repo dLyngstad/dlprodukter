@@ -23,16 +23,21 @@ const createProductHTML = (product) => {
     }
 
     return `
-        <div class="product-card">
-            <img src="${product.image}" alt="${product.name}" class="product-image">
-            <div class="product-details">
-                <h3 class="product-title">${product.name}</h3>
-                <p class="product-description">${product.description}</p>
-                <p class="product-price">kr ${product.price}</p>
-                <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${product.ecwidId}" 
-                     itemtype="http://schema.org/Product" 
-                     data-single-product-id="${product.ecwidId}">
-                    <div customprop="addtobag"></div>
+        <div class="group-box">
+            <span class="group-box-legend">${product.name}</span>
+            
+            <div class="product-content-wrapper">
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                
+                <div class="product-details-retro">
+                    <p class="product-description">${product.description}</p>
+                    <p class="product-price">kr ${product.price}</p>
+                    
+                    <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${product.ecwidId}" 
+                         itemtype="http://schema.org/Product" 
+                         data-single-product-id="${product.ecwidId}">
+                        <div customprop="addtobag"></div>
+                    </div>
                 </div>
             </div>
         </div>
