@@ -6,7 +6,7 @@ const products = [
         name: 'Karabin krok',
         price: '5.00',
         images: [
-            'Bilder/karabinkrok_1.png', 
+            'Bilder/karabinkrok.png', 
             'Bilder/karabinkrok_2.png'
         ],
         description: 'En solid karabinkrok i stål.'
@@ -17,7 +17,7 @@ const products = [
         name: 'Vaske Sett',
         price: '80',
         images: [
-            'Bilder/vaskesett_1.png', 
+            'Bilder/vaskesett.png', 
             'Bilder/vaskesett_2.png'
         ],
         description: 'Et vaskesett som er perfekt til rengjøring.'
@@ -28,7 +28,7 @@ const products = [
         name: 'Egge Form',
         price: '80',
         images: [
-            'Bilder/eggeform_1.png',
+            'Bilder/eggeform.png',
             'Bilder/eggeform_2.png'
         ],
         description: 'Til å forme egg i stekepanne.'
@@ -39,7 +39,7 @@ const products = [
         name: 'Glass',
         price: '160',
         images: [
-            'Bilder/lupe_1.png',
+            'Bilder/lupe.png',
             'Bilder/lupe_2.png'
         ],
         description: 'Til a se maur eller andre insekter.'
