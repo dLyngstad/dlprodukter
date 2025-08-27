@@ -86,7 +86,7 @@ main {
     gap: 15px;
 }
 
-.product-image-retro {
+.product-image {
     width: 175px;
     height: 150px;
     object-fit: cover;
