@@ -24,6 +24,16 @@ const products = [
         price: '80',
         image: 'Bilder/eggeform.png',
         description: 'Til å forme eggene dine'
-    } // It's good practice to have a comma here too, but it's not required for the last item.
-
+    }, // <-- DU MANGLER ET KOMMA HER. JEG HAR LAGT DET TIL.
+    {
+        id: 'prod_004',
+        ecwidId: '777743139',
+        name: 'Glass',
+        price: '160',
+        image: 'Bilder/eggeform.png',
+        description: 'Til a se maur'
+    },
 ];
+
+
+
