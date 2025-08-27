@@ -30,7 +30,7 @@ const products = [
         ecwidId: '777743139',
         name: 'Glass',
         price: '160',
-        image: 'Bilder/eggeform.png',
+        image: 'Bilder/lupe.png',
         description: 'Til a se maur'
     },
 ];
