@@ -1,14 +1,15 @@
-/* --- Windows Classic Theme --- */
+/* --- Windows Classic Theme - Refined --- */
 
 /* 1. General Body Styles */
 body {
     background-color: #008080; /* The classic teal desktop background */
     font-family: "Tahoma", "Geneva", sans-serif;
-    font-size: 13px;
-    margin: 0; /* Remove default margin */
+    font-size: 14px; /* Slightly larger for readability */
+    color: #333333; /* Dark grey for text */
+    margin: 0;
 }
 
-/* 2. Top Header Bar (assumes this is for a future header/footer) */
+/* 2. Top Header Bar (Assumes this is for a future header.html content) */
 .top-bar {
     background-color: #C0C0C0;
     border-bottom: 2px solid #000000;
@@ -17,8 +18,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 5px 15px;
+    box-shadow: 0 1px 0 #808080; /* Subtle shadow for depth */
 }
-/* You can add more .top-bar styles here if needed */
 
 /* 3. The Main "Window" Container */
 .window {
@@ -27,10 +28,10 @@ body {
     border-left: 2px solid #FFFFFF;
     border-right: 2px solid #000000;
     border-bottom: 2px solid #000000;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-    max-width: 800px;
-    margin: 20px auto; /* Adds space above and below, and centers it */
-    padding: 3px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.4); /* Stronger shadow for realism */
+    max-width: 900px; /* Slightly wider window */
+    margin: 30px auto; /* More space around the main window */
+    padding: 3px; /* Padding for the inner frame */
 }
 
 /* 4. The Blue Title Bar */
@@ -38,68 +39,149 @@ body {
     background: #000080;
     color: white;
     font-weight: bold;
-    padding: 4px 5px;
-    margin-bottom: 10px;
+    padding: 4px 8px; /* Slightly more padding */
+    margin-bottom: 15px; /* More space below title bar */
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: default; /* Mimic default window behavior */
+}
+
+.title-bar h1 { /* Style for the main page title */
+    font-size: 16px;
+    margin: 0;
+    text-shadow: 1px 1px #000000; /* Subtle shadow for text */
 }
 
 .title-bar-nav a {
     color: white;
     text-decoration: none;
-    margin-left: 10px;
+    margin-left: 15px; /* More space between nav items */
+    font-size: 14px;
 }
+.title-bar-nav a:hover {
+    text-decoration: underline;
+}
+
 
 /* 5. Main Content Area */
 main {
-    padding: 10px;
+    padding: 20px; /* More internal padding for content */
 }
 
+/* 6. Product Grid (CSS Grid applied) */
 #product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px; /* This creates space between the cards */
-    padding: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min-width for better fit */
+    gap: 25px; /* Slightly reduced gap for a tighter look */
+    padding: 0; /* Remove padding here, main handles it */
 }
 
-/* 6. Product Cards (using the Group Box style) */
+/* 7. Product Cards (using the Group Box style) */
 .group-box {
     border: 1px solid #808080;
     border-top-color: #FFFFFF;
     border-left-color: #FFFFFF;
-    padding: 15px;
-    margin-bottom: 15px;
+    padding: 10px; /* Reduced padding for cleaner card look */
+    margin-bottom: 0; /* No margin-bottom here, gap handles spacing */
     position: relative;
-    background-color: #C0C0C0; /* Ensures background matches window */
-    padding-top: 20px; /* Extra space for the legend */
+    background-color: #C0C0C0;
+    padding-top: 20px;
+    box-shadow: 1px 1px 0 #808080; /* Subtle internal shadow */
 }
 
 .group-box-legend {
     background-color: #C0C0C0;
-    padding: 0 5px;
+    padding: 0 7px; /* Slightly more padding for the legend text */
     position: absolute;
-    top: -8px; /* Lifts the legend up onto the border */
+    top: -8px;
     left: 10px;
+    font-weight: bold; /* Make product name stand out */
+    color: #000000;
 }
 
 .product-content-wrapper {
     display: flex;
-    align-items: flex-start;
-    gap: 15px;
+    flex-direction: column; /* Stack image, description, price, button */
+    align-items: flex-start; /* Align contents to the left */
+    gap: 10px; /* Space between elements inside the card */
+    padding-top: 5px; /* Small buffer below legend */
 }
 
-.product-image {
-    width: 150px;
-    height: 125px;
-    object-fit: cover;
+.product-image { /* Use .product-image as per our last fix */
+    width: 175px;
+    height: 150px;
+    object-fit: contain; /* Use contain to fit entire image without cropping */
+    background-color: #FFFFFF; /* White background for images */
     border: 1px solid #808080;
     border-top-color: #000000;
     border-left-color: #000000;
+    margin-bottom: 5px; /* Space below image */
 }
 
-.product-details-retro .product-description {
-    margin-bottom: 10px;
+.product-details-retro {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Take full width of card */
 }
 
-.product-details-retro .product-price {
+.product-description {
+    font-size: 13px;
+    color: #444444;
+    margin-bottom: 8px;
+    line-height: 1.4; /* Better readability */
+}
+
+.product-price {
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    margin: 0 0 10px 0; /* Space below price */
+}
+
+/* Ecwid Buy Now Button Styling */
+.ecsp-product-actions .ecwid-productBrowser-product-addToBag-button {
+    /* Apply classic button styling to the Ecwid button */
+    background-color: #C0C0C0 !important; /* Force classic grey */
+    border-top: 1px solid #FFFFFF !important;
+    border-left: 1px solid #FFFFFF !important;
+    border-right: 1px solid #000000 !important;
+    border-bottom: 1px solid #000000 !important;
+    padding: 5px 15px !important;
+    font-family: "Tahoma", sans-serif !important;
+    box-shadow: 1px 1px 0px #000000 !important;
+    color: #000000 !important; /* Text color */
+    text-transform: none !important; /* Remove uppercase if Ecwid adds it */
+    font-size: 13px !important;
+    cursor: pointer;
+}
+
+.ecsp-product-actions .ecwid-productBrowser-product-addToBag-button:active {
+    border-top: 1px solid #000000 !important;
+    border-left: 1px solid #000000 !important;
+    border-right: 1px solid #FFFFFF !important;
+    border-bottom: 1px solid #FFFFFF !important;
+    box-shadow: none !important;
+}
+
+/* Ensure the minicart is visible and styled if you have a separate footer/header */
+#my-cart {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: #C0C0C0; /* Classic grey */
+    border-top: 2px solid #FFFFFF;
+    border-left: 2px solid #FFFFFF;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    padding: 5px;
+    box-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+    border-radius: 0; /* Square corners */
+}
+
+/* Ecwid's default cart icon can be styled if needed */
+.ecwid-minicart-label, .ecwid-minicart-count {
+    font-family: "Tahoma", sans-serif;
+    color: #000000 !important;
+}
