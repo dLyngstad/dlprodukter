@@ -147,3 +147,16 @@ main {
     right: 20px;
     z-index: 1000;
 }
+
+/* --- Homepage Logo Showcase --- */
+
+.logo-showcase {
+    text-align: center; /* Centers the image inside the box */
+    padding: 20px 10px; /* Adds some vertical breathing room */
+    background-color: #B0B0B0; /* Slightly darker grey to stand out */
+}
+
+.showcase-logo-img {
+    max-width: 60%; /* Controls how big the logo is. Adjust as needed. */
+    height: auto;   /* Maintains the aspect ratio */
+}
