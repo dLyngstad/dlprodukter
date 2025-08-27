@@ -2,7 +2,7 @@
 
 /* 1. General Body Styles */
 body {
-    background-color: #F0EAD6; /* Beige background */
+    background-color: #F0EAD6;
     font-family: "Tahoma", "Geneva", sans-serif;
     font-size: 14px;
     color: #333333;
@@ -76,3 +76,148 @@ body {
 /* 5. Main Content Area */
 main {
     padding: 20px;
+}
+
+/* 6. Product Grid */
+#product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 0;
+}
+
+/* 7. Product Cards (Group Box style) */
+.group-box {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    box-shadow: inset 1px 1px 0px #000000, inset -1px -1px 0px #A0A0A0;
+    padding: 10px;
+    position: relative;
+    background-color: #C0C0C0;
+    padding-top: 20px;
+}
+
+.group-box-legend {
+    background-color: #C0C0C0;
+    padding: 0 7px;
+    position: absolute;
+    top: -8px;
+    left: 10px;
+    font-weight: bold;
+}
+
+/* KORRIGERT KODE HER */
+.product-content-wrapper {
+    display: flex;
+    flex-direction: row; /* Endret til row */
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.product-details-retro {
+    display: flex;
+    flex-direction: column; /* Sørger for at tekst, pris og knapp stables */
+    width: 100%;
+}
+/* SLUTT PÅ KORRIGERT KODE */
+
+
+.product-details-retro .product-description {
+    font-size: 13px;
+    color: #444444;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.product-details-retro .product-price {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0 0 10px 0;
+}
+
+/* --- Product Image Carousel Styles --- */
+
+.image-carousel {
+    position: relative;
+    width: 175px;
+    height: 150px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    border: 1px solid #808080;
+    border-top-color: #000000;
+    border-left-color: #000000;
+    margin-bottom: 5px;
+    flex-shrink: 0; /* Hindrer karusellen fra å krympe */
+}
+
+.carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.carousel-image {
+    width: 175px;
+    height: 150px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(192, 192, 192, 0.7);
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    color: #000000;
+    width: 24px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    user-select: none;
+}
+
+.carousel-arrow:active {
+    border-top: 1px solid #000000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.carousel-arrow.left {
+    left: 4px;
+}
+
+.carousel-arrow.right {
+    right: 4px;
+}
+
+
+/* Ecwid Cart Styling */
+#my-cart {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* --- Homepage Logo Showcase --- */
+
+.logo-showcase {
+    text-align: center;
+    padding: 20px 10px;
+    background-color: #B0B0B0;
+}
+
+.showcase-logo-img {
+    max-width: 60%;
+    height: auto;
+}
