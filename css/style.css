@@ -79,15 +79,19 @@ main {
 
 /* 7. Product Cards (using the Group Box style) */
 .group-box {
-    border: 1px solid #808080;
-    border-top-color: #FFFFFF;
-    border-left-color: #FFFFFF;
-    padding: 10px; /* Reduced padding for cleaner card look */
-    margin-bottom: 0; /* No margin-bottom here, gap handles spacing */
+    /* Existing styles */
+    padding: 10px;
+    margin-bottom: 0;
     position: relative;
     background-color: #C0C0C0;
     padding-top: 20px;
-    box-shadow: 1px 1px 0 #808080; /* Subtle internal shadow */
+    
+    /* NEW: Sunken Border Effect */
+    border-top: 1px solid #808080;   /* Darker on top and left */
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF; /* Lighter on right and bottom */
+    border-bottom: 1px solid #FFFFFF;
+    box-shadow: inset 1px 1px 0px #000000, inset -1px -1px 0px #A0A0A0; /* Inner shadow for depth */
 }
 
 .group-box-legend {
