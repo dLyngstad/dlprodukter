@@ -2,7 +2,7 @@
 
 /* 1. General Body Styles */
 body {
-    background-color: #008080; /* The classic teal desktop background */
+    background-color: #F0EAD6;
     font-family: "Tahoma", "Geneva", sans-serif;
     font-size: 14px;
     color: #333333;
@@ -17,12 +17,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 25px; /* More padding for a bigger feel */
+    padding: 10px 25px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .logo-image {
-    max-height: 40px; /* Controls the height of your logo */
+    max-height: 40px;
     width: auto;
 }
 
@@ -31,7 +31,7 @@ body {
     padding: 0;
     list-style: none;
     display: flex;
-    gap: 25px; /* Space between nav items */
+    gap: 25px;
 }
 
 .main-nav a {
@@ -110,23 +110,17 @@ main {
 
 .product-content-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    gap: 10px;
+    gap: 15px;
 }
 
-.product-image {
-    width: 175px;
-    height: 150px;
-    object-fit: contain;
-    background-color: #FFFFFF;
-    border: 1px solid #808080;
-    border-top-color: #000000;
-    border-left-color: #000000;
-    margin-bottom: 5px;
+.product-details-retro {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-/* Other product styles remain the same... */
 .product-details-retro .product-description {
     font-size: 13px;
     color: #444444;
@@ -140,6 +134,68 @@ main {
     margin: 0 0 10px 0;
 }
 
+/* --- Product Image Carousel Styles --- */
+.image-carousel {
+    position: relative;
+    width: 175px;
+    height: 150px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    border: 1px solid #808080;
+    border-top-color: #000000;
+    border-left-color: #000000;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+}
+
+.carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.carousel-image {
+    width: 175px;
+    height: 150px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(192, 192, 192, 0.7);
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    color: #000000;
+    width: 24px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    user-select: none;
+}
+
+.carousel-arrow:active {
+    border-top: 1px solid #000000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.carousel-arrow.left {
+    left: 4px;
+}
+
+.carousel-arrow.right {
+    right: 4px;
+}
+
 /* Ecwid Cart Styling */
 #my-cart {
     position: fixed;
@@ -147,8 +203,3 @@ main {
     right: 20px;
     z-index: 1000;
 }
-
-
-
-
-
