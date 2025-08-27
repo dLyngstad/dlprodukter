@@ -2,161 +2,168 @@
 
 /* 1. General Body Styles */
 body {
-    background-color: #F0EAD6; /* The classic teal desktop background */
-    font-family: "Tahoma", "Geneva", sans-serif;
-    font-size: 14px;
-    color: #333333;
-    margin: 0;
+    background-color: #F0EAD6;
+    font-family: "Tahoma", "Geneva", sans-serif;
+    font-size: 14px;
+    color: #333333;
+    margin: 0;
 }
 
 /* 2. Site Header */
 .site-header {
-    background-color: #C0C0C0;
-    border-bottom: 2px solid #000000;
-    border-top: 2px solid #FFFFFF;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 25px; /* More padding for a bigger feel */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    background-color: #C0C0C0;
+    border-bottom: 2px solid #000000;
+    border-top: 2px solid #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 25px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .logo-image {
-    max-height: 40px; /* Controls the height of your logo */
-    width: auto;
+    max-height: 40px;
+    width: auto;
 }
 
 .main-nav ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    gap: 25px; /* Space between nav items */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 25px;
 }
 
 .main-nav a {
-    color: #000000;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    padding: 5px 0;
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 5px 0;
 }
 
 .main-nav a:hover {
-    text-decoration: underline;
+    text-decoration: underline;
 }
 
 /* 3. The Main "Window" Container */
 .window {
-    background-color: #C0C0C0;
-    border-top: 2px solid #FFFFFF;
-    border-left: 2px solid #FFFFFF;
-    border-right: 2px solid #000000;
-    border-bottom: 2px solid #000000;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.4);
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 3px;
+    background-color: #C0C0C0;
+    border-top: 2px solid #FFFFFF;
+    border-left: 2px solid #FFFFFF;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.4);
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 3px;
 }
 
 /* 4. The Blue Title Bar */
 .title-bar {
-    background: #000080;
-    color: white;
-    font-weight: bold;
-    padding: 4px 8px;
-    margin-bottom: 15px;
+    background: #000080;
+    color: white;
+    font-weight: bold;
+    padding: 4px 8px;
+    margin-bottom: 15px;
 }
 
 .title-bar h1 {
-    font-size: 16px;
-    margin: 0;
+    font-size: 16px;
+    margin: 0;
 }
 
 /* 5. Main Content Area */
 main {
-    padding: 20px;
+    padding: 20px;
 }
 
 /* 6. Product Grid */
 #product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 0;
 }
 
 /* 7. Product Cards (Group Box style) */
 .group-box {
-    border-top: 1px solid #808080;
-    border-left: 1px solid #808080;
-    border-right: 1px solid #FFFFFF;
-    border-bottom: 1px solid #FFFFFF;
-    box-shadow: inset 1px 1px 0px #000000, inset -1px -1px 0px #A0A0A0;
-    padding: 10px;
-    position: relative;
-    background-color: #C0C0C0;
-    padding-top: 20px;
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    box-shadow: inset 1px 1px 0px #000000, inset -1px -1px 0px #A0A0A0;
+    padding: 10px;
+    position: relative;
+    background-color: #C0C0C0;
+    padding-top: 20px;
 }
 
 .group-box-legend {
-    background-color: #C0C0C0;
-    padding: 0 7px;
-    position: absolute;
-    top: -8px;
-    left: 10px;
-    font-weight: bold;
+    background-color: #C0C0C0;
+    padding: 0 7px;
+    position: absolute;
+    top: -8px;
+    left: 10px;
+    font-weight: bold;
 }
 
 .product-content-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 15px;
 }
 
-.product-image {
-    width: 175px;
-    height: 150px;
-    object-fit: contain;
-    background-color: #FFFFFF;
-    border: 1px solid #808080;
-    border-top-color: #000000;
-    border-left-color: #000000;
-    margin-bottom: 5px;
+.product-details-retro {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-/* Other product styles remain the same... */
 .product-details-retro .product-description {
-    font-size: 13px;
-    color: #444444;
-    margin-bottom: 8px;
-    line-height: 1.4;
+    font-size: 13px;
+    color: #444444;
+    margin-bottom: 8px;
+    line-height: 1.4;
 }
 
 .product-details-retro .product-price {
-    font-weight: bold;
-    font-size: 16px;
-    margin: 0 0 10px 0;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0 0 10px 0;
 }
 
-/* Ecwid Cart Styling */
-#my-cart {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
+/* --- Product Image Carousel Styles --- */
+.image-carousel {
+    position: relative;
+    width: 175px;
+    height: 150px;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    border: 1px solid #808080;
+    border-top-color: #000000;
+    border-left-color: #000000;
+    margin-bottom: 5px;
+    flex-shrink: 0;
 }
 
-/* --- Homepage Logo Showcase --- */
-
-.logo-showcase {
-    text-align: center; /* Centers the image inside the box */
-    padding: 20px 10px; /* Adds some vertical breathing room */
-    background-color: #B0B0B0; /* Slightly darker grey to stand out */
+.carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
 }
 
-.showcase-logo-img {
-    max-width: 60%; /* Controls how big the logo is. Adjust as needed. */
-    height: auto;   /* Maintains the aspect ratio */
+.carousel-image {
+    width: 175px;
+    height: 150px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(192, 192, 192, 0.7);
+    border-top: 1px solid #FFFFFF;
