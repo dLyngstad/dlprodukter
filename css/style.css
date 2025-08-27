@@ -87,8 +87,8 @@ main {
 }
 
 .product-image {
-    width: 100px;
-    height: 75px;
+    width: 150px;
+    height: 125px;
     object-fit: cover;
     border: 1px solid #808080;
     border-top-color: #000000;
