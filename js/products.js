@@ -8,7 +8,7 @@ const products = [
         price: '5.00',
         images: [
             'Bilder/kar2.png', // Main image
-            'Bilder/kar2.png', // Replace with your 2nd image
+            'Bilder/vaskesett.png', // Replace with your 2nd image
             'Bilder/kar2.png'  // Replace with your 3rd image
         ],
         description: 'En solid karabinkrok i stål. Perfekt for nøkler eller utstyr.'
@@ -20,7 +20,7 @@ const products = [
         price: '80',
         images: [
             'Bilder/vaskesett.png', // Main image
-            'Bilder/vaskesett.png' // Replace with your 2nd image
+            'Bilder/kar2.png' // Replace with your 2nd image
         ],
         description: 'Et vaskesett som er perfekt til rengjøring'
     },
