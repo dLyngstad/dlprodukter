@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Søk - DL TEST Produkter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* A little extra styling to make the search input fit your retro theme */
+        .search-window {
+            background-color: #C0C0C0;
+            border-top: 2px solid #FFFFFF;
+            border-left: 2px solid #FFFFFF;
+            border-right: 2px solid #000000;
+            border-bottom: 2px solid #000000;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        #searchInput {
+            width: 100%;
+            height: 30px;
+            padding: 0 8px;
+            font-family: "Tahoma", "Geneva", sans-serif;
+            font-size: 14px;
+            border: 1px solid #808080;
+            border-top-color: #000000;
+            border-left-color: #000000;
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+        }
+        #search-results-grid {
+             margin-top: 30px; /* Adds space below the search bar */
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header-placeholder"></header>
+
+    <div class="search-window">
+        <label for="searchInput" style="font-weight: bold; margin-bottom: 5px; display: block;">Søk i produkter:</label>
+        <input type="text" id="searchInput" placeholder="Skriv for å søke...">
+    </div>
+
+    <div class="window">
+        <div class="title-bar">
+            <h1>Søkeresultater</h1>
+        </div>
+        <main>
+            <div id="search-results-grid"></div>
+        </main>
+    </div>
+
+    <div id="my-cart"></div>
+
+    <footer id="footer-placeholder"></footer>
+
+    <script src="js/products.js"></script> <script src="js/search.js"></script>   </body>
+</html>
