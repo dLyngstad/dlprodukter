@@ -11,7 +11,7 @@ const products = [
         ],
         description: 'Funksjonell, med kosmetisk skade.',
         moreInfo: 'Modell: HERO7 Silver<br>Tilstand: Brukt, har noen riper men fungerer som den skal.<br>Inkluderer: Kamera og standardfeste.'
-    }
+    },
     {
         id: 'prod_006',
         ecwidId: '778175153', // <-- SET YOUR ECWID ID HERE
