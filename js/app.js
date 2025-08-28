@@ -1,5 +1,5 @@
 // Fil: app.js
-// Versjon: Korrekt lasting og initialisering
+// Versjon: Added "Mer Info" Modal Functionality
 
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
@@ -25,6 +25,11 @@ const createProductHTML = (product) => {
         `<img src="${imgSrc}" alt="${product.name}" class="carousel-image">`
     ).join('');
 
+    // --- NEW: Conditionally create the "Mer info" button ---
+    const infoButtonHTML = product.moreInfo 
+        ? `<button class="info-btn" data-product-id="${product.id}">Mer info</button>` 
+        : '';
+
     return `
         <div class="group-box">
             <span class="group-box-legend">${product.name}</span>
@@ -42,6 +47,7 @@ const createProductHTML = (product) => {
                          data-single-product-id="${product.ecwidId}">
                         <div customprop="addtobag"></div>
                     </div>
+                    ${infoButtonHTML}
                 </div>
             </div>
         </div>
@@ -65,6 +71,7 @@ const renderProducts = () => {
  * Adds click functionality to all carousels on the page.
  */
 const initializeCarousels = () => {
+    // ... (This function remains exactly the same as before)
     const carousels = document.querySelectorAll('.image-carousel');
     carousels.forEach(carousel => {
         const track = carousel.querySelector('.carousel-track');
@@ -106,6 +113,43 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProducts();
     initializeCarousels();
 
+    // --- NEW: MODAL LOGIC ---
+    const modalOverlay = document.getElementById('info-modal-overlay');
+    const modalTitle = document.getElementById('info-modal-title');
+    const modalBody = document.getElementById('info-modal-body');
+    const closeModalBtn = document.getElementById('info-modal-close-btn');
+    const productGrid = document.getElementById('product-grid');
+
+    const openModal = (product) => {
+        modalTitle.textContent = product.name;
+        modalBody.innerHTML = product.moreInfo;
+        modalOverlay.classList.remove('hidden');
+    };
+
+    const closeModal = () => {
+        modalOverlay.classList.add('hidden');
+    };
+
+    // Event listener for all "Mer info" buttons using event delegation
+    productGrid.addEventListener('click', (event) => {
+        if (event.target.classList.contains('info-btn')) {
+            const productId = event.target.dataset.productId;
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                openModal(product);
+            }
+        }
+    });
+    
+    closeModalBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (event) => {
+        if (event.target === modalOverlay) { // Only close if clicking the background
+            closeModal();
+        }
+    });
+    // --- END OF NEW MODAL LOGIC ---
+
+
     // Create the Ecwid script tag
     const ecwidScript = document.createElement('script');
     ecwidScript.setAttribute('data-cfasync', 'false');
@@ -115,10 +159,9 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Set up the function that will run AFTER the script has loaded
     ecwidScript.onload = () => {
-        // This checks if the Ecwid object and its methods are ready
+        // ... (This section remains exactly the same as before)
         if (typeof Ecwid !== 'undefined' && Ecwid.OnAPILoaded) {
             Ecwid.OnAPILoaded.add(function() {
-                // Now that the API is ready, initialize the buttons and cart
                 if (typeof xProduct === 'function') {
                     xProduct();
                 }
