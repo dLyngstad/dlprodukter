@@ -9,7 +9,9 @@ const products = [
             'Bilder/karabinkrok.png', 
             'Bilder/karabinkrok_2.png'
         ],
-        description: 'En solid karabinkrok i stål.'
+        description: 'En solid karabinkrok i stål.',
+        moreInfo: 'Materiale:'
+
     },
     {
         id: 'prod_002',
