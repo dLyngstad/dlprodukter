@@ -1,49 +1,51 @@
 // Fil: products.js
 const products = [
     {
-        id: 'prod_001',
-        ecwidId: '777515903',
-        name: 'Karabin krok',
-        price: '5.00',
+        id: 'prod_005',
+        ecwidId: '778175166', // <-- SET YOUR ECWID ID HERE
+        name: 'Brukt GoPro HERO7 Silver',
+        price: '499.00',
         images: [
-            'Bilder/karabinkrok.png', 
-            'Bilder/karabinkrok_2.png'
+            'Bilder/gopro1.jpg', // <-- Replace with your image path
+            'Bilder/gopro2.jpg'  // <-- Replace with your image path
         ],
-        description: 'En solid karabinkrok i stål.',
-        moreInfo: 'Materiale:'
-
+        description: 'Funksjonell, med kosmetisk skade.',
+        moreInfo: 'Modell: HERO7 Silver<br>Tilstand: Brukt, har noen riper men fungerer som den skal.<br>Inkluderer: Kamera og standardfeste.'
     },
     {
-        id: 'prod_002',
-        ecwidId: '777573842',
-        name: 'Vaske Sett',
-        price: '80',
+        id: 'prod_006',
+        ecwidId: '778175153', // <-- SET YOUR ECWID ID HERE
+        name: 'Sett med 12 grafittblyanter',
+        price: '190.00',
         images: [
-            'Bilder/vaskesett.png', 
-            'Bilder/vaskesett_2.png'
+            'Bilder/grafittblyanter_1.png', // <-- Replace with your image path
+            'Bilder/grafittblyanter_2.png'  // <-- Replace with your image path
         ],
-        description: 'Et vaskesett som er perfekt til rengjøring.'
+        description: 'Grafittblyanter i ulike hardhetsgrader.',
+        moreInfo: 'Antall: 12 blyanter<br>Hardhetsgrader: Fra 6H (hard) til 8B (myk)<br>Ideell for tegning og skissering.'
     },
     {
-        id: 'prod_003',
-        ecwidId: '777591031',
-        name: 'Egge Form',
-        price: '80',
+        id: 'prod_007',
+        ecwidId: '778180876', // <-- SET YOUR ECWID ID HERE
+        name: 'Talens Art Creation Akvarellmaling',
+        price: '150.00',
         images: [
-            'Bilder/eggeform.png',
-            'Bilder/eggeform_2.png'
+            'Bilder/akvarellmaling_1.png', // <-- Replace with your image path
+            'Bilder/akvarellmaling_2.png'  // <-- Replace with your image path
         ],
-        description: 'Til å forme egg i stekepanne.'
+        description: 'Sett med 8 x 12 ml tuber.',
+        moreInfo: 'Merke: Talens Art Creation<br>Type: Akvarellmaling<br>Innhold: 8 tuber à 12 ml i basisfarger.'
     },
     {
-        id: 'prod_004',
-        ecwidId: '777743139',
-        name: 'Glass',
-        price: '160',
+        id: 'prod_008',
+        ecwidId: '778175158', // <-- SET YOUR ECWID ID HERE
+        name: 'Talens Panda Oljepasteller (12 farger)',
+        price: '130.00',
         images: [
-            'Bilder/lupe.png',
-            'Bilder/lupe_2.png'
-        ],
-        description: 'Til a se maur eller andre insekter.'
-    },
+            'Bilder/oljepasteller_1.png', // <-- Replace with your image path
+            'Bilder/oljepasteller_2.png'  // <-- Replace with your image path
+        ], 
+        description: 'Et sett med 12 oljepasteller i klare farger.',
+        moreInfo: 'Merke: Talens Panda<br>Antall: 12 farger<br>Egenskaper: Myke og enkle å blande.'
+    }
 ];
