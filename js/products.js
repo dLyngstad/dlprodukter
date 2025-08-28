@@ -11,15 +11,15 @@ const products = [
         ],
         description: 'Funksjonell, med kosmetisk skade.',
         moreInfo: 'Modell: HERO7 Silver<br>Tilstand: Brukt, har noen riper men fungerer som den skal.<br>Inkluderer: Kamera og standardfeste.'
-    },
+    }
     {
         id: 'prod_006',
         ecwidId: '778175153', // <-- SET YOUR ECWID ID HERE
         name: 'Sett med 12 grafittblyanter',
         price: '190.00',
         images: [
-            'Bilder/grafittblyanter_1.png', // <-- Replace with your image path
-            'Bilder/grafittblyanter_2.png'  // <-- Replace with your image path
+            'Bilder/blyant1.jpg', // <-- Replace with your image path
+            'Bilder/blyant2.jpg'  // <-- Replace with your image path
         ],
         description: 'Grafittblyanter i ulike hardhetsgrader.',
         moreInfo: 'Antall: 12 blyanter<br>Hardhetsgrader: Fra 6H (hard) til 8B (myk)<br>Ideell for tegning og skissering.'
@@ -30,8 +30,8 @@ const products = [
         name: 'Talens Art Creation Akvarellmaling',
         price: '150.00',
         images: [
-            'Bilder/akvarellmaling_1.png', // <-- Replace with your image path
-            'Bilder/akvarellmaling_2.png'  // <-- Replace with your image path
+            'Bilder/vann1.jpg', // <-- Replace with your image path
+            'Bilder/vann2.jpg'  // <-- Replace with your image path
         ],
         description: 'Sett med 8 x 12 ml tuber.',
         moreInfo: 'Merke: Talens Art Creation<br>Type: Akvarellmaling<br>Innhold: 8 tuber à 12 ml i basisfarger.'
@@ -42,8 +42,8 @@ const products = [
         name: 'Talens Panda Oljepasteller (12 farger)',
         price: '130.00',
         images: [
-            'Bilder/oljepasteller_1.png', // <-- Replace with your image path
-            'Bilder/oljepasteller_2.png'  // <-- Replace with your image path
+            'Bilder/olje1.jpg', // <-- Replace with your image path
+            'Bilder/olje2.jpg'  // <-- Replace with your image path
         ], 
         description: 'Et sett med 12 oljepasteller i klare farger.',
         moreInfo: 'Merke: Talens Panda<br>Antall: 12 farger<br>Egenskaper: Myke og enkle å blande.'
