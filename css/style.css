@@ -221,7 +221,7 @@ main {
     padding: 5px 10px;
     margin-top: 10px;
     cursor: pointer;
-    width: 100%; /* Make button fill available space */
+    width: 60%; /* Make button fill available space */
 }
 
 .info-btn:active {
