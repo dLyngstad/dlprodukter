@@ -47,5 +47,17 @@ const products = [
         ], 
         description: 'Et sett med 12 oljepasteller i klare farger.',
         moreInfo: 'Merke: Talens Panda<br>Antall: 12 farger<br>Egenskaper: Myke og enkle å blande.'
-    }
+    },
+    {
+        id: 'prod_009',
+        ecwidId: '778329845', // <-- SET YOUR ECWID ID HERE
+        name: 'Garmin Forerunner 245 Music GPS Running Watch',
+        price: '975',
+        images: [
+            'Bilder/olje1.jpeg', // <-- Replace with your image path
+            'Bilder/olje2.jpeg'  // <-- Replace with your image path
+        ], 
+        description: 'Garmin Forerunner 245 Music watch, a perfect companion for any runner or athlete. This watch is a great tool for tracking your runs, listening to music on the go, and monitoring your overall health and fitness.',
+        moreInfo: 'Advanced running metrics,<br> gps and navigation,<br> health & welness monitoring,<br> activity tracking,<br> smart features,<br> water rating.'
+    },
 ];
