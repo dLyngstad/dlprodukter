@@ -54,8 +54,8 @@ const products = [
         name: 'Garmin Forerunner 245 Music GPS Running Watch',
         price: '975',
         images: [
-            'Bilder/olje1.jpeg', // <-- Replace with your image path
-            'Bilder/olje2.jpeg'  // <-- Replace with your image path
+            'Bilder/garmin1.jpeg', // <-- Replace with your image path
+            'Bilder/garmin2.jpeg'  // <-- Replace with your image path
         ], 
         description: 'Garmin Forerunner 245 Music watch, a perfect companion for any runner or athlete. This watch is a great tool for tracking your runs, listening to music on the go, and monitoring your overall health and fitness.',
         moreInfo: 'Advanced running metrics,<br> gps and navigation,<br> health & welness monitoring,<br> activity tracking,<br> smart features,<br> water rating.'
