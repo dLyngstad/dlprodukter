@@ -3,50 +3,50 @@ const products = [
     {
         id: 'prod_005',
         ecwidId: '778175166', // <-- SET YOUR ECWID ID HERE
-        name: 'Brukt GoPro HERO7 Silver',
-        price: '499.00',
+        name: 'Prisklasse E12',
+        price: '49.00',
         images: [
-            'Bilder/gopro1.jpeg', // <-- Replace with your image path
-            'Bilder/gopro2.jpeg'  // <-- Replace with your image path
+            'Bilder/bilde1.jpeg', // <-- Replace with your image path
+            'Bilder/bilde2.jpeg'  // <-- Replace with your image path
         ],
-        description: 'Funksjonell, med kosmetisk skade.',
-        moreInfo: 'Modell: HERO7 Silver<br>Tilstand: Brukt, har noen riper men fungerer som den skal.<br>Inkluderer: Kamera og standardfeste.'
+        description: 'Beskrivelse for Prisklasse E12.',
+        moreInfo: 'Mer informasjon om produktet.'
     },
     {
         id: 'prod_006',
         ecwidId: '778175153', // <-- SET YOUR ECWID ID HERE
-        name: 'Sett med 12 grafittblyanter',
-        price: '190.00',
+        name: 'Prisklasse E13',
+        price: '99.00',
         images: [
-            'Bilder/blyant1.jpeg', // <-- Replace with your image path
-            'Bilder/blyant2.jpeg'  // <-- Replace with your image path
+            'Bilder/bilde3.jpeg', // <-- Replace with your image path
+            'Bilder/bilde4.jpeg'  // <-- Replace with your image path
         ],
-        description: 'Grafittblyanter i ulike hardhetsgrader.',
-        moreInfo: 'Antall: 12 blyanter<br>Hardhetsgrader: Fra 6H (hard) til 8B (myk)<br>Ideell for tegning og skissering.'
+        description: 'Beskrivelse for Prisklasse E13.',
+        moreInfo: 'Mer informasjon om produktet.'
     },
     {
         id: 'prod_007',
         ecwidId: '778180876', // <-- SET YOUR ECWID ID HERE
-        name: 'Talens Art Creation Akvarellmaling',
-        price: '150.00',
+        name: 'Prisklasse E14',
+        price: '149.00',
         images: [
-            'Bilder/vann1.jpeg', // <-- Replace with your image path
-            'Bilder/vann2.jpeg'  // <-- Replace with your image path
+            'Bilder/bilde5.jpeg', // <-- Replace with your image path
+            'Bilder/bilde6.jpeg'  // <-- Replace with your image path
         ],
-        description: 'Sett med 8 x 12 ml tuber.',
-        moreInfo: 'Merke: Talens Art Creation<br>Type: Akvarellmaling<br>Innhold: 8 tuber à 12 ml i basisfarger.'
+        description: 'Beskrivelse for Prisklasse E14.',
+        moreInfo: 'Mer informasjon om produktet.'
     },
     {
         id: 'prod_008',
         ecwidId: '778175158', // <-- SET YOUR ECWID ID HERE
-        name: 'Talens Panda Oljepasteller (12 farger)',
-        price: '130.00',
+        name: 'Prisklasse E16',
+        price: '249.00',
         images: [
-            'Bilder/olje1.jpeg', // <-- Replace with your image path
-            'Bilder/olje2.jpeg'  // <-- Replace with your image path
+            'Bilder/bilde7.jpeg', // <-- Replace with your image path
+            'Bilder/bilde8.jpeg'  // <-- Replace with your image path
         ], 
-        description: 'Et sett med 12 oljepasteller i klare farger.',
-        moreInfo: 'Merke: Talens Panda<br>Antall: 12 farger<br>Egenskaper: Myke og enkle å blande.'
+        description: 'Beskrivelse for Prisklasse E16.',
+        moreInfo: 'Mer informasjon om produktet.'
     },
     {
         id: 'prod_009',
