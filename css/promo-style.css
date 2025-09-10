@@ -1,74 +1,68 @@
+/* promo-style.css - Oppdatert for å matche sidens retro-stil */
 
-/* promo-style.css */
-
-/* Selve dialogboksen */
+/* Selve dialogboksen, stylet som et klassisk "vindu" */
 .promo-popup {
-  position: fixed; /* Holder seg på plass selv om man scroller */
+  position: fixed;
   left: 20px;
   bottom: 20px;
-  background-color: #ffc107; /* En varm, oppmerksomhetsfangende gulfarge */
-  color: #333;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  z-index: 1000; /* Sikrer at den ligger oppå alt annet innhold */
-  font-family: sans-serif;
-  border: 3px solid #e0a800;
+  background-color: #cccccc; /* Den lysegrå bakgrunnen fra siden din */
+  color: #000000;          /* Svart tekst */
+  border: 1px solid #000;    /* En tynn, svart ramme */
+  box-shadow: 2px 2px 0px #000; /* En hard, 2D-aktig skygge */
+  z-index: 1000;
+  font-family: Arial, sans-serif; /* En standard font som passer stilen */
+  width: 300px; /* Gir den en fast bredde */
   
-  /* Her er animasjonen! */
-  animation: pulse-animation 1.5s infinite;
+  /* Ny "blink"-animasjon som passer stilen bedre */
+  animation: retro-blink-animation 1s infinite step-end;
 }
 
-/* Tittelen inni boksen */
+/* Tittelen, stylet som den blå "tittellinjen" */
 .promo-popup h3 {
-  margin-top: 0;
-  font-size: 2em; /* Stor og tydelig */
-  text-transform: uppercase;
-  text-align: center;
+  background-color: #000080; /* Den mørkeblå fargen fra toppen */
+  color: white;
+  padding: 5px 10px;
+  margin: 0; /* Fjerner all standard marg */
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 /* Paragrafen med tilbudet */
 .promo-popup p {
-  margin-bottom: 15px;
-  font-size: 1.1em;
+  padding: 15px;
+  margin: 0;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #808080;
 }
 
 /* Egen stil for rabattkoden */
 .promo-code {
-  background-color: #fff;
-  border: 2px dashed #333;
-  padding: 8px 12px;
+  background-color: #cccccc;
+  border: 1px solid #808080;
+  padding: 10px;
+  margin: 15px;
   font-weight: bold;
   font-size: 1.4em;
   text-align: center;
-  display: block; /* Gjør at den tar opp hele bredden */
 }
 
 /* Lukkeknappen (X) */
 .promo-close-btn {
   position: absolute;
-  top: 5px;
-  right: 10px;
-  font-size: 24px;
+  top: 1px; /* Justert for å passe i den blå linjen */
+  right: 8px;
+  font-size: 20px;
   font-weight: bold;
-  color: #333;
+  color: white; /* Hvit farge for å synes på den blå bakgrunnen */
   cursor: pointer;
   border: none;
   background: none;
+  font-family: "Arial Black", sans-serif;
 }
 
-/* Definisjon av den pulserende animasjonen */
-@keyframes pulse-animation {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  }
+/* Definisjon av en enklere blinke-animasjon ved å endre synlighet */
+@keyframes retro-blink-animation {
   50% {
-    transform: scale(1.03); /* Blir litt større */
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4); /* Skyggen blir større */
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    opacity: 0.8;
   }
 }
