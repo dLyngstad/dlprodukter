@@ -1,41 +1,56 @@
-/* promo-style.css - Oppdatert for å matche sidens retro-stil */
+/* promo-style.css - Oppdatert med gjenbrukbar stil */
 
-/* Selve dialogboksen, stylet som et klassisk "vindu" */
-.promo-popup {
+/* Den generelle stilen for alle "vinduer" */
+.classic-window {
   position: fixed;
   left: 20px;
   bottom: 20px;
-  background-color: #cccccc; /* Den lysegrå bakgrunnen fra siden din */
-  color: #000000;          /* Svart tekst */
-  border: 1px solid #000;    /* En tynn, svart ramme */
-  box-shadow: 2px 2px 0px #000; /* En hard, 2D-aktig skygge */
+  background-color: #cccccc;
+  color: #000000;
+  border: 1px solid #000;
+  box-shadow: 2px 2px 0px #000;
   z-index: 1000;
-  font-family: Arial, sans-serif; /* En standard font som passer stilen */
-  width: 300px; /* Gir den en fast bredde */
-  
-  /* Ny "blink"-animasjon som passer stilen bedre */
-  animation: retro-blink-animation 1s infinite step-end;
+  font-family: Arial, sans-serif;
+  width: 320px; /* Litt bredere for cookie-teksten */
 }
 
-/* Tittelen, stylet som den blå "tittellinjen" */
-.promo-popup h3 {
-  background-color: #000080; /* Den mørkeblå fargen fra toppen */
+/* Tittelen / den blå "tittellinjen" */
+.classic-window h3 {
+  background-color: #000080;
   color: white;
   padding: 5px 10px;
-  margin: 0; /* Fjerner all standard marg */
+  margin: 0;
   font-size: 1.2em;
   font-weight: bold;
 }
 
-/* Paragrafen med tilbudet */
-.promo-popup p {
+/* Innholdsdeler i vinduet */
+.classic-window p {
   padding: 15px;
   margin: 0;
   border-top: 1px solid #808080;
-  border-bottom: 1px solid #808080;
+  font-size: 0.9em;
+  line-height: 1.4;
 }
 
-/* Egen stil for rabattkoden */
+/* Stil for knapper inni vinduet */
+.classic-window .window-button {
+  display: block;
+  width: calc(100% - 30px); /* Full bredde minus padding */
+  margin: 0 15px 15px 15px;
+  padding: 10px;
+  background-color: #cccccc;
+  border: 1px solid #808080;
+  box-shadow: 1px 1px 0px #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+.classic-window .window-button:active {
+    box-shadow: inset 1px 1px 0px #000;
+}
+
+
+/* Stil for rabattkoden spesifikt */
 .promo-code {
   background-color: #cccccc;
   border: 1px solid #808080;
@@ -47,20 +62,24 @@
 }
 
 /* Lukkeknappen (X) */
-.promo-close-btn {
+.classic-window-close-btn {
   position: absolute;
-  top: 1px; /* Justert for å passe i den blå linjen */
+  top: 1px;
   right: 8px;
   font-size: 20px;
   font-weight: bold;
-  color: white; /* Hvit farge for å synes på den blå bakgrunnen */
+  color: white;
   cursor: pointer;
   border: none;
   background: none;
   font-family: "Arial Black", sans-serif;
 }
 
-/* Definisjon av en enklere blinke-animasjon ved å endre synlighet */
+/* Egen klasse KUN for promo-animasjonen */
+.promo-blink {
+  animation: retro-blink-animation 1s infinite step-end;
+}
+
 @keyframes retro-blink-animation {
   50% {
     opacity: 0.8;
