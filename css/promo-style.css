@@ -1,1 +1,74 @@
 
+/* promo-style.css */
+
+/* Selve dialogboksen */
+.promo-popup {
+  position: fixed; /* Holder seg på plass selv om man scroller */
+  left: 20px;
+  bottom: 20px;
+  background-color: #ffc107; /* En varm, oppmerksomhetsfangende gulfarge */
+  color: #333;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 1000; /* Sikrer at den ligger oppå alt annet innhold */
+  font-family: sans-serif;
+  border: 3px solid #e0a800;
+  
+  /* Her er animasjonen! */
+  animation: pulse-animation 1.5s infinite;
+}
+
+/* Tittelen inni boksen */
+.promo-popup h3 {
+  margin-top: 0;
+  font-size: 2em; /* Stor og tydelig */
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Paragrafen med tilbudet */
+.promo-popup p {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+/* Egen stil for rabattkoden */
+.promo-code {
+  background-color: #fff;
+  border: 2px dashed #333;
+  padding: 8px 12px;
+  font-weight: bold;
+  font-size: 1.4em;
+  text-align: center;
+  display: block; /* Gjør at den tar opp hele bredden */
+}
+
+/* Lukkeknappen (X) */
+.promo-close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Definisjon av den pulserende animasjonen */
+@keyframes pulse-animation {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+  50% {
+    transform: scale(1.03); /* Blir litt større */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4); /* Skyggen blir større */
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+}
