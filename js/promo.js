@@ -5,7 +5,7 @@ window.addEventListener('load', function() {
   if (localStorage.getItem('cookiesAccepted') === 'true') {
     
     // Sjekk for 25% sjanse
-    if (Math.random() < 0.25) {
+    if (Math.random() < 0.99) {
       createPromoPopup();
     }
   }
