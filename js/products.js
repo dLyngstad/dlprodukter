@@ -3,11 +3,11 @@ const products = [
     {
         id: 'prod_005',
         ecwidId: '778175166',
-        name: 'Prisklasse E12',
-        price: '49.00',
+        name: 'Elektrisk Forsegler',
+        price: '149',
         images: ['Bilder/bilde1.jpeg', 'Bilder/bilde2.jpeg'],
-        description: 'Beskrivelse for Prisklasse E12.',
-        moreInfo: 'Mer informasjon om produktet.'
+        description: 'Pose forsegler! Forsegler alt du vil. .',
+        moreInfo: 'Følger med ladekabel og instruksjoner.<br>- Implementert magnet for å feste på kjøleskap. <br> - Implementert kniv for å skjøre opp poser.'
     },
    
 ];
