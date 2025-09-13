@@ -9,5 +9,14 @@ const products = [
         description: 'Pose forsegler! Forsegler alt du vil. .',
         moreInfo: 'Følger med ladekabel og instruksjoner.<br>- Implementert magnet for å feste på kjøleskap. <br> - Implementert kniv for å skjøre opp poser.'
     },
+     {
+        id: 'prod_006',
+        ecwidId: '778175166',
+        name: 'Skimmer',
+        price: '149',
+        images: ['Bilder/bagsealerimages/bagsealerA.png','Bilder/bagsealerimages/bagsealerB.png','Bilder/bagsealerimages/bagsealerC.png','Bilder/bagsealerimages/bagsealerD.png','Bilder/bagsealerimages/bagsealerE.png','Bilder/bagsealerimages/bagsealerF.png','Bilder/bagsealerimages/bagsealerG.png'],
+        description: 'Blander melk osv.',
+        moreInfo: 'følger med mye rart'
+    },
    
 ];
