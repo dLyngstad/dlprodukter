@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showCloseButton: true,
         contentHTML: `
           <p>Du er heldig! Få 10% rabatt på din neste bestilling med koden under:</p>
-          <div class="promo-code">HØSTTILBUD10</div>
+          <div class="promo-code">HØSTTILBUD11</div>
         `
       });
     } 
