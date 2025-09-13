@@ -8,7 +8,7 @@ const POPUP_CONFIG = [
   {
     id: 'promo',
     enabled: true,
-    chance: 25, // Sjanse i prosent (1-100)
+    chance: 99, // Sjanse i prosent (1-100)
     pages: ['index.html', 'products.html'], // Vises KUN på disse sidene. Tom liste [] betyr alle sider.
     position: 'left',
     options: {
@@ -24,7 +24,7 @@ const POPUP_CONFIG = [
   {
     id: 'delivery',
     enabled: true,
-    chance: 50,
+    chance: 99,
     pages: ['products.html'], // Vises KUN på produktsiden
     position: 'right',
     options: {
