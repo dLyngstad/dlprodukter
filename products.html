@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/analytics.js"></script>
     
-<link rel="stylesheet" href="css/promo-style.css">
+    <link rel="stylesheet" href="css/promo-style.css">
     <script src="js/promo.js" defer></script>
 
 </head>
@@ -41,6 +41,21 @@
             </div>
             <div class="modal-content" id="info-modal-body">
                 </div>
+        </div>
+    </div>
+    
+    <div id="image-lightbox-overlay" class="hidden">
+        <div id="image-lightbox-box" class="window">
+            <div class="title-bar">
+                <h1 id="lightbox-title">Product Image</h1>
+                <button id="lightbox-close-btn">X</button>
+            </div>
+            <div class="lightbox-content">
+                <div class="lightbox-arrow left">&lt;</div>
+                <img src="" alt="Enlarged product image" id="lightbox-image">
+                <div class="lightbox-arrow right">&gt;</div>
+            </div>
+            <div id="lightbox-counter"></div>
         </div>
     </div>
     
