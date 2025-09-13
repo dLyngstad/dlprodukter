@@ -1,20 +1,35 @@
-/* promo-style.css - Oppdatert med gjenbrukbar stil */
+/* promo-style.css - Komplett stilark for alle popups */
 
 /* Den generelle stilen for alle "vinduer" */
 .classic-window {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
+  position: fixed; /* Holder seg på plass */
   background-color: #cccccc;
   color: #000000;
   border: 1px solid #000;
   box-shadow: 2px 2px 0px #000;
   z-index: 1000;
   font-family: Arial, sans-serif;
-  width: 320px; /* Litt bredere for cookie-teksten */
+  width: 320px;
 }
 
-/* Tittelen / den blå "tittellinjen" */
+/* POSISJONERINGSKLASSER */
+.popup-position-left {
+  left: 20px;
+}
+.popup-position-right {
+  right: 20px;
+}
+
+/* STABLING: Setter en unik bunn-posisjon for hver ID */
+#cookie-banner, #delivery-popup {
+  bottom: 20px;
+}
+#promo-popup, #contact-hours-popup {
+  bottom: 240px; /* Plasseres over de nedre popupene */
+}
+
+/* ------ Generelle stiler for innhold ------ */
+
 .classic-window h3 {
   background-color: #000080;
   color: white;
@@ -23,8 +38,6 @@
   font-size: 1.2em;
   font-weight: bold;
 }
-
-/* Innholdsdeler i vinduet */
 .classic-window p {
   padding: 15px;
   margin: 0;
@@ -32,11 +45,9 @@
   font-size: 0.9em;
   line-height: 1.4;
 }
-
-/* Stil for knapper inni vinduet */
 .classic-window .window-button {
   display: block;
-  width: calc(100% - 30px); /* Full bredde minus padding */
+  width: calc(100% - 30px);
   margin: 0 15px 15px 15px;
   padding: 10px;
   background-color: #cccccc;
@@ -48,9 +59,6 @@
 .classic-window .window-button:active {
     box-shadow: inset 1px 1px 0px #000;
 }
-
-
-/* Stil for rabattkoden spesifikt */
 .promo-code {
   background-color: #cccccc;
   border: 1px solid #808080;
@@ -60,8 +68,6 @@
   font-size: 1.4em;
   text-align: center;
 }
-
-/* Lukkeknappen (X) */
 .classic-window-close-btn {
   position: absolute;
   top: 1px;
@@ -74,12 +80,9 @@
   background: none;
   font-family: "Arial Black", sans-serif;
 }
-
-/* Egen klasse KUN for promo-animasjonen */
 .promo-blink {
   animation: retro-blink-animation 1s infinite step-end;
 }
-
 @keyframes retro-blink-animation {
   50% {
     opacity: 0.8;
