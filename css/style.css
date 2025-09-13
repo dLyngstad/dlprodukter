@@ -311,7 +311,7 @@ main {
 
 #image-lightbox-box {
     width: 90%;
-    max-width: 800px;
+    max-width: 950px; /* Increased max-width to accommodate new section */
     max-height: 90vh;
     display: flex;
     flex-direction: column;
@@ -349,25 +349,92 @@ main {
     border-bottom: 1px solid #FFFFFF;
 }
 
-.lightbox-content {
+/* NEW: Wrapper for image and info sections */
+.lightbox-main-content {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
+    flex-direction: row; /* Arrange image and info side-by-side */
     flex-grow: 1;
-    overflow: hidden;
-    background-color: #FFFFFF;
+    padding: 15px;
+    gap: 15px; /* Space between image and info */
+    background-color: #FFFFFF; /* White background for the main content area */
     border: 1px inset #808080;
 }
 
-#lightbox-image {
-    max-width: calc(100% - 100px);
-    max-height: 100%;
-    object-fit: contain;
+/* NEW: Image section (left side) */
+.lightbox-image-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 2; /* Takes 2 parts of the available space */
+    min-width: 300px; /* Ensure a minimum size */
+    background-color: #FFFFFF; /* White background behind the image */
+    border: 1px solid #808080;
+    border-top-color: #000000;
+    border-left-color: #000000;
+    padding-bottom: 30px; /* Space for the counter */
+    overflow: hidden; /* Hide any overflow from image */
 }
 
-.lightbox-arrow {
-    background-color: #C0C0C0;
+#lightbox-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    flex-grow: 1;
+}
+
+/* NEW: Info section (right side) */
+.lightbox-info-section {
+    flex: 1; /* Takes 1 part of the available space */
+    min-width: 250px; /* Ensure a minimum size */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #C0C0C0; /* Classic grey background */
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    box-shadow: inset 1px 1px 0px #000000, inset -1px -1px 0px #A0A0A0;
+    padding: 15px;
+}
+
+.lightbox-info-section h2 {
+    font-size: 18px;
+    margin: 0;
+    color: #000000;
+    font-weight: bold;
+}
+
+.lightbox-info-section p {
+    font-size: 13px;
+    color: #333333;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.lightbox-info-section #lightbox-product-price {
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: auto; /* Push price to bottom before button */
+}
+
+.lightbox-info-section #lightbox-ecwid-buy-button {
+    margin-top: 10px; /* Space above Ecwid button */
+}
+
+.lightbox-info-section .info-btn {
+    width: 100%; /* Make button fill info section width */
+    margin-top: 5px; /* Adjust margin if needed */
+}
+
+/* Lightbox navigation arrows (positioned within image section) */
+.lightbox-image-section .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(192, 192, 192, 0.7);
     border-top: 1px solid #FFFFFF;
     border-left: 1px solid #FFFFFF;
     border-right: 1px solid #000000;
@@ -382,21 +449,37 @@ main {
     font-size: 24px;
     font-weight: bold;
     user-select: none;
+    z-index: 10; /* Ensure arrows are above image */
 }
 
-.lightbox-arrow:active {
+.lightbox-image-section .lightbox-arrow:active {
     border-top: 1px solid #000000;
     border-left: 1px solid #000000;
     border-right: 1px solid #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
 }
 
-#lightbox-counter {
+.lightbox-image-section .lightbox-arrow.left {
+    left: 5px;
+}
+
+.lightbox-image-section .lightbox-arrow.right {
+    right: 5px;
+}
+
+/* Image counter, moved to be inside the image section */
+.lightbox-image-section #lightbox-counter {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
-    padding: 5px;
-    margin: 5px 10px 5px 10px;
+    padding: 2px 8px;
+    background-color: #C0C0C0;
     border-top: 1px solid #808080;
     border-left: 1px solid #808080;
     border-right: 1px solid #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
+    font-size: 12px;
+    white-space: nowrap;
 }
