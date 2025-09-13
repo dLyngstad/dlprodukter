@@ -29,6 +29,7 @@ const POPUP_CONFIG = [
     position: 'left',
     options: {
       title: 'Gratis Levering!',
+      blink: true,
       showCloseButton: true,
       contentHTML: `
         <p style="text-align: center; font-size: 1.2em; padding-top: 15px;">
