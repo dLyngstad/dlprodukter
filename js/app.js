@@ -1,5 +1,5 @@
 // Fil: app.js
-// Versjon: Added "Mer Info" Modal Functionality
+// Versjon: Added Image Lightbox Functionality
 
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
@@ -21,11 +21,12 @@ const createProductHTML = (product) => {
         return '';
     }
 
-    const imageSlides = product.images.map(imgSrc => 
-        `<img src="${imgSrc}" alt="${product.name}" class="carousel-image">`
+    // Added data-attributes to each image to make them clickable for the lightbox
+    const imageSlides = product.images.map((imgSrc, index) => 
+        `<img src="${imgSrc}" alt="${product.name}" class="carousel-image" data-product-id="${product.id}" data-image-index="${index}">`
     ).join('');
 
-    // --- NEW: Conditionally create the "Mer info" button ---
+    // Conditionally create the "Mer info" button
     const infoButtonHTML = product.moreInfo 
         ? `<button class="info-btn" data-product-id="${product.id}">Mer info</button>` 
         : '';
@@ -71,7 +72,6 @@ const renderProducts = () => {
  * Adds click functionality to all carousels on the page.
  */
 const initializeCarousels = () => {
-    // ... (This function remains exactly the same as before)
     const carousels = document.querySelectorAll('.image-carousel');
     carousels.forEach(carousel => {
         const track = carousel.querySelector('.carousel-track');
@@ -113,12 +113,13 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProducts();
     initializeCarousels();
 
-    // --- NEW: MODAL LOGIC ---
+    const productGrid = document.getElementById('product-grid');
+
+    // --- LOGIC FOR "MER INFO" MODAL ---
     const modalOverlay = document.getElementById('info-modal-overlay');
     const modalTitle = document.getElementById('info-modal-title');
     const modalBody = document.getElementById('info-modal-body');
     const closeModalBtn = document.getElementById('info-modal-close-btn');
-    const productGrid = document.getElementById('product-grid');
 
     const openModal = (product) => {
         modalTitle.textContent = product.name;
@@ -130,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
         modalOverlay.classList.add('hidden');
     };
 
-    // Event listener for all "Mer info" buttons using event delegation
     productGrid.addEventListener('click', (event) => {
         if (event.target.classList.contains('info-btn')) {
             const productId = event.target.dataset.productId;
@@ -143,12 +143,73 @@ document.addEventListener("DOMContentLoaded", () => {
     
     closeModalBtn.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (event) => {
-        if (event.target === modalOverlay) { // Only close if clicking the background
+        if (event.target === modalOverlay) {
             closeModal();
         }
     });
-    // --- END OF NEW MODAL LOGIC ---
 
+    // --- LOGIC FOR IMAGE LIGHTBOX ---
+    const lightboxOverlay = document.getElementById('image-lightbox-overlay');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+    const lightboxNextBtn = document.querySelector('#image-lightbox-box .lightbox-arrow.right');
+    const lightboxPrevBtn = document.querySelector('#image-lightbox-box .lightbox-arrow.left');
+
+    let currentLightboxProduct = null;
+    let currentLightboxIndex = 0;
+
+    const showLightboxImage = () => {
+        const images = currentLightboxProduct.images;
+        lightboxImage.src = images[currentLightboxIndex];
+        lightboxTitle.textContent = currentLightboxProduct.name;
+        lightboxCounter.textContent = `Bilde ${currentLightboxIndex + 1} av ${images.length}`;
+        const display = images.length > 1 ? 'flex' : 'none';
+        lightboxNextBtn.style.display = display;
+        lightboxPrevBtn.style.display = display;
+    };
+
+    const openLightbox = (productId, imageIndex) => {
+        currentLightboxProduct = products.find(p => p.id === productId);
+        if (!currentLightboxProduct) return;
+        currentLightboxIndex = parseInt(imageIndex, 10);
+        showLightboxImage();
+        lightboxOverlay.classList.remove('hidden');
+    };
+
+    const closeLightbox = () => {
+        lightboxOverlay.classList.add('hidden');
+    };
+
+    const nextLightboxImage = () => {
+        const images = currentLightboxProduct.images;
+        currentLightboxIndex = (currentLightboxIndex + 1) % images.length;
+        showLightboxImage();
+    };
+
+    const prevLightboxImage = () => {
+        const images = currentLightboxProduct.images;
+        currentLightboxIndex = (currentLightboxIndex - 1 + images.length) % images.length;
+        showLightboxImage();
+    };
+
+    productGrid.addEventListener('click', (event) => {
+        if (event.target.classList.contains('carousel-image')) {
+            const productId = event.target.dataset.productId;
+            const imageIndex = event.target.dataset.imageIndex;
+            openLightbox(productId, imageIndex);
+        }
+    });
+
+    lightboxCloseBtn.addEventListener('click', closeLightbox);
+    lightboxNextBtn.addEventListener('click', nextLightboxImage);
+    lightboxPrevBtn.addEventListener('click', prevLightboxImage);
+    lightboxOverlay.addEventListener('click', (event) => {
+        if (event.target === lightboxOverlay) {
+            closeLightbox();
+        }
+    });
 
     // Create the Ecwid script tag
     const ecwidScript = document.createElement('script');
@@ -157,11 +218,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ecwidScript.setAttribute('src', 'https://app.ecwid.com/script.js?123196506&data_platform=singleproduct_v2');
     ecwidScript.setAttribute('charset', 'utf-8');
     
-    // Set up the function that will run AFTER the script has loaded
     ecwidScript.onload = () => {
-        // ... (This section remains exactly the same as before)
         if (typeof Ecwid !== 'undefined' && Ecwid.OnAPILoaded) {
-            Ecwid.OnAPILoaded.add(function() {
+            Ewid.OnAPILoaded.add(function() {
                 if (typeof xProduct === 'function') {
                     xProduct();
                 }
@@ -172,6 +231,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     
-    // Add the script to the page to start loading it
     document.body.appendChild(ecwidScript);
 });
