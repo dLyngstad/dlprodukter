@@ -53,13 +53,13 @@ const POPUP_CONFIG = [
 ];
 
 // ==================================================================
-// HOVEDLOGIKK - DENNE TRENGER DU IKKE ENDRE
+// HOVEDLOGIKK - DENNE TRENGER DU IKKE ENDRE (bortsett fra denne rettelsen)
 // ==================================================================
 
 // Hent filnavnet til den nåværende siden
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
-// Generell funksjon for å lage vindu
+// Generell funksjon for å lage vindu (uendret)
 function createPopupWindow(options) {
   const windowDiv = document.createElement('div');
   windowDiv.className = 'classic-window';
@@ -89,15 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // 1. Cookie-banner har alltid prioritet
   if (localStorage.getItem('cookiesAccepted') !== 'true') {
     const cookieWindow = createPopupWindow({
+      // ---- DENNE DELEN ER RETTET ----
       id: 'cookie-banner',
       title: 'Informasjonskapsler',
       position: 'left',
-      options: { // Bruker 'options' for å være konsekvent, selv om det ikke er i config
-        contentHTML: `
-          <p>Denne nettsiden bruker informasjonskapsler for å sikre at du får den beste opplevelsen.</p>
-          <button id="accept-cookies-btn" class="window-button">Jeg forstår og godtar</button>
-        `
-      }
+      contentHTML: `
+        <p>Denne nettsiden bruker informasjonskapsler for å sikre at du får den beste opplevelsen.</p>
+        <button id="accept-cookies-btn" class="window-button">Jeg forstår og godtar</button>
+      `
+      // ---- SLUTT PÅ RETTELSEN ----
     });
     document.getElementById('accept-cookies-btn').onclick = () => {
       localStorage.setItem('cookiesAccepted', 'true');
