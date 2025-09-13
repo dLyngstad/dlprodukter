@@ -45,7 +45,7 @@ const POPUP_CONFIG = [
     pages: ['contact.html'], // Vises KUN på kontaktsiden
     position: 'right',
     options: {
-      title: 'Åpningstider',
+      title: 'Ta kontakt!',
       showCloseButton: true,
       contentHTML: '<p>Gjerne send henvendelser!<br>Gjelder også returrett!</p>'
     }
