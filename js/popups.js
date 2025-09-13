@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const randomNumber = Math.random(); // Vi genererer ett tilfeldig tall
 
     // 25% sjanse for tilbudet
-    if (randomNumber < 0.25) { 
+    if (randomNumber < 0.99) { 
       createPopupWindow({
         id: 'promo-popup',
         title: 'TILBUD!',
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     } 
     // Ytterligere 25% sjanse (mellom 0.25 og 0.50) for leveringsinfo
-    else if (randomNumber < 0.50) { 
+    else if (randomNumber < 0.99) { 
       createPopupWindow({
         id: 'delivery-popup',
         title: 'Gratis Levering!',
