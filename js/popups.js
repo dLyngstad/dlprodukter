@@ -26,7 +26,7 @@ const POPUP_CONFIG = [
     enabled: true,
     chance: 99,
     pages: ['products.html'], // Vises KUN på produktsiden
-    position: 'right',
+    position: 'left',
     options: {
       title: 'Gratis Levering!',
       showCloseButton: true,
