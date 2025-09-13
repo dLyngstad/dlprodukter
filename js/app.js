@@ -1,5 +1,5 @@
 // Fil: app.js
-// Versjon: Added Image Lightbox Functionality
+// Versjon: Added Image Lightbox with Product Info and Ecwid Button
 
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
@@ -151,11 +151,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- LOGIC FOR IMAGE LIGHTBOX ---
     const lightboxOverlay = document.getElementById('image-lightbox-overlay');
     const lightboxImage = document.getElementById('lightbox-image');
-    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxTitle = document.getElementById('lightbox-title'); // Main title bar
     const lightboxCounter = document.getElementById('lightbox-counter');
     const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
     const lightboxNextBtn = document.querySelector('#image-lightbox-box .lightbox-arrow.right');
     const lightboxPrevBtn = document.querySelector('#image-lightbox-box .lightbox-arrow.left');
+
+    // New elements for product info section
+    const lightboxProductName = document.getElementById('lightbox-product-name');
+    const lightboxProductDescription = document.getElementById('lightbox-product-description');
+    const lightboxProductPrice = document.getElementById('lightbox-product-price');
+    const lightboxEcwidBuyButtonContainer = document.getElementById('lightbox-ecwid-buy-button');
+    const lightboxMoreInfoButton = document.getElementById('lightbox-more-info-btn');
+
 
     let currentLightboxProduct = null;
     let currentLightboxIndex = 0;
@@ -163,7 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const showLightboxImage = () => {
         const images = currentLightboxProduct.images;
         lightboxImage.src = images[currentLightboxIndex];
-        lightboxTitle.textContent = currentLightboxProduct.name;
         lightboxCounter.textContent = `Bilde ${currentLightboxIndex + 1} av ${images.length}`;
         const display = images.length > 1 ? 'flex' : 'none';
         lightboxNextBtn.style.display = display;
@@ -173,13 +180,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const openLightbox = (productId, imageIndex) => {
         currentLightboxProduct = products.find(p => p.id === productId);
         if (!currentLightboxProduct) return;
+        
+        // Update main lightbox title bar
+        lightboxTitle.textContent = currentLightboxProduct.name;
+
+        // Update product info section
+        lightboxProductName.textContent = currentLightboxProduct.name;
+        lightboxProductDescription.textContent = currentLightboxProduct.description;
+        lightboxProductPrice.textContent = `kr ${currentLightboxProduct.price}`;
+        
+        // Setup Ecwid buy button
+        lightboxEcwidBuyButtonContainer.innerHTML = `
+            <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${currentLightboxProduct.ecwidId}" 
+                 itemtype="http://schema.org/Product" 
+                 data-single-product-id="${currentLightboxProduct.ecwidId}">
+                <div customprop="addtobag"></div>
+            </div>
+        `;
+
+        // Conditionally show/hide "Mer info" button
+        if (currentLightboxProduct.moreInfo) {
+            lightboxMoreInfoButton.style.display = 'block';
+            lightboxMoreInfoButton.dataset.productId = currentLightboxProduct.id;
+        } else {
+            lightboxMoreInfoButton.style.display = 'none';
+            delete lightboxMoreInfoButton.dataset.productId;
+        }
+
         currentLightboxIndex = parseInt(imageIndex, 10);
         showLightboxImage();
         lightboxOverlay.classList.remove('hidden');
+
+        // Re-initialize Ecwid widgets inside the lightbox if xProduct is available
+        if (typeof xProduct === 'function') {
+            xProduct();
+        }
     };
 
     const closeLightbox = () => {
         lightboxOverlay.classList.add('hidden');
+        // Clear Ecwid button container to prevent re-initialization issues
+        lightboxEcwidBuyButtonContainer.innerHTML = ''; 
     };
 
     const nextLightboxImage = () => {
@@ -205,7 +246,17 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxCloseBtn.addEventListener('click', closeLightbox);
     lightboxNextBtn.addEventListener('click', nextLightboxImage);
     lightboxPrevBtn.addEventListener('click', prevLightboxImage);
+    
+    // Event listener for "Mer info" button inside the lightbox
+    lightboxMoreInfoButton.addEventListener('click', (event) => {
+        if (currentLightboxProduct && currentLightboxProduct.moreInfo) {
+            closeLightbox(); // Close lightbox before opening info modal
+            openModal(currentLightboxProduct);
+        }
+    });
+
     lightboxOverlay.addEventListener('click', (event) => {
+        // Only close if clicking the actual overlay background, not the box itself
         if (event.target === lightboxOverlay) {
             closeLightbox();
         }
@@ -220,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     ecwidScript.onload = () => {
         if (typeof Ecwid !== 'undefined' && Ecwid.OnAPILoaded) {
-            Ewid.OnAPILoaded.add(function() {
+            Ecwid.OnAPILoaded.add(function() {
                 if (typeof xProduct === 'function') {
                     xProduct();
                 }
