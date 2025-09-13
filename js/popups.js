@@ -32,7 +32,7 @@ const POPUP_CONFIG = [
       showCloseButton: true,
       contentHTML: `
         <p style="text-align: center; font-size: 1.2em; padding-top: 15px;">
-          Vi spanderer frakten på alle ordre til <strong>Trondheim</strong>!
+          Gratis frakt på alle ordre til <strong>Trondheim</strong>!
         </p>
       `
     }
@@ -46,7 +46,7 @@ const POPUP_CONFIG = [
     options: {
       title: 'Åpningstider',
       showCloseButton: true,
-      contentHTML: '<p>Vi svarer på henvendelser mellom kl. 09:00 og 16:00.</p>'
+      contentHTML: '<p>Gjerne send henvendelser!<br>Gjelder også returrett!</p>'
     }
   }
 ];
