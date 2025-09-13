@@ -14,7 +14,7 @@ const products = [
         ecwidId: '778175166',
         name: 'Skimmer',
         price: '149',
-        images: ['Bilder/bagsealerimages/bagsealerA.png','Bilder/bagsealerimages/bagsealerB.png','Bilder/bagsealerimages/bagsealerC.png','Bilder/bagsealerimages/bagsealerD.png','Bilder/bagsealerimages/bagsealerE.png','Bilder/bagsealerimages/bagsealerF.png','Bilder/bagsealerimages/bagsealerG.png'],
+        images: ['Bilder/milkfrotherimages/milkfrotherimagesA.png','Bilder/milkfrotherimages/milkfrotherimagesB.png','Bilder/milkfrotherimages/milkfrotherimagesC.png','Bilder/milkfrotherimages/milkfrotherimagesD.png','Bilder/milkfrotherimages/milkfrotherimagesE.png','Bilder/milkfrotherimages/milkfrotherimagesF.png'],
         description: 'Blander melk osv.',
         moreInfo: 'følger med mye rart'
     },
