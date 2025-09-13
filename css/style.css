@@ -311,7 +311,7 @@ main {
 
 #image-lightbox-box {
     width: 90%;
-    max-width: 950px; /* Increased max-width to accommodate new section */
+    max-width: 950px;
     max-height: 90vh;
     display: flex;
     flex-direction: column;
@@ -349,49 +349,47 @@ main {
     border-bottom: 1px solid #FFFFFF;
 }
 
-/* NEW: Wrapper for image and info sections */
 .lightbox-main-content {
     display: flex;
-    flex-direction: row; /* Arrange image and info side-by-side */
+    flex-direction: row;
     flex-grow: 1;
     padding: 15px;
-    gap: 15px; /* Space between image and info */
-    background-color: #FFFFFF; /* White background for the main content area */
+    gap: 15px;
+    background-color: #FFFFFF;
     border: 1px inset #808080;
+    height: 550px; /* ENDRING: Gir en fast høyde til hele innholdsområdet */
+    overflow: hidden; /* Forhindrer at noe flyter utenfor */
 }
 
-/* NEW: Image section (left side) */
 .lightbox-image-section {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex: 2; /* Takes 2 parts of the available space */
-    min-width: 300px; /* Ensure a minimum size */
-    background-color: #FFFFFF; /* White background behind the image */
+    flex: 2;
+    background-color: #FFFFFF;
     border: 1px solid #808080;
     border-top-color: #000000;
     border-left-color: #000000;
-    padding-bottom: 30px; /* Space for the counter */
-    overflow: hidden; /* Hide any overflow from image */
+    padding-bottom: 30px;
+    overflow: hidden;
 }
 
 #lightbox-image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    width: 100%;     /* ENDRING: Fyller hele bredden av containeren */
+    height: 100%;    /* ENDRING: Fyller hele høyden av containeren */
+    object-fit: contain; /* Nøkkelen: Skalerer bildet proporsjonalt innenfor rammen */
     flex-grow: 1;
 }
 
-/* NEW: Info section (right side) */
 .lightbox-info-section {
-    flex: 1; /* Takes 1 part of the available space */
-    min-width: 250px; /* Ensure a minimum size */
+    flex: 1;
+    min-width: 250px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #C0C0C0; /* Classic grey background */
+    background-color: #C0C0C0;
     border-top: 1px solid #FFFFFF;
     border-left: 1px solid #FFFFFF;
     border-right: 1px solid #000000;
@@ -417,19 +415,18 @@ main {
 .lightbox-info-section #lightbox-product-price {
     font-weight: bold;
     font-size: 16px;
-    margin-top: auto; /* Push price to bottom before button */
+    margin-top: auto;
 }
 
 .lightbox-info-section #lightbox-ecwid-buy-button {
-    margin-top: 10px; /* Space above Ecwid button */
+    margin-top: 10px;
 }
 
 .lightbox-info-section .info-btn {
-    width: 100%; /* Make button fill info section width */
-    margin-top: 5px; /* Adjust margin if needed */
+    width: 100%;
+    margin-top: 5px;
 }
 
-/* Lightbox navigation arrows (positioned within image section) */
 .lightbox-image-section .lightbox-arrow {
     position: absolute;
     top: 50%;
@@ -449,7 +446,7 @@ main {
     font-size: 24px;
     font-weight: bold;
     user-select: none;
-    z-index: 10; /* Ensure arrows are above image */
+    z-index: 10;
 }
 
 .lightbox-image-section .lightbox-arrow:active {
@@ -467,7 +464,6 @@ main {
     right: 5px;
 }
 
-/* Image counter, moved to be inside the image section */
 .lightbox-image-section #lightbox-counter {
     position: absolute;
     bottom: 5px;
@@ -479,4 +475,7 @@ main {
     border-top: 1px solid #808080;
     border-left: 1px solid #808080;
     border-right: 1px solid #FFFFFF;
-    border-bottom: 1px solid #FFFFF
+    border-bottom: 1px solid #FFFFFF;
+    font-size: 12px;
+    white-space: nowrap;
+}
