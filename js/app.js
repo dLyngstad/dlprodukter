@@ -1,5 +1,5 @@
 // Fil: app.js
-// Versjon: Added Hover-to-Zoom functionality in Lightbox
+// Versjon: Reworked Zoom functionality based on a more reliable method.
 
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
@@ -152,88 +152,87 @@ document.addEventListener("DOMContentLoaded", () => {
     // Zoom elements
     const zoomLens = document.getElementById('zoom-lens');
     const zoomResult = document.getElementById('zoom-result');
+    const zoomedImage = document.getElementById('zoomed-image'); // The new <img> tag
     const imageSection = document.querySelector('.lightbox-image-section');
 
     let currentLightboxProduct = null;
     let currentLightboxIndex = 0;
     
-    // --- ZOOM LOGIC SECTION ---
-    const initializeZoom = (img, result, lens, container) => {
-        container.onmousemove = null;
-        container.onmouseenter = null;
-        container.onmouseleave = null;
+    // --- REWORKED ZOOM LOGIC SECTION ---
+    const initializeZoom = () => {
+        // Clear old listeners
+        imageSection.onmousemove = null;
+        imageSection.onmouseenter = null;
+        imageSection.onmouseleave = null;
 
-        const zoomFactor = 2.5;
-        let naturalWidth = img.naturalWidth;
-        let naturalHeight = img.naturalHeight;
+        const sourceImage = lightboxImage;
+        const resultPane = zoomResult;
+        const lens = zoomLens;
         
-        img.onload = () => {
-            naturalWidth = img.naturalWidth;
-            naturalHeight = img.naturalHeight;
+        const zoomFactor = 2.5;
 
-            result.style.width = container.offsetWidth + 'px';
-            result.style.height = container.offsetHeight + 'px';
-            result.style.backgroundImage = "url('" + img.src + "')";
-            result.style.backgroundSize = (naturalWidth * zoomFactor) + "px " + (naturalHeight * zoomFactor) + "px";
+        // Ensure the source image is loaded before doing calculations
+        sourceImage.onload = () => {
+            // Set the size of the large, magnified image
+            zoomedImage.style.width = `${sourceImage.offsetWidth * zoomFactor}px`;
+            zoomedImage.style.height = `${sourceImage.offsetHeight * zoomFactor}px`;
 
-            lens.style.width = (result.offsetWidth / zoomFactor) + "px";
-            lens.style.height = (result.offsetHeight / zoomFactor) + "px";
+            // Set the size of the lens based on the result pane (viewport)
+            lens.style.width = `${resultPane.offsetWidth / zoomFactor}px`;
+            lens.style.height = `${resultPane.offsetHeight / zoomFactor}px`;
         };
-        if (img.complete) {
-            img.onload();
+        // If image is cached, onload may not fire, so we call it manually
+        if (sourceImage.complete) {
+            sourceImage.onload();
         }
 
         const moveLens = (e) => {
-            e.preventDefault();
-            const pos = getCursorPos(e);
-            let x = pos.x - (lens.offsetWidth / 2);
-            let y = pos.y - (lens.offsetHeight / 2);
+            const sourceRect = sourceImage.getBoundingClientRect();
 
-            if (x > img.width - lens.offsetWidth) {x = img.width - lens.offsetWidth;}
-            if (x < 0) {x = 0;}
-            if (y > img.height - lens.offsetHeight) {y = img.height - lens.offsetHeight;}
-            if (y < 0) {y = 0;}
+            // 1. Position the lens
+            let cursorX = e.clientX - sourceRect.left;
+            let cursorY = e.clientY - sourceRect.top;
 
-            lens.style.left = x + "px";
-            lens.style.top = y + "px";
-            result.style.backgroundPosition = "-" + (x * zoomFactor) + "px -" + (y * zoomFactor) + "px";
+            let lensX = cursorX - (lens.offsetWidth / 2);
+            let lensY = cursorY - (lens.offsetHeight / 2);
+
+            lensX = Math.max(0, Math.min(lensX, sourceImage.offsetWidth - lens.offsetWidth));
+            lensY = Math.max(0, Math.min(lensY, sourceImage.offsetHeight - lens.offsetHeight));
+            
+            lens.style.left = `${lensX}px`;
+            lens.style.top = `${lensY}px`;
+
+            // 2. Position the zoomed image inside its viewport
+            const ratioX = zoomedImage.offsetWidth / sourceImage.offsetWidth;
+            const ratioY = zoomedImage.offsetHeight / sourceImage.offsetHeight;
+
+            // Invert the position and apply the ratio
+            zoomedImage.style.left = `-${lensX * ratioX}px`;
+            zoomedImage.style.top = `-${lensY * ratioY}px`;
         };
 
-        const getCursorPos = (e) => {
-            let a, x = 0, y = 0;
-            e = e || window.event;
-            a = img.getBoundingClientRect();
-            x = e.pageX - a.left - window.pageXOffset;
-            y = e.pageY - a.top - window.pageYOffset;
-            return {x : x, y : y};
-        };
-
-        container.onmousemove = moveLens;
-        container.onmouseenter = () => {
+        imageSection.onmousemove = moveLens;
+        imageSection.onmouseenter = () => {
             lens.classList.remove('hidden');
-            result.classList.remove('hidden');
+            resultPane.classList.remove('hidden');
         };
-        container.onmouseleave = () => {
+        imageSection.onmouseleave = () => {
             lens.classList.add('hidden');
-            result.classList.add('hidden');
+            resultPane.classList.add('hidden');
         };
-    };
-    
-    const hideZoom = () => {
-        zoomLens.classList.add('hidden');
-        zoomResult.classList.add('hidden');
     };
     // --- END OF ZOOM LOGIC SECTION ---
 
     const showLightboxImage = () => {
         const images = currentLightboxProduct.images;
         lightboxImage.src = images[currentLightboxIndex];
+        zoomedImage.src = images[currentLightboxIndex]; // Set src for zoomed image as well
         lightboxCounter.textContent = `Bilde ${currentLightboxIndex + 1} av ${images.length}`;
         const display = images.length > 1 ? 'flex' : 'none';
         lightboxNextBtn.style.display = display;
         lightboxPrevBtn.style.display = display;
         
-        initializeZoom(lightboxImage, zoomResult, zoomLens, imageSection);
+        initializeZoom();
     };
 
     const openLightbox = (productId, imageIndex) => {
@@ -271,8 +270,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const closeLightbox = () => {
         lightboxOverlay.classList.add('hidden');
-        lightboxEcwidBuyButtonContainer.innerHTML = ''; 
-        hideZoom();
+        lightboxEcwidBuyButtonContainer.innerHTML = '';
+        lens.classList.add('hidden');
+        zoomResult.classList.add('hidden');
     };
 
     const nextLightboxImage = () => {
