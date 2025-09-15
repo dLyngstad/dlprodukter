@@ -1,5 +1,5 @@
 // Fil: app.js
-// Versjon: Added Image Lightbox with Product Info and Ecwid Button
+// Versjon: Added Hover-to-Zoom functionality in Lightbox
 
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
@@ -20,17 +20,12 @@ const createProductHTML = (product) => {
     if (!product.ecwidId || !product.images || product.images.length === 0) {
         return '';
     }
-
-    // Added data-attributes to each image to make them clickable for the lightbox
     const imageSlides = product.images.map((imgSrc, index) => 
         `<img src="${imgSrc}" alt="${product.name}" class="carousel-image" data-product-id="${product.id}" data-image-index="${index}">`
     ).join('');
-
-    // Conditionally create the "Mer info" button
     const infoButtonHTML = product.moreInfo 
         ? `<button class="info-btn" data-product-id="${product.id}">Mer info</button>` 
         : '';
-
     return `
         <div class="group-box">
             <span class="group-box-legend">${product.name}</span>
@@ -84,20 +79,16 @@ const initializeCarousels = () => {
             if (prevButton) prevButton.style.display = 'none';
             return;
         }
-
         const slideWidth = slides[0].getBoundingClientRect().width;
         let currentIndex = 0;
-
         const moveToSlide = (targetIndex) => {
             track.style.transform = 'translateX(-' + slideWidth * targetIndex + 'px)';
             currentIndex = targetIndex;
         };
-
         nextButton.addEventListener('click', () => {
             const nextIndex = (currentIndex + 1) % slides.length;
             moveToSlide(nextIndex);
         });
-
         prevButton.addEventListener('click', () => {
             const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
             moveToSlide(prevIndex);
@@ -120,17 +111,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalTitle = document.getElementById('info-modal-title');
     const modalBody = document.getElementById('info-modal-body');
     const closeModalBtn = document.getElementById('info-modal-close-btn');
-
     const openModal = (product) => {
         modalTitle.textContent = product.name;
         modalBody.innerHTML = product.moreInfo;
         modalOverlay.classList.remove('hidden');
     };
-
     const closeModal = () => {
         modalOverlay.classList.add('hidden');
     };
-
     productGrid.addEventListener('click', (event) => {
         if (event.target.classList.contains('info-btn')) {
             const productId = event.target.dataset.productId;
@@ -140,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-    
     closeModalBtn.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (event) => {
         if (event.target === modalOverlay) {
@@ -151,22 +138,92 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- LOGIC FOR IMAGE LIGHTBOX ---
     const lightboxOverlay = document.getElementById('image-lightbox-overlay');
     const lightboxImage = document.getElementById('lightbox-image');
-    const lightboxTitle = document.getElementById('lightbox-title'); // Main title bar
+    const lightboxTitle = document.getElementById('lightbox-title');
     const lightboxCounter = document.getElementById('lightbox-counter');
     const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
     const lightboxNextBtn = document.querySelector('#image-lightbox-box .lightbox-arrow.right');
     const lightboxPrevBtn = document.querySelector('#image-lightbox-box .lightbox-arrow.left');
-
-    // New elements for product info section
     const lightboxProductName = document.getElementById('lightbox-product-name');
     const lightboxProductDescription = document.getElementById('lightbox-product-description');
     const lightboxProductPrice = document.getElementById('lightbox-product-price');
     const lightboxEcwidBuyButtonContainer = document.getElementById('lightbox-ecwid-buy-button');
     const lightboxMoreInfoButton = document.getElementById('lightbox-more-info-btn');
-
+    
+    // Zoom elements
+    const zoomLens = document.getElementById('zoom-lens');
+    const zoomResult = document.getElementById('zoom-result');
+    const imageSection = document.querySelector('.lightbox-image-section');
 
     let currentLightboxProduct = null;
     let currentLightboxIndex = 0;
+    
+    // --- ZOOM LOGIC SECTION ---
+    const initializeZoom = (img, result, lens, container) => {
+        container.onmousemove = null;
+        container.onmouseenter = null;
+        container.onmouseleave = null;
+
+        const zoomFactor = 2.5;
+        let naturalWidth = img.naturalWidth;
+        let naturalHeight = img.naturalHeight;
+        
+        img.onload = () => {
+            naturalWidth = img.naturalWidth;
+            naturalHeight = img.naturalHeight;
+
+            result.style.width = container.offsetWidth + 'px';
+            result.style.height = container.offsetHeight + 'px';
+            result.style.backgroundImage = "url('" + img.src + "')";
+            result.style.backgroundSize = (naturalWidth * zoomFactor) + "px " + (naturalHeight * zoomFactor) + "px";
+
+            lens.style.width = (result.offsetWidth / zoomFactor) + "px";
+            lens.style.height = (result.offsetHeight / zoomFactor) + "px";
+        };
+        if (img.complete) {
+            img.onload();
+        }
+
+        const moveLens = (e) => {
+            e.preventDefault();
+            const pos = getCursorPos(e);
+            let x = pos.x - (lens.offsetWidth / 2);
+            let y = pos.y - (lens.offsetHeight / 2);
+
+            if (x > img.width - lens.offsetWidth) {x = img.width - lens.offsetWidth;}
+            if (x < 0) {x = 0;}
+            if (y > img.height - lens.offsetHeight) {y = img.height - lens.offsetHeight;}
+            if (y < 0) {y = 0;}
+
+            lens.style.left = x + "px";
+            lens.style.top = y + "px";
+            result.style.backgroundPosition = "-" + (x * zoomFactor) + "px -" + (y * zoomFactor) + "px";
+        };
+
+        const getCursorPos = (e) => {
+            let a, x = 0, y = 0;
+            e = e || window.event;
+            a = img.getBoundingClientRect();
+            x = e.pageX - a.left - window.pageXOffset;
+            y = e.pageY - a.top - window.pageYOffset;
+            return {x : x, y : y};
+        };
+
+        container.onmousemove = moveLens;
+        container.onmouseenter = () => {
+            lens.classList.remove('hidden');
+            result.classList.remove('hidden');
+        };
+        container.onmouseleave = () => {
+            lens.classList.add('hidden');
+            result.classList.add('hidden');
+        };
+    };
+    
+    const hideZoom = () => {
+        zoomLens.classList.add('hidden');
+        zoomResult.classList.add('hidden');
+    };
+    // --- END OF ZOOM LOGIC SECTION ---
 
     const showLightboxImage = () => {
         const images = currentLightboxProduct.images;
@@ -175,30 +232,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const display = images.length > 1 ? 'flex' : 'none';
         lightboxNextBtn.style.display = display;
         lightboxPrevBtn.style.display = display;
+        
+        initializeZoom(lightboxImage, zoomResult, zoomLens, imageSection);
     };
 
     const openLightbox = (productId, imageIndex) => {
         currentLightboxProduct = products.find(p => p.id === productId);
         if (!currentLightboxProduct) return;
         
-        // Update main lightbox title bar
         lightboxTitle.textContent = currentLightboxProduct.name;
-
-        // Update product info section
         lightboxProductName.textContent = currentLightboxProduct.name;
         lightboxProductDescription.textContent = currentLightboxProduct.description;
         lightboxProductPrice.textContent = `kr ${currentLightboxProduct.price}`;
         
-        // Setup Ecwid buy button
         lightboxEcwidBuyButtonContainer.innerHTML = `
             <div class="ecsp ecsp-SingleProduct-v2 ecsp-Product ec-Product-${currentLightboxProduct.ecwidId}" 
                  itemtype="http://schema.org/Product" 
                  data-single-product-id="${currentLightboxProduct.ecwidId}">
                 <div customprop="addtobag"></div>
-            </div>
-        `;
+            </div>`;
 
-        // Conditionally show/hide "Mer info" button
         if (currentLightboxProduct.moreInfo) {
             lightboxMoreInfoButton.style.display = 'block';
             lightboxMoreInfoButton.dataset.productId = currentLightboxProduct.id;
@@ -211,7 +264,6 @@ document.addEventListener("DOMContentLoaded", () => {
         showLightboxImage();
         lightboxOverlay.classList.remove('hidden');
 
-        // Re-initialize Ecwid widgets inside the lightbox if xProduct is available
         if (typeof xProduct === 'function') {
             xProduct();
         }
@@ -219,8 +271,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const closeLightbox = () => {
         lightboxOverlay.classList.add('hidden');
-        // Clear Ecwid button container to prevent re-initialization issues
         lightboxEcwidBuyButtonContainer.innerHTML = ''; 
+        hideZoom();
     };
 
     const nextLightboxImage = () => {
@@ -247,22 +299,19 @@ document.addEventListener("DOMContentLoaded", () => {
     lightboxNextBtn.addEventListener('click', nextLightboxImage);
     lightboxPrevBtn.addEventListener('click', prevLightboxImage);
     
-    // Event listener for "Mer info" button inside the lightbox
     lightboxMoreInfoButton.addEventListener('click', (event) => {
         if (currentLightboxProduct && currentLightboxProduct.moreInfo) {
-            closeLightbox(); // Close lightbox before opening info modal
+            closeLightbox();
             openModal(currentLightboxProduct);
         }
     });
 
     lightboxOverlay.addEventListener('click', (event) => {
-        // Only close if clicking the actual overlay background, not the box itself
         if (event.target === lightboxOverlay) {
             closeLightbox();
         }
     });
 
-    // Create the Ecwid script tag
     const ecwidScript = document.createElement('script');
     ecwidScript.setAttribute('data-cfasync', 'false');
     ecwidScript.setAttribute('type', 'text/javascript');
@@ -271,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     ecwidScript.onload = () => {
         if (typeof Ecwid !== 'undefined' && Ecwid.OnAPILoaded) {
-            Ecwid.OnAPILoaded.add(function() {
+            Ewid.OnAPILoaded.add(function() {
                 if (typeof xProduct === 'function') {
                     xProduct();
                 }
