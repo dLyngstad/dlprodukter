@@ -56,12 +56,15 @@ const createProductHTML = (product) => {
 const renderProducts = () => {
     const productGrid = document.getElementById('product-grid');
     if (productGrid && typeof products !== 'undefined') {
-        productGrid.innerHTML = '';
-        products.forEach(product => {
-            productGrid.innerHTML += createProductHTML(product);
-        });
+        // === VIKTIG ENDRING HER ===
+        // GAMMEL METODE: productGrid.innerHTML += createProductHTML(product); i en løkke.
+        // NY, MER ROBUST METODE: Bygg hele HTML-strengen først, og sett den inn én gang.
+        
+        const allProductsHTML = products.map(product => createProductHTML(product)).join('');
+        productGrid.innerHTML = allProductsHTML;
     }
 };
+
 
 /**
  * Adds click functionality to all carousels on the page.
@@ -320,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     ecwidScript.onload = () => {
         if (typeof Ecwid !== 'undefined' && Ecwid.OnAPILoaded) {
-            Ewid.OnAPILoaded.add(function() {
+            Ecwid.OnAPILoaded.add(function() {
                 if (typeof xProduct === 'function') {
                     xProduct();
                 }
