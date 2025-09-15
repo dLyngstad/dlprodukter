@@ -357,8 +357,8 @@ main {
     gap: 15px;
     background-color: #FFFFFF;
     border: 1px inset #808080;
-    height: 550px; /* ENDRING: Gir en fast høyde til hele innholdsområdet */
-    overflow: hidden; /* Forhindrer at noe flyter utenfor */
+    height: 550px;
+    overflow: hidden;
 }
 
 .lightbox-image-section {
@@ -374,12 +374,13 @@ main {
     border-left-color: #000000;
     padding-bottom: 30px;
     overflow: hidden;
+    cursor: crosshair;
 }
 
 #lightbox-image {
-    width: 100%;     /* ENDRING: Fyller hele bredden av containeren */
-    height: 100%;    /* ENDRING: Fyller hele høyden av containeren */
-    object-fit: contain; /* Nøkkelen: Skalerer bildet proporsjonalt innenfor rammen */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     flex-grow: 1;
 }
 
@@ -478,4 +479,32 @@ main {
     border-bottom: 1px solid #FFFFFF;
     font-size: 12px;
     white-space: nowrap;
+}
+
+
+/* --- STILER FOR ZOOM-FUNKSJON --- */
+
+#zoom-lens {
+    position: absolute;
+    border: 1px solid #000080;
+    background-color: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    z-index: 15;
+}
+
+#zoom-result {
+    position: absolute;
+    top: 0;
+    left: 102%;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.4);
+    padding: 0;
+}
+
+#zoom-result.window {
+    margin: 0;
 }
