@@ -359,6 +359,7 @@ main {
     border: 1px inset #808080;
     height: 550px;
     overflow: hidden;
+    position: relative; /* VIKTIG: Gjør denne til ankerpunkt for zoom-resultatet */
 }
 
 .lightbox-image-section {
@@ -495,8 +496,8 @@ main {
 #zoom-result {
     position: absolute;
     top: 0;
-    left: 102%;
-    width: 100%;
+    right: 0; /* ENDRING: Posisjoneres til høyre i containeren */
+    width: 33.33%; /* ENDRING: Tar opp samme relative bredde som info-seksjonen */
     height: 100%;
     z-index: 20;
     background-repeat: no-repeat;
