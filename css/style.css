@@ -495,10 +495,12 @@ main {
 
 #zoom-result {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 33.33%;
-    height: 100%;
+    /* ENDRING: Flyttet til venstre side med litt luft */
+    top: 15px;
+    left: 15px;
+    /* ENDRING: Satt en fast, mindre størrelse */
+    width: 300px;
+    height: 300px;
     z-index: 20;
     pointer-events: none;
     padding: 0;
@@ -507,7 +509,8 @@ main {
 
 #zoom-result.window {
     margin: 0;
-    box-shadow: none; /* Fjerner skygge for å unngå dobbelt opp */
+    /* Gir vinduet tilbake sin egen skygge siden det nå "svever" fritt */
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.4);
 }
 
 #zoomed-image {
