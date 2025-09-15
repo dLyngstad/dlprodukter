@@ -359,7 +359,7 @@ main {
     border: 1px inset #808080;
     height: 550px;
     overflow: hidden;
-    position: relative; /* VIKTIG: Gjør denne til ankerpunkt for zoom-resultatet */
+    position: relative; 
 }
 
 .lightbox-image-section {
@@ -496,16 +496,20 @@ main {
 #zoom-result {
     position: absolute;
     top: 0;
-    right: 0; /* ENDRING: Posisjoneres til høyre i containeren */
-    width: 33.33%; /* ENDRING: Tar opp samme relative bredde som info-seksjonen */
+    right: 0;
+    width: 33.33%;
     height: 100%;
     z-index: 20;
-    background-repeat: no-repeat;
     pointer-events: none;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.4);
     padding: 0;
+    overflow: hidden; /* VIKTIG: Klipper det store bildet */
 }
 
 #zoom-result.window {
     margin: 0;
+    box-shadow: none; /* Fjerner skygge for å unngå dobbelt opp */
+}
+
+#zoomed-image {
+    position: absolute; /* Bildet som flyttes inni #zoom-result */
 }
