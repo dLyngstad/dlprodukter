@@ -9,7 +9,7 @@
     <script src="js/analytics.js"></script>
     
     <link rel="stylesheet" href="css/promo-style.css">
-     <script src="js/popups.js" defer></script>
+    <script src="js/popups.js" defer></script>
 
 </head>
 <body>
@@ -50,13 +50,18 @@
                 <h1 id="lightbox-title">Product Image</h1>
                 <button id="lightbox-close-btn">X</button>
             </div>
-            <div class="lightbox-main-content"> <div class="lightbox-image-section">
+            <div class="lightbox-main-content"> 
+                <div class="lightbox-image-section">
                     <div class="lightbox-arrow left">&lt;</div>
                     <img src="" alt="Enlarged product image" id="lightbox-image">
                     <div class="lightbox-arrow right">&gt;</div>
                     <div id="lightbox-counter"></div>
-                </div>
-                <div class="lightbox-info-section"> <h2 id="lightbox-product-name"></h2>
+                    
+                    <div id="zoom-result" class="hidden window"></div>
+                    <div id="zoom-lens" class="hidden"></div>
+                    </div>
+                <div class="lightbox-info-section">
+                    <h2 id="lightbox-product-name"></h2>
                     <p id="lightbox-product-description"></p>
                     <p id="lightbox-product-price"></p>
                     <div id="lightbox-ecwid-buy-button"></div>
