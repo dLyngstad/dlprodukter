@@ -517,3 +517,66 @@ main {
 #zoomed-image {
     position: absolute; 
 }
+
+
+
+
+
+
+
+/* =============================================== */
+/* === RESPONSIV DESIGN FOR MOBIL (MEDIA QUERY) === */
+/* =============================================== */
+
+/* Disse stilene gjelder kun for skjermer som er 768px eller smalere */
+@media screen and (max-width: 768px) {
+
+    /* 1. Juster hovedvinduet i lysboksen for mobil */
+    #image-lightbox-box {
+        width: 95%; /* Ta opp nesten hele skjermbredden */
+        max-height: 85vh; /* Begrens høyden til 85% av skjermhøyden */
+        padding: 1px;
+    }
+
+    /* 2. STABLE INNHOLDET I EN KOLONNE (VIKTIGST!) */
+    .lightbox-main-content {
+        flex-direction: column; /* Bytter fra rad til kolonne */
+        height: auto; /* Fjerner den faste høyden */
+        max-height: calc(85vh - 40px); /* Regner ut maks høyde minus tittellinjen */
+        overflow-y: auto; /* Tillat scrolling hvis innholdet er for langt */
+        padding: 8px;
+        gap: 8px;
+    }
+
+    /* 3. La bilde og info fylle bredden */
+    .lightbox-image-section,
+    .lightbox-info-section {
+        flex: none; /* Nullstiller flex-verdiene */
+        width: 100%;
+    }
+    
+    .lightbox-image-section {
+        min-height: 250px; /* Sørger for at bilde-seksjonen har en fornuftig minimumshøyde */
+    }
+    
+    .lightbox-info-section {
+        min-width: unset; /* Fjerner minimumsbredde */
+    }
+
+    /* 4. SKJUL ZOOM-FUNKSJONEN PÅ MOBIL */
+    #zoom-lens,
+    #zoom-result {
+        display: none !important; /* Skjuler zoomen helt */
+    }
+    
+    .lightbox-image-section {
+        cursor: default; /* Fjerner crosshair-markøren */
+    }
+
+    /* 5. Juster piler for å være lettere å trykke på */
+    .lightbox-image-section .lightbox-arrow {
+        width: 40px;
+        height: 50px;
+        font-size: 28px;
+    }
+}
