@@ -494,24 +494,26 @@ main {
 }
 
 #zoom-result {
-    position: absolute;
-    /* ENDRING: Posisjoneres til å dekke info-seksjonen perfekt */
-    top: 0;
-    right: 0;
-    width: 33.33%; /* Tar opp nøyaktig samme bredde som info-seksjonen */
-    height: 100%;
-    z-index: 20;
-    pointer-events: none;
+    /* ENDRING: Ikke lenger absolutt posisjonert, blir en del av flex-layouten */
+    position: relative; /* VIKTIG: Blir ankerpunkt for #zoomed-image */
+    width: 100%; /* Fyller bredden av info-kolonnen */
+    height: 250px; /* ENDRING: Satt en fast høyde som ønsket */
+    margin: 15px 0; /* Gir litt luft over og under */
     padding: 0;
-    overflow: hidden; /* VIKTIG: Klipper det store bildet */
+    overflow: hidden; 
 }
 
 #zoom-result.window {
-    margin: 0;
-    /* Vi fjerner skyggen her siden den ligger kant-i-kant med rammen */
-    box-shadow: none; 
+    margin-left: 0;
+    margin-right: 0;
+    box-shadow: none;
+    /* Bruker en innfelt ramme som passer bedre inne i en annen boks */
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
 }
 
 #zoomed-image {
-    position: absolute; /* Bildet som flyttes inni #zoom-result */
+    position: absolute; 
 }
