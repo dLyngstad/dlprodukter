@@ -1,8 +1,7 @@
-const API_URL = 'http://143.110.126.86:3000/posts'; 
-// F.eks: 'http://81.166.123.45:3000/posts'
+document.addEventListener('DOMContentLoaded', () => {
 
-    // VIKTIG: Adressen til din Raspberry Pi-server
-    //const API_URL = 'http://raspberrypi.local:3000/posts';
+    // VIKTIG: Pass på at dette er din KORREKTE offentlige IP-adresse
+    const API_URL = 'http://143.110.126.86:3000/posts';
     
     // Referanser til HTML-elementene
     const postsContainer = document.getElementById('posts-container');
@@ -33,7 +32,7 @@ const API_URL = 'http://143.110.126.86:3000/posts';
             });
         } catch (error) {
             console.error('Klarte ikke å hente poster:', error);
-            postsContainer.innerHTML = '<p>Kunne ikke laste innlegg. Er serveren påslått?</p>';
+            postsContainer.innerHTML = '<p>Kunne ikke laste innlegg. Er serveren påslått og port forwarding riktig?</p>';
         }
     };
 
