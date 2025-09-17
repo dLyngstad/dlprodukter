@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // VIKTIG: Pass på at dette er din KORREKTE offentlige IP-adresse
-    const API_URL = 'http://143.110.126.86:3000/posts';
+    const API_URL = 'https://forum.dlprodukter.com/posts';
     
     // Referanser til HTML-elementene
     const postsContainer = document.getElementById('posts-container');
