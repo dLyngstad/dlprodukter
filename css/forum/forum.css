@@ -1,0 +1,74 @@
+/* Stiler for forum.html */
+
+#post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    background-color: #FFFFFF;
+    border: 1px solid #808080;
+    border-top-color: #000000;
+    border-left-color: #000000;
+    padding: 5px;
+    font-family: "Tahoma", "Geneva", sans-serif;
+    font-size: 14px;
+}
+
+.submit-btn {
+    background-color: #C0C0C0;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    font-family: "Tahoma", "Geneva", sans-serif;
+    font-size: 14px;
+    padding: 8px 12px;
+    cursor: pointer;
+    align-self: flex-start; /* Unngå at knappen strekker seg */
+}
+
+.submit-btn:active {
+    border-top: 1px solid #000000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+#posts-container {
+    margin-top: 30px;
+}
+
+.post {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    background-color: #C0C0C0;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.post-header {
+    font-weight: bold;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #808080;
+    padding-bottom: 8px;
+}
+
+.post-content {
+    line-height: 1.5;
+    white-space: pre-wrap; /* Respekterer linjeskift i innlegget */
+}
