@@ -2,7 +2,7 @@ const API_URL = 'http://143.110.126.86:3000/posts';
 // F.eks: 'http://81.166.123.45:3000/posts'
 
     // VIKTIG: Adressen til din Raspberry Pi-server
-    const API_URL = 'http://raspberrypi.local:3000/posts';
+    //const API_URL = 'http://raspberrypi.local:3000/posts';
     
     // Referanser til HTML-elementene
     const postsContainer = document.getElementById('posts-container');
