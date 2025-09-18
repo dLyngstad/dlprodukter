@@ -75,5 +75,20 @@ export const updateProfile = async (bio, token) => {
     return await response.json();
 };
 
+// ... (din eksisterende kode for fetchPosts, createPost etc. er her) ...
+
+// NY FUNKSJON: Sender en forespørsel om å slette et innlegg
+export const deletePost = async (postId, token) => {
+    const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    if (!response.ok) throw new Error('Kunne ikke slette innlegg.');
+    return await response.json();
+};
+
+
 
 export { escapeHTML }; // Pass på at denne linjen er helt til slutt
