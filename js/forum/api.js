@@ -52,4 +52,28 @@ export const createPost = async (content, token) => {
     return await response.json();
 };
 
-export { escapeHTML };
+// ... (din eksisterende kode for fetchPosts, loginUser etc. er her) ...
+
+// NY FUNKSJON: Henter en brukers profildata
+export const fetchProfile = async (username) => {
+    const response = await fetch(`${API_BASE_URL}/profile/${username}`);
+    if (!response.ok) throw new Error('Fant ikke brukerprofil.');
+    return await response.json();
+};
+
+// NY FUNKSJON: Oppdaterer en brukers profil
+export const updateProfile = async (bio, token) => {
+    const response = await fetch(`${API_BASE_URL}/profile`, {
+        method: 'PUT', // PUT brukes vanligvis for å oppdatere eksisterende data
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ bio }),
+    });
+    if (!response.ok) throw new Error('Kunne ikke oppdatere profil.');
+    return await response.json();
+};
+
+
+export { escapeHTML }; // Pass på at denne linjen er helt til slutt
