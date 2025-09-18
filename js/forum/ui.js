@@ -10,25 +10,33 @@ const userStatus = document.getElementById('user-status');
 const usernameDisplay = document.getElementById('username-display');
 
 export const renderPosts = (posts) => {
-    // Hent den innloggede brukeren for å sammenligne
     const loggedInUser = getUserFromToken();
 
     postsContainer.innerHTML = '<h2>Innlegg</h2>'; 
     posts.forEach(post => {
-        const postElement = document.createElement('div');
-        postElement.className = 'post';
+        // Hopp over hvis posten eller forfatteren mangler data av en eller annen grunn
+        if (!post || !post.author) return;
 
-        // Bygg opp HTML for innlegget
+        const postElement = document.createElement('div');
+        postElement.className = 'post'; // Bruker fortsatt .post som hovedcontainer
+
         let postHTML = `
-            <div class="post-header">Fra: <a href="profile.html?user=${escapeHTML(post.author)}">${escapeHTML(post.author)}</a></div>
-            <p class="post-content">${escapeHTML(post.content)}</p>
+            <div class="post-user-info">
+                <img src="https://via.placeholder.com/80?text=${escapeHTML(post.author.username.charAt(0))}" alt="Profilbilde" class="post-avatar">
+                <strong><a href="profile.html?user=${escapeHTML(post.author.username)}">${escapeHTML(post.author.username)}</a></strong>
+                <p>Innlegg: ${post.author.postCount}</p>
+            </div>
+            <div class="post-main">
+                <p class="post-content">${escapeHTML(post.content)}</p>
         `;
 
-        // VIKTIG: Sjekk om den innloggede brukeren er forfatteren av posten
-        if (loggedInUser && loggedInUser.username === post.author) {
-            // Hvis ja, legg til en sletteknapp med postens unike ID
+        // Sjekk om sletteknappen skal vises
+        if (loggedInUser && loggedInUser.username === post.author.username) {
             postHTML += `<button class="delete-btn" data-post-id="${post.id}">Slett</button>`;
         }
+
+        // Lukk post-main div
+        postHTML += `</div>`; 
 
         postElement.innerHTML = postHTML;
         postsContainer.appendChild(postElement);
