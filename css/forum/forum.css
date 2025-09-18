@@ -68,6 +68,30 @@
     padding-bottom: 8px;
 }
 
+
+.delete-btn {
+    background-color: #c55a5a;
+    color: white;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    font-family: "Tahoma", "Geneva", sans-serif;
+    font-size: 12px;
+    padding: 3px 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    float: right; /* Plasserer den til høyre */
+}
+
+.delete-btn:active {
+    background-color: #a54b4b;
+    border-top: 1px solid #000000;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
 .post-content {
     line-height: 1.5;
     white-space: pre-wrap; /* Respekterer linjeskift i innlegget */
