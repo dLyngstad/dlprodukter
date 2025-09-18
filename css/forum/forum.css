@@ -96,3 +96,49 @@
     line-height: 1.5;
     white-space: pre-wrap; /* Respekterer linjeskift i innlegget */
 }
+
+
+/* Nye stiler for post-layout */
+.post {
+    display: flex; /* Aktiverer flexbox for to kolonner */
+    flex-direction: row;
+    gap: 15px;
+}
+
+.post-user-info {
+    flex: 0 0 120px; /* Basisbredde 120px, skal ikke vokse eller krympe */
+    text-align: center;
+    padding-right: 15px;
+    border-right: 1px solid #808080;
+    font-size: 12px;
+}
+
+.post-user-info strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    word-break: break-all; /* For lange brukernavn */
+}
+
+.post-user-info p {
+    margin: 5px 0;
+}
+
+.post-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; /* Gjør bildet rundt */
+    background-color: #fff;
+    border: 1px solid #808080;
+    margin-bottom: 10px;
+}
+
+.post-main {
+    flex-grow: 1; /* Hovedinnholdet tar resten av plassen */
+    display: flex;
+    flex-direction: column;
+}
+
+.post-main .post-content {
+    flex-grow: 1; /* Sørger for at innholdet fyller plassen */
+}
