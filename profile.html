@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <link rel="icon" type="image/png" href="Bilder/favicon2.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brukerprofil - DLProdukter</title>
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/forum.css">
+</head>
+<body>
+
+    <header id="header-placeholder"></header>
+
+    <div class="window">
+        <div class="title-bar">
+            <h1 id="profile-title">Brukerprofil</h1>
+        </div>
+        <main>
+            <div id="profile-container" class="product-content-wrapper">
+                <div class="image-carousel">
+                    <img id="profile-image" src="" alt="Profilbilde" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="profile-details">
+                    <h2 id="profile-username">Laster...</h2>
+                    <p>Antall innlegg: <strong id="profile-post-count">0</strong></p>
+                    <p id="profile-bio">Ingen biografi.</p>
+                </div>
+            </div>
+
+            <div id="edit-profile-container" class="group-box hidden">
+                <span class="group-box-legend">Rediger din profil</span>
+                <form id="edit-profile-form">
+                    <div class="form-group">
+                        <label for="bio">Biografi:</label>
+                        <textarea id="bio" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Lagre endringer</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <footer id="footer-placeholder"></footer>
+    
+    <script type="module" src="js/profile.js"></script>
+    <script>
+        fetch('partials/header.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('header-placeholder').innerHTML = data);
+        fetch('partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer-placeholder').innerHTML = data);
+    </script>
+</body>
+</html>
