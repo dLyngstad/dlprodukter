@@ -73,7 +73,34 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.updateUI();
     });
 
-    // --- Initialisering ---
+// ... (din eksisterende kode for registerForm, loginForm, postForm, etc. er her) ...
+
+// NY EVENT LISTENER: Lytter etter klikk på sletteknapper
+document.getElementById('posts-container').addEventListener('click', async (event) => {
+    // Sjekk om det var en sletteknapp som ble trykket
+    if (event.target.classList.contains('delete-btn')) {
+        const postId = event.target.dataset.postId;
+
+        // Spør brukeren om bekreftelse
+        if (confirm('Er du sikker på at du vil slette dette innlegget?')) {
+            try {
+                const token = auth.getToken();
+                if (!token) {
+                    alert("Du må være logget inn for å slette.");
+                    return;
+                }
+                await api.deletePost(postId, token);
+                fetchAndRenderPosts(); // Last inn postene på nytt for å vise endringen
+            } catch (error) {
+                alert(`Kunne ikke slette innlegget: ${error.message}`);
+            }
+        }
+    }
+});
+
+// --- Initialisering ---
+    
+ // --- Initialisering ---
     
     fetchAndRenderPosts(); // Hent poster når siden lastes
     ui.updateUI(); // Sjekk login-status og vis/skjul riktige elementer
