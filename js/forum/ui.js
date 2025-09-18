@@ -15,7 +15,7 @@ export const renderPosts = (posts) => {
         const postElement = document.createElement('div');
         postElement.className = 'post';
         postElement.innerHTML = `
-            <div class="post-header">Fra: ${escapeHTML(post.author)}</div>
+            <div class="post-header">Fra: <a href="profile.html?user=${escapeHTML(post.author)}">${escapeHTML(post.author)}</a></div>
             <p class="post-content">${escapeHTML(post.content)}</p>
         `;
         postsContainer.appendChild(postElement);
