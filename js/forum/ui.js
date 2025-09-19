@@ -1,21 +1,25 @@
 import { getUserFromToken } from './auth.js';
-import { escapeHTML, API_BASE_URL } from './api.js';
+// ENDRING: Importerer SITE_BASE_URL i stedet for API_BASE_URL for bilder
+import { escapeHTML, SITE_BASE_URL } from './api.js';
 
 // Referanser til alle elementer som skal manipuleres
 const categoryView = document.getElementById('category-view');
 const threadView = document.getElementById('thread-view');
 const postView = document.getElementById('post-view');
 const breadcrumbs = document.getElementById('breadcrumbs');
-const postsContainer = document.getElementById('posts-container');
-const postFormContainer = document.getElementById('post-form-container');
+const postsContainer = document.getElementById('posts-container'); // Denne er fra gammel kode, kan fjernes senere
+const postFormContainer = document.getElementById('post-form-container'); // Denne er fra gammel kode
 const authContainer = document.getElementById('auth-container');
 const userStatus = document.getElementById('user-status');
 const usernameDisplay = document.getElementById('username-display');
 
 // Hjelpefunksjon for å bytte mellom hovedvisningene
 export const showView = (viewId) => {
-    [categoryView, threadView, postView].forEach(view => view.classList.add('hidden'));
-    document.getElementById(viewId).classList.remove('hidden');
+    // Sørger for at alle visninger er definert før vi prøver å skjule dem
+    if (categoryView && threadView && postView) {
+        [categoryView, threadView, postView].forEach(view => view.classList.add('hidden'));
+        document.getElementById(viewId).classList.remove('hidden');
+    }
 };
 
 // Viser/skjuler innlogging vs. innlogget status
@@ -97,7 +101,7 @@ export const renderPosts = (posts, threadId) => {
         postView.innerHTML += `
             <div class="post">
                 <div class="post-user-info">
-                    <img src="${API_BASE_URL}/avatars/${post.author.profileImage}" alt="Profilbilde" class="post-avatar">
+                    <img src="${SITE_BASE_URL}/avatars/${post.author.profileImage}" alt="Profilbilde" class="post-avatar">
                     <strong><a href="profile.html?user=${escapeHTML(post.author.username)}">${escapeHTML(post.author.username)}</a></strong>
                 </div>
                 <div class="post-main">
@@ -122,5 +126,5 @@ export const renderPosts = (posts, threadId) => {
             </div>
         `;
     }
-    breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; <a href="#category/TILBAKE">Tråder</a> &gt; Tråd`;
+    breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; Tråd`;
 };
