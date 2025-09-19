@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const editProfileContainer = document.getElementById('edit-profile-container');
     const editProfileForm = document.getElementById('edit-profile-form');
     const bioTextarea = document.getElementById('bio');
-    const avatarUploadForm = document.getElementById('avatar-upload-form'); // Ny referanse
+    const avatarUploadForm = document.getElementById('avatar-upload-form');
 
     // Funksjon for å laste profildata
     const loadProfile = async () => {
@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
             profilePostCount.textContent = profileData.postCount;
             profileBio.textContent = profileData.bio || "Ingen biografi.";
             
-            // ENDRING: Viser det ekte profilbildet fra serveren
-            profileImage.src = `${api.API_BASE_URL}/avatars/${profileData.profileImage}`;
+            // ENDRING: Bruker SITE_BASE_URL for å bygge korrekt bilde-URL
+            profileImage.src = `${api.SITE_BASE_URL}/avatars/${profileData.profileImage}`;
             
             const loggedInUser = auth.getUserFromToken();
             if (loggedInUser && loggedInUser.username === profileData.username) {
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // NY EVENT LISTENER: Håndterer innsending av bildeopplasting
+    // Event listener for bildeopplasting
     avatarUploadForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const token = auth.getToken();
@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Vi bruker FormData for å sende filer
         const formData = new FormData();
         formData.append('avatar', fileInput.files[0]);
 
