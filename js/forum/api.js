@@ -89,6 +89,22 @@ export const deletePost = async (postId, token) => {
     return await response.json();
 };
 
+// ... (din eksisterende kode for fetchPosts, etc. er her) ...
 
+// NY FUNKSJON: Håndterer opplasting av avatar-bilde
+export const uploadAvatar = async (formData, token) => {
+    const response = await fetch(`${API_BASE_URL}/profile/avatar`, {
+        method: 'POST',
+        headers: {
+            // VIKTIG: IKKE sett 'Content-Type' her. 
+            // Nettleseren gjør det automatisk for FormData.
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData,
+    });
+    if (!response.ok) throw new Error('Kunne ikke laste opp bilde.');
+    return await response.json();
+};
 
-export { escapeHTML }; // Pass på at denne linjen er helt til slutt
+// ENDRING: Eksporter API_BASE_URL også
+export { escapeHTML, API_BASE_URL }; // Pass på at denne linjen er helt til slutt
