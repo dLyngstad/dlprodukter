@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- RUTER-LOGIKK ---
     const router = async () => {
+        // Ser på "hashen" i URL-en, f.eks. #category/hjelp
         const hash = window.location.hash || '#/';
         
         try {
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ui.renderPosts(posts, threadId);
                 ui.showView('post-view');
             } else {
+                // Standardvisning: Kategorier
                 const categories = await api.fetchCategories();
                 ui.renderCategories(categories);
                 ui.showView('category-view');
