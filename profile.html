@@ -28,16 +28,27 @@
                 </div>
             </div>
 
-            <div id="edit-profile-container" class="group-box hidden">
-                <span class="group-box-legend">Rediger din profil</span>
-                <form id="edit-profile-form">
-                    <div class="form-group">
-                        <label for="bio">Biografi:</label>
-                        <textarea id="bio" rows="4"></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Lagre endringer</button>
-                </form>
-            </div>
+<div id="edit-profile-container" class="group-box hidden">
+    <span class="group-box-legend">Rediger din profil</span>
+    
+    <form id="edit-profile-form">
+        <div class="form-group">
+            <label for="bio">Biografi:</label>
+            <textarea id="bio" rows="4"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Lagre biografi</button>
+    </form>
+
+    <hr style="margin: 20px 0;">
+
+    <form id="avatar-upload-form" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="avatar-file">Velg nytt profilbilde:</label>
+            <input type="file" id="avatar-file" name="avatar" accept="image/png, image/jpeg">
+        </div>
+        <button type="submit" class="submit-btn">Last opp bilde</button>
+    </form>
+</div>
         </main>
     </div>
 
