@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const editProfileContainer = document.getElementById('edit-profile-container');
     const editProfileForm = document.getElementById('edit-profile-form');
     const bioTextarea = document.getElementById('bio');
+    const avatarUploadForm = document.getElementById('avatar-upload-form'); // Ny referanse
 
     // Funksjon for å laste profildata
     const loadProfile = async () => {
-        // Henter brukernavnet fra URL-en (f.eks. profile.html?user=testbruker)
         const params = new URLSearchParams(window.location.search);
         const username = params.get('user');
 
@@ -25,41 +25,61 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const profileData = await api.fetchProfile(username);
             
-            // Fyll inn data på siden
             profileUsername.textContent = profileData.username;
             profilePostCount.textContent = profileData.postCount;
             profileBio.textContent = profileData.bio || "Ingen biografi.";
-            // Her vil vi senere sette profilbilde, foreløpig en plassholder
-            profileImage.src = `https://via.placeholder.com/150?text=${profileData.username.charAt(0)}`;
             
-            // Sjekk om innlogget bruker ser på sin egen profil
+            // ENDRING: Viser det ekte profilbildet fra serveren
+            profileImage.src = `${api.API_BASE_URL}/avatars/${profileData.profileImage}`;
+            
             const loggedInUser = auth.getUserFromToken();
             if (loggedInUser && loggedInUser.username === profileData.username) {
                 editProfileContainer.classList.remove('hidden');
                 bioTextarea.value = profileData.bio;
             }
-
         } catch (error) {
             console.error(error);
             profileUsername.textContent = "Kunne ikke laste profil.";
         }
     };
 
-    // Event listener for redigeringsskjemaet
+    // Event listener for redigeringsskjemaet (bio)
     editProfileForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const token = auth.getToken();
         const newBio = bioTextarea.value;
-
         try {
             await api.updateProfile(newBio, token);
             alert("Profilen din er oppdatert!");
-            loadProfile(); // Last inn profilen på nytt for å vise endringene
+            loadProfile();
         } catch (error) {
             alert(`Feil: ${error.message}`);
         }
     });
 
-    // Start alt når siden lastes
+    // NY EVENT LISTENER: Håndterer innsending av bildeopplasting
+    avatarUploadForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const token = auth.getToken();
+        const fileInput = document.getElementById('avatar-file');
+        
+        if (fileInput.files.length === 0) {
+            alert("Vennligst velg en fil først.");
+            return;
+        }
+
+        // Vi bruker FormData for å sende filer
+        const formData = new FormData();
+        formData.append('avatar', fileInput.files[0]);
+
+        try {
+            await api.uploadAvatar(formData, token);
+            alert("Profilbilde oppdatert!");
+            loadProfile(); // Last profilen på nytt for å vise det nye bildet
+        } catch(error) {
+            alert(`Feil ved opplasting: ${error.message}`);
+        }
+    });
+
     loadProfile();
 });
