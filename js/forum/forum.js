@@ -2,41 +2,81 @@ import * as api from './api.js';
 import * as auth from './auth.js';
 import * as ui from './ui.js';
 
-// Denne filen er "sjefen" som delegerer oppgaver.
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Hent referanser til skjemaer og knapper
+    const mainContent = document.querySelector('main');
+    
+    // Referanser til skjemaer vi trenger her
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
-    const postForm = document.getElementById('post-form');
     const logoutBtn = document.getElementById('logout-btn');
 
-    // Funksjon for å hente og vise poster
-    const fetchAndRenderPosts = async () => {
+    // --- RUTER-LOGIKK ---
+    const router = async () => {
+        const hash = window.location.hash || '#/';
+        
         try {
-            const posts = await api.fetchPosts();
-            ui.renderPosts(posts);
+            if (hash.startsWith('#category/')) {
+                const categoryId = hash.substring(10);
+                const [threads, categories] = await Promise.all([
+                    api.fetchThreadsByCategory(categoryId),
+                    api.fetchCategories()
+                ]);
+                const currentCategory = categories.find(c => c.id === categoryId);
+                ui.renderThreads(threads, currentCategory);
+                ui.showView('thread-view');
+            } else if (hash.startsWith('#thread/')) {
+                const threadId = hash.substring(8);
+                const posts = await api.fetchPostsByThread(threadId);
+                ui.renderPosts(posts, threadId);
+                ui.showView('post-view');
+            } else {
+                const categories = await api.fetchCategories();
+                ui.renderCategories(categories);
+                ui.showView('category-view');
+            }
         } catch (error) {
             console.error(error);
-            document.getElementById('posts-container').innerHTML = '<h2>Innlegg</h2><p>Kunne ikke laste innlegg.</p>';
+            mainContent.innerHTML = `<p>Noe gikk galt: ${error.message}</p>`;
         }
     };
 
-    // --- Event Listeners ---
+    // --- EVENT LISTENERS ---
+    
+    // Lytter på 'submit' i hele <main>-elementet for dynamiske skjemaer
+    mainContent.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Forhindrer at siden laster på nytt for alle skjemaer
 
-    registerForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const username = document.getElementById('register-username').value;
-        const password = document.getElementById('register-password').value;
-        try {
-            const result = await api.registerUser(username, password);
-            alert(result.message);
-            ui.clearForm(registerForm);
-        } catch (error) {
-            alert(`Registrering feilet: ${error.message}`);
+        const token = auth.getToken();
+
+        // Ny tråd
+        if (event.target.id === 'new-thread-form') {
+            const title = document.getElementById('thread-title').value;
+            const content = document.getElementById('thread-content').value;
+            const categoryId = document.getElementById('categoryId').value;
+            
+            try {
+                const newThread = await api.createThread(title, content, categoryId, token);
+                window.location.hash = `#thread/${newThread.id}`; // Gå til den nye tråden
+            } catch (error) {
+                alert(`Kunne ikke opprette tråd: ${error.message}`);
+            }
+        }
+
+        // Svar på tråd
+        if (event.target.id === 'reply-form') {
+            const content = document.getElementById('reply-content').value;
+            const threadId = document.getElementById('threadId').value;
+            
+            try {
+                await api.createPost(content, threadId, token);
+                router(); // Last visningen på nytt for å se det nye svaret
+            } catch (error) {
+                alert(`Kunne ikke sende svar: ${error.message}`);
+            }
         }
     });
 
+    // Innlogging
     loginForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const username = document.getElementById('login-username').value;
@@ -44,64 +84,37 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const result = await api.loginUser(username, password);
             auth.saveToken(result.token);
-            ui.clearForm(loginForm);
-            ui.updateUI();
+            loginForm.reset();
+            ui.updateAuthUI();
+            router(); // Kjør ruter på nytt for å vise innhold for innloggede
         } catch (error) {
             alert(`Innlogging feilet: ${error.message}`);
         }
     });
-    
-    postForm.addEventListener('submit', async (event) => {
+
+    // Registrering
+    registerForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const content = document.getElementById('content').value;
-        const token = auth.getToken();
-        if (!token) {
-            alert("Du må være logget inn for å poste.");
-            return;
-        }
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
         try {
-            await api.createPost(content, token);
-            ui.clearForm(postForm);
-            fetchAndRenderPosts();
+            const result = await api.registerUser(username, password);
+            alert(result.message);
+            registerForm.reset();
         } catch (error) {
-            alert(`Kunne ikke poste: ${error.message}`);
+            alert(`Registrering feilet: ${error.message}`);
         }
     });
 
+    // Utlogging
     logoutBtn.addEventListener('click', () => {
         auth.removeToken();
-        ui.updateUI();
+        ui.updateAuthUI();
+        router();
     });
 
-// ... (din eksisterende kode for registerForm, loginForm, postForm, etc. er her) ...
-
-// NY EVENT LISTENER: Lytter etter klikk på sletteknapper
-document.getElementById('posts-container').addEventListener('click', async (event) => {
-    // Sjekk om det var en sletteknapp som ble trykket
-    if (event.target.classList.contains('delete-btn')) {
-        const postId = event.target.dataset.postId;
-
-        // Spør brukeren om bekreftelse
-        if (confirm('Er du sikker på at du vil slette dette innlegget?')) {
-            try {
-                const token = auth.getToken();
-                if (!token) {
-                    alert("Du må være logget inn for å slette.");
-                    return;
-                }
-                await api.deletePost(postId, token);
-                fetchAndRenderPosts(); // Last inn postene på nytt for å vise endringen
-            } catch (error) {
-                alert(`Kunne ikke slette innlegget: ${error.message}`);
-            }
-        }
-    }
-});
-
-// --- Initialisering ---
-    
- // --- Initialisering ---
-    
-    fetchAndRenderPosts(); // Hent poster når siden lastes
-    ui.updateUI(); // Sjekk login-status og vis/skjul riktige elementer
+    // --- INITIERING ---
+    window.addEventListener('hashchange', router); // Lytt etter URL-endringer
+    router(); // Kjør ruter når siden lastes
+    ui.updateAuthUI(); // Sjekk innloggingsstatus
 });
