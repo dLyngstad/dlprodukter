@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum - DLProdukter</title>
     <link rel="stylesheet" href="css/style.css"> 
-    <link rel="stylesheet" href="css/forum/forum.css">
+    <link rel="stylesheet" href="css/forum.css">
 </head>
 <body>
 
@@ -37,7 +37,6 @@
                         <button type="submit" class="submit-btn">Logg inn</button>
                     </form>
                 </div>
-
                 <div class="group-box">
                     <span class="group-box-legend">Eller registrer ny bruker</span>
                     <form id="register-form">
@@ -54,27 +53,23 @@
                 </div>
             </div>
 
-            <div id="post-form-container" class="group-box hidden">
-                <span class="group-box-legend">Skriv et nytt innlegg</span>
-                <form id="post-form">
-                    <div class="form-group">
-                        <label for="content">Melding:</label>
-                        <textarea id="content" rows="4" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Post innlegg</button>
-                </form>
-            </div>
-            
-            <div id="posts-container">
-                <h2>Innlegg</h2>
+            <div id="breadcrumbs" style="margin-bottom: 15px;"></div>
+
+            <div id="category-view">
                 </div>
+            <div id="thread-view" class="hidden">
+                </div>
+            <div id="post-view" class="hidden">
+                </div>
+            
         </main>
     </div>
 
     <footer id="footer-placeholder"></footer>
 
-    <script type="module" src="js/forum/forum.js"></script>
+    <script type="module" src="js/forum.js"></script>
     <script>
+        // Laster header/footer som på de andre sidene
         fetch('partials/header.html')
             .then(response => response.text())
             .then(data => document.getElementById('header-placeholder').innerHTML = data);
