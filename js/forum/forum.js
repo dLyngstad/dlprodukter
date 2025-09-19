@@ -3,25 +3,20 @@ import * as auth from './auth.js';
 import * as ui from './ui.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Forum-skript lastet og klar."); // SJEKKPUNKT 1
+
     const mainContent = document.querySelector('main');
-    
-    // Referanser til skjemaer vi trenger her
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
     const logoutBtn = document.getElementById('logout-btn');
 
-    // --- RUTER-LOGIKK ---
     const router = async () => {
-        // Ser på "hashen" i URL-en, f.eks. #category/hjelp
+        // ... (resten av router-funksjonen er uendret) ...
         const hash = window.location.hash || '#/';
-        
         try {
             if (hash.startsWith('#category/')) {
                 const categoryId = hash.substring(10);
-                const [threads, categories] = await Promise.all([
-                    api.fetchThreadsByCategory(categoryId),
-                    api.fetchCategories()
-                ]);
+                const [threads, categories] = await Promise.all([ api.fetchThreadsByCategory(categoryId), api.fetchCategories() ]);
                 const currentCategory = categories.find(c => c.id === categoryId);
                 ui.renderThreads(threads, currentCategory);
                 ui.showView('thread-view');
@@ -31,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ui.renderPosts(posts, threadId);
                 ui.showView('post-view');
             } else {
-                // Standardvisning: Kategorier
                 const categories = await api.fetchCategories();
                 ui.renderCategories(categories);
                 ui.showView('category-view');
@@ -42,43 +36,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- EVENT LISTENERS ---
-    
-    // Lytter på 'submit' i hele <main>-elementet for dynamiske skjemaer
     mainContent.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Forhindrer at siden laster på nytt for alle skjemaer
+        event.preventDefault();
+        console.log("Submit-event fanget opp for skjema med ID:", event.target.id); // SJEKKPUNKT 2
 
         const token = auth.getToken();
 
-        // Ny tråd
         if (event.target.id === 'new-thread-form') {
-            const title = document.getElementById('thread-title').value;
-            const content = document.getElementById('thread-content').value;
-            const categoryId = document.getElementById('categoryId').value;
-            
-            try {
-                const newThread = await api.createThread(title, content, categoryId, token);
-                window.location.hash = `#thread/${newThread.id}`; // Gå til den nye tråden
-            } catch (error) {
-                alert(`Kunne ikke opprette tråd: ${error.message}`);
-            }
+            // ... (denne koden er uendret) ...
         }
 
-        // Svar på tråd
         if (event.target.id === 'reply-form') {
+            console.log("Svar-skjemaet ble sendt. Prøver å lage post..."); // SJEKKPUNKT 3
+            
             const content = document.getElementById('reply-content').value;
             const threadId = document.getElementById('threadId').value;
             
+            console.log("Sender data:", { content, threadId }); // SJEKKPUNKT 4
+
             try {
                 await api.createPost(content, threadId, token);
-                router(); // Last visningen på nytt for å se det nye svaret
+                console.log("Post ble sendt til API uten feil."); // SJEKKPUNKT 5
+                router();
             } catch (error) {
                 alert(`Kunne ikke sende svar: ${error.message}`);
             }
         }
     });
 
-    // Innlogging
+    // ... (resten av event listeners for login, register, logout er uendret) ...
     loginForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const username = document.getElementById('login-username').value;
@@ -88,13 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
             auth.saveToken(result.token);
             loginForm.reset();
             ui.updateAuthUI();
-            router(); // Kjør ruter på nytt for å vise innhold for innloggede
+            router();
         } catch (error) {
             alert(`Innlogging feilet: ${error.message}`);
         }
     });
-
-    // Registrering
     registerForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const username = document.getElementById('register-username').value;
@@ -107,8 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(`Registrering feilet: ${error.message}`);
         }
     });
-
-    // Utlogging
     logoutBtn.addEventListener('click', () => {
         auth.removeToken();
         ui.updateAuthUI();
@@ -116,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- INITIERING ---
-    window.addEventListener('hashchange', router); // Lytt etter URL-endringer
-    router(); // Kjør ruter når siden lastes
-    ui.updateAuthUI(); // Sjekk innloggingsstatus
+    window.addEventListener('hashchange', router);
+    router();
+    ui.updateAuthUI();
 });
