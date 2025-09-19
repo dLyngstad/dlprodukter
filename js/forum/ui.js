@@ -1,65 +1,126 @@
 import { getUserFromToken } from './auth.js';
-// ENDRING: Importerer API_BASE_URL for å bygge bilde-URLer
 import { escapeHTML, API_BASE_URL } from './api.js';
 
-// Denne filen er vår "interiørdesigner" som endrer på hva som vises på siden.
-
+// Referanser til alle elementer som skal manipuleres
+const categoryView = document.getElementById('category-view');
+const threadView = document.getElementById('thread-view');
+const postView = document.getElementById('post-view');
+const breadcrumbs = document.getElementById('breadcrumbs');
 const postsContainer = document.getElementById('posts-container');
 const postFormContainer = document.getElementById('post-form-container');
 const authContainer = document.getElementById('auth-container');
 const userStatus = document.getElementById('user-status');
 const usernameDisplay = document.getElementById('username-display');
 
-export const renderPosts = (posts) => {
-    const loggedInUser = getUserFromToken();
-
-    postsContainer.innerHTML = '<h2>Innlegg</h2>'; 
-    posts.forEach(post => {
-        // Hopp over hvis posten eller forfatteren mangler data av en eller annen grunn
-        if (!post || !post.author) return;
-
-        const postElement = document.createElement('div');
-        postElement.className = 'post'; // Bruker fortsatt .post som hovedcontainer
-
-        let postHTML = `
-            <div class="post-user-info">
-                
-                <img src="${API_BASE_URL}/avatars/${post.author.profileImage}" alt="Profilbilde" class="post-avatar">
-
-                <strong><a href="profile.html?user=${escapeHTML(post.author.username)}">${escapeHTML(post.author.username)}</a></strong>
-                <p>Innlegg: ${post.author.postCount}</p>
-            </div>
-            <div class="post-main">
-                <p class="post-content">${escapeHTML(post.content)}</p>
-        `;
-
-        // Sjekk om sletteknappen skal vises
-        if (loggedInUser && loggedInUser.username === post.author.username) {
-            postHTML += `<button class="delete-btn" data-post-id="${post.id}">Slett</button>`;
-        }
-
-        // Lukk post-main div
-        postHTML += `</div>`; 
-
-        postElement.innerHTML = postHTML;
-        postsContainer.appendChild(postElement);
-    });
+// Hjelpefunksjon for å bytte mellom hovedvisningene
+export const showView = (viewId) => {
+    [categoryView, threadView, postView].forEach(view => view.classList.add('hidden'));
+    document.getElementById(viewId).classList.remove('hidden');
 };
 
-export const updateUI = () => {
+// Viser/skjuler innlogging vs. innlogget status
+export const updateAuthUI = () => {
     const user = getUserFromToken();
     if (user) {
         authContainer.classList.add('hidden');
-        postFormContainer.classList.remove('hidden');
         userStatus.classList.remove('hidden');
         usernameDisplay.textContent = user.username;
     } else {
         authContainer.classList.remove('hidden');
-        postFormContainer.classList.add('hidden');
         userStatus.classList.add('hidden');
     }
 };
 
-export const clearForm = (formElement) => {
-    formElement.reset();
+// Rendrer kategorilisten
+export const renderCategories = (categories) => {
+    categoryView.innerHTML = '<h2>Kategorier</h2>';
+    categories.forEach(cat => {
+        categoryView.innerHTML += `
+            <div class="post">
+                <div class="post-main">
+                    <h3><a href="#category/${cat.id}">${escapeHTML(cat.title)}</a></h3>
+                    <p>${escapeHTML(cat.description)}</p>
+                </div>
+                <div style="text-align: right;">
+                    <p>Tråder: ${cat.threadCount}</p>
+                    <p>Innlegg: ${cat.postCount}</p>
+                </div>
+            </div>
+        `;
+    });
+    breadcrumbs.innerHTML = `<a href="#/">Forum</a>`;
+};
+
+// Rendrer trådlisten
+export const renderThreads = (threads, category) => {
+    threadView.innerHTML = `<h2>Tråder i ${escapeHTML(category.title)}</h2>`;
+    threads.forEach(thread => {
+        threadView.innerHTML += `
+            <div class="post">
+                <div class="post-main">
+                    <p><a href="#thread/${thread.id}">${escapeHTML(thread.title)}</a></p>
+                    <small>Startet av: ${escapeHTML(thread.author)}</small>
+                </div>
+                <div style="text-align: right;">
+                    <p>Svar: ${thread.replyCount}</p>
+                </div>
+            </div>
+        `;
+    });
+    
+    if (getUserFromToken()) {
+        threadView.innerHTML += `
+            <div class="group-box" style="margin-top: 20px;">
+                <span class="group-box-legend">Start en ny tråd</span>
+                <form id="new-thread-form">
+                    <input type="hidden" id="categoryId" value="${category.id}">
+                    <div class="form-group">
+                        <label for="thread-title">Tittel:</label>
+                        <input type="text" id="thread-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="thread-content">Innlegg:</label>
+                        <textarea id="thread-content" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Opprett tråd</button>
+                </form>
+            </div>
+        `;
+    }
+    breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; ${escapeHTML(category.title)}`;
+};
+
+// Rendrer innleggslisten
+export const renderPosts = (posts, threadId) => {
+    postView.innerHTML = ``;
+    posts.forEach(post => {
+        postView.innerHTML += `
+            <div class="post">
+                <div class="post-user-info">
+                    <img src="${API_BASE_URL}/avatars/${post.author.profileImage}" alt="Profilbilde" class="post-avatar">
+                    <strong><a href="profile.html?user=${escapeHTML(post.author.username)}">${escapeHTML(post.author.username)}</a></strong>
+                </div>
+                <div class="post-main">
+                    <p class="post-content">${escapeHTML(post.content)}</p>
+                </div>
+            </div>
+        `;
+    });
+
+    if (getUserFromToken()) {
+        postView.innerHTML += `
+            <div class="group-box" style="margin-top: 20px;">
+                <span class="group-box-legend">Skriv et svar</span>
+                <form id="reply-form">
+                    <input type="hidden" id="threadId" value="${threadId}">
+                    <div class="form-group">
+                        <label for="reply-content">Melding:</label>
+                        <textarea id="reply-content" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send svar</button>
+                </form>
+            </div>
+        `;
+    }
+    breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; <a href="#category/TILBAKE">Tråder</a> &gt; Tråd`;
 };
