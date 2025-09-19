@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum - DLProdukter</title>
     <link rel="stylesheet" href="css/style.css"> 
-    <link rel="stylesheet" href="css/forum.css">
+    <link rel="stylesheet" href="css/forum/forum.css">
 </head>
 <body>
 
@@ -55,27 +55,20 @@
 
             <div id="breadcrumbs" style="margin-bottom: 15px;"></div>
 
-            <div id="category-view">
-                </div>
-            <div id="thread-view" class="hidden">
-                </div>
-            <div id="post-view" class="hidden">
-                </div>
+            <div id="category-view"></div>
+            <div id="thread-view" class="hidden"></div>
+            <div id="post-view" class="hidden"></div>
             
         </main>
     </div>
 
     <footer id="footer-placeholder"></footer>
 
-    <script type="module" src="js/forum.js"></script>
+    <script type="module" src="js/forum/forum.js"></script>
     <script>
-        // Laster header/footer som på de andre sidene
-        fetch('partials/header.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('header-placeholder').innerHTML = data);
-        fetch('partials/footer.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('footer-placeholder').innerHTML = data);
+        // Laster header/footer
+        fetch('partials/header.html').then(r => r.text()).then(d => document.getElementById('header-placeholder').innerHTML = d);
+        fetch('partials/footer.html').then(r => r.text()).then(d => document.getElementById('footer-placeholder').innerHTML = d);
     </script>
 </body>
 </html>
