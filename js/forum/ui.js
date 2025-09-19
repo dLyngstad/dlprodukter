@@ -1,5 +1,6 @@
 import { getUserFromToken } from './auth.js';
-import { escapeHTML } from './api.js';
+// ENDRING: Importerer API_BASE_URL for å bygge bilde-URLer
+import { escapeHTML, API_BASE_URL } from './api.js';
 
 // Denne filen er vår "interiørdesigner" som endrer på hva som vises på siden.
 
@@ -22,7 +23,9 @@ export const renderPosts = (posts) => {
 
         let postHTML = `
             <div class="post-user-info">
-                <img src="https://via.placeholder.com/80?text=${escapeHTML(post.author.username.charAt(0))}" alt="Profilbilde" class="post-avatar">
+                
+                <img src="${API_BASE_URL}/avatars/${post.author.profileImage}" alt="Profilbilde" class="post-avatar">
+
                 <strong><a href="profile.html?user=${escapeHTML(post.author.username)}">${escapeHTML(post.author.username)}</a></strong>
                 <p>Innlegg: ${post.author.postCount}</p>
             </div>
