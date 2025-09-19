@@ -1,24 +1,55 @@
-// Denne filen er vår "kommunikasjonssjef" med serveren.
+const API_BASE_URL = 'https://forum.dlprodukter.com/api';
 
-const API_BASE_URL = 'https://forum.dlprodukter.com';
-
-// Hjelpefunksjon for å escape HTML
 const escapeHTML = (str) => {
     const p = document.createElement('p');
     p.appendChild(document.createTextNode(str || ""));
     return p.innerHTML;
 };
 
-// Henter alle poster
-export const fetchPosts = async () => {
-    const response = await fetch(`${API_BASE_URL}/posts`);
-    if (!response.ok) throw new Error('Nettverksfeil ved henting av poster.');
-    return await response.json();
+// Kategorier
+export const fetchCategories = async () => {
+    const res = await fetch(`${API_BASE_URL}/categories`);
+    if (!res.ok) throw new Error('Kunne ikke hente kategorier.');
+    return res.json();
 };
 
-// Registrerer en ny bruker
+// Tråder
+export const fetchThreadsByCategory = async (categoryId) => {
+    const res = await fetch(`${API_BASE_URL}/threads/category/${categoryId}`);
+    if (!res.ok) throw new Error('Kunne ikke hente tråder.');
+    return res.json();
+};
+
+export const createThread = async (title, content, categoryId, token) => {
+    const res = await fetch(`${API_BASE_URL}/threads`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ title, content, categoryId }),
+    });
+    if (!res.ok) throw new Error('Kunne ikke opprette tråd.');
+    return res.json();
+};
+
+// Innlegg
+export const fetchPostsByThread = async (threadId) => {
+    const res = await fetch(`${API_BASE_URL}/posts/thread/${threadId}`);
+    if (!res.ok) throw new Error('Kunne ikke hente innlegg.');
+    return res.json();
+};
+
+export const createPost = async (content, threadId, token) => {
+    const res = await fetch(`${API_BASE_URL}/posts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ content, threadId }),
+    });
+    if (!res.ok) throw new Error('Kunne ikke poste innlegg.');
+    return res.json();
+};
+
+// Autentisering
 export const registerUser = async (username, password) => {
-    const response = await fetch(`${API_BASE_URL}/register`, {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -26,9 +57,8 @@ export const registerUser = async (username, password) => {
     return await response.json();
 };
 
-// Logger inn en bruker
 export const loginUser = async (username, password) => {
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -38,73 +68,4 @@ export const loginUser = async (username, password) => {
     return data;
 };
 
-// Poster et nytt innlegg
-export const createPost = async (content, token) => {
-    const response = await fetch(`${API_BASE_URL}/posts`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ content }),
-    });
-    if (!response.ok) throw new Error('Kunne ikke poste innlegg.');
-    return await response.json();
-};
-
-// ... (din eksisterende kode for fetchPosts, loginUser etc. er her) ...
-
-// NY FUNKSJON: Henter en brukers profildata
-export const fetchProfile = async (username) => {
-    const response = await fetch(`${API_BASE_URL}/profile/${username}`);
-    if (!response.ok) throw new Error('Fant ikke brukerprofil.');
-    return await response.json();
-};
-
-// NY FUNKSJON: Oppdaterer en brukers profil
-export const updateProfile = async (bio, token) => {
-    const response = await fetch(`${API_BASE_URL}/profile`, {
-        method: 'PUT', // PUT brukes vanligvis for å oppdatere eksisterende data
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ bio }),
-    });
-    if (!response.ok) throw new Error('Kunne ikke oppdatere profil.');
-    return await response.json();
-};
-
-// ... (din eksisterende kode for fetchPosts, createPost etc. er her) ...
-
-// NY FUNKSJON: Sender en forespørsel om å slette et innlegg
-export const deletePost = async (postId, token) => {
-    const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
-        method: 'DELETE',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
-    if (!response.ok) throw new Error('Kunne ikke slette innlegg.');
-    return await response.json();
-};
-
-// ... (din eksisterende kode for fetchPosts, etc. er her) ...
-
-// NY FUNKSJON: Håndterer opplasting av avatar-bilde
-export const uploadAvatar = async (formData, token) => {
-    const response = await fetch(`${API_BASE_URL}/profile/avatar`, {
-        method: 'POST',
-        headers: {
-            // VIKTIG: IKKE sett 'Content-Type' her. 
-            // Nettleseren gjør det automatisk for FormData.
-            'Authorization': `Bearer ${token}`
-        },
-        body: formData,
-    });
-    if (!response.ok) throw new Error('Kunne ikke laste opp bilde.');
-    return await response.json();
-};
-
-// ENDRING: Eksporter API_BASE_URL også
-export { escapeHTML, API_BASE_URL }; // Pass på at denne linjen er helt til slutt
+export { escapeHTML, API_BASE_URL };
