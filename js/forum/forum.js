@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
     const logoutBtn = document.getElementById('logout-btn');
+        ui.renderProfileLink(); // rendrer en profillink hvis man er innlogget
 
     // --- RUTER-LOGIKK ---
     // Denne funksjonen leser URL-en og bestemmer hva som skal vises på siden
@@ -129,4 +130,6 @@ mainContent.addEventListener('submit', async (event) => {
     window.addEventListener('hashchange', router); // Lytt etter URL-endringer
     router(); // Kjør ruter når siden lastes for første gang
     ui.updateAuthUI(); // Sjekk innloggingsstatus
+
+
 });
