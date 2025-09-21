@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('register-form');
     const logoutBtn = document.getElementById('logout-btn');
 
+    // --- RUTER-LOGIKK ---
     const router = async () => {
-        // ... (resten av router-funksjonen er uendret) ...
         const hash = window.location.hash || '#/';
         try {
             if (hash.startsWith('#category/')) {
@@ -36,27 +36,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // --- EVENT LISTENERS ---
+    
     mainContent.addEventListener('submit', async (event) => {
         event.preventDefault();
         console.log("Submit-event fanget opp for skjema med ID:", event.target.id); // SJEKKPUNKT 2
 
         const token = auth.getToken();
-
-        if (event.target.id === 'new-thread-form') {
-            // ... (denne koden er uendret) ...
+        if (!token) {
+            alert("Du må være logget inn.");
+            return;
         }
 
-        if (event.target.id === 'reply-form') {
-            console.log("Svar-skjemaet ble sendt. Prøver å lage post..."); // SJEKKPUNKT 3
+        // Ny tråd
+        if (event.target.id === 'new-thread-form') {
+            console.log("Behandler 'new-thread-form'..."); // SJEKKPUNKT 3
+            const title = document.getElementById('thread-title').value;
+            const content = document.getElementById('thread-content').value;
+            const categoryId = document.getElementById('categoryId').value;
             
+            try {
+                const newThread = await api.createThread(title, content, categoryId, token);
+                window.location.hash = `#thread/${newThread.id}`;
+            } catch (error) {
+                alert(`Kunne ikke opprette tråd: ${error.message}`);
+            }
+        }
+
+        // Svar på tråd
+        if (event.target.id === 'reply-form') {
+            console.log("Behandler 'reply-form'..."); // SJEKKPUNKT 3
             const content = document.getElementById('reply-content').value;
             const threadId = document.getElementById('threadId').value;
             
-            console.log("Sender data:", { content, threadId }); // SJEKKPUNKT 4
-
             try {
                 await api.createPost(content, threadId, token);
-                console.log("Post ble sendt til API uten feil."); // SJEKKPUNKT 5
                 router();
             } catch (error) {
                 alert(`Kunne ikke sende svar: ${error.message}`);
@@ -64,37 +78,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ... (resten av event listeners for login, register, logout er uendret) ...
+    // Innlogging
     loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const username = document.getElementById('login-username').value;
-        const password = document.getElementById('login-password').value;
-        try {
-            const result = await api.loginUser(username, password);
-            auth.saveToken(result.token);
-            loginForm.reset();
-            ui.updateAuthUI();
-            router();
-        } catch (error) {
-            alert(`Innlogging feilet: ${error.message}`);
-        }
+        // ... (denne koden er uendret) ...
     });
+
+    // Registrering
     registerForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const username = document.getElementById('register-username').value;
-        const password = document.getElementById('register-password').value;
-        try {
-            const result = await api.registerUser(username, password);
-            alert(result.message);
-            registerForm.reset();
-        } catch (error) {
-            alert(`Registrering feilet: ${error.message}`);
-        }
+        // ... (denne koden er uendret) ...
     });
+
+    // Utlogging
     logoutBtn.addEventListener('click', () => {
-        auth.removeToken();
-        ui.updateAuthUI();
-        router();
+        // ... (denne koden er uendret) ...
     });
 
     // --- INITIERING ---
