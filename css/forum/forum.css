@@ -142,3 +142,10 @@
 .post-main .post-content {
     flex-grow: 1; /* Sørger for at innholdet fyller plassen */
 }
+
+
+/* Egen stil for det første innlegget i en tråd */
+.original-post {
+    background-color: #d1d1d1; /* En litt mørkere gråfarge */
+    border: 2px inset #808080; /* En litt tydeligere ramme */
+}
