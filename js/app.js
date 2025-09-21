@@ -4,7 +4,7 @@
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
  */
-import { renderProfileLink } from './ui.js';
+
 
 const loadHTML = (filePath, elementId) => {
     fetch(filePath)
