@@ -63,14 +63,12 @@ export const renderThreads = (threads, category) => {
                     <small>Startet av: ${escapeHTML(thread.author)}</small>
                 </div>
                 <div style="text-align: right;">
-
                     <p>Svar: ${thread.replyCount}</p>
-
                 </div>
             </div>
         `;
     });
-
+    
     if (getUserFromToken()) {
         html += `
             <div class="group-box" style="margin-top: 20px;">
@@ -94,24 +92,34 @@ export const renderThreads = (threads, category) => {
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; ${escapeHTML(category.title)}`;
 };
 
-// Rendrer innleggslisten
+// Rendrer innleggslisten (MED LOGIKK FOR ORIGINAL-POST)
 export const renderPosts = (posts, threadId) => {
     const loggedInUser = getUserFromToken();
     let postsHTML = '';
 
-    posts.forEach(post => {
+    posts.forEach((post, index) => { // Legger til 'index' for å vite hvilket innlegg vi er på
         if (!post || !post.author) return;
+
+        let deleteButtonHTML = '';
+        if (loggedInUser && loggedInUser.username === post.author.username) {
+            deleteButtonHTML = `<button class="delete-btn" data-post-id="${post.id}">Slett</button>`;
+        }
+        
+        // NY LOGIKK: Sjekker om det er det første innlegget (index === 0)
+        let postClasses = 'post';
+        if (index === 0) {
+            postClasses += ' original-post'; // Legger til den nye klassen
+        }
+
         postsHTML += `
-            <div class="post">
+            <div class="${postClasses}">
                 <div class="post-user-info">
                     <img src="${SITE_BASE_URL}/avatars/${post.author.profileImage}" alt="Profilbilde" class="post-avatar">
                     <strong><a href="profile.html?user=${escapeHTML(post.author.username)}">${escapeHTML(post.author.username)}</a></strong>
                 </div>
                 <div class="post-main">
                     <p class="post-content">${escapeHTML(post.content)}</p>
-                    ${loggedInUser && loggedInUser.username === post.author.username ?
-                        `<button class="delete-btn" data-post-id="${post.id}">Slett</button>` : ''
-                    }
+                    ${deleteButtonHTML}
                 </div>
             </div>
         `;
