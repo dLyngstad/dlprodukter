@@ -1,5 +1,5 @@
 import { getUserFromToken } from './auth.js';
-import { escapeHTML, SITE_BASE_URL } from './api.js';
+import { escapeHTML, SITE_BASE_URL, deletePost } from './api.js';
 
 // Referanser til alle elementer som skal manipuleres
 const categoryView = document.getElementById('category-view');
