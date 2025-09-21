@@ -148,5 +148,8 @@
 .original-post {
     background-color: #d1d1d1; /* En litt mørkere gråfarge */
     border: 2px inset #808080; /* En litt tydeligere ramme */
-    border-left: 5px solid #808080;
+ /* NYE LINJER FOR Å SKAPE SKILLE OG "INNDRAG" */
+    margin-bottom: 25px; /* Legger til ekstra luft under hovedinnlegget */
+    border-left: 5px solid #000080; /* Legger til en tykk, blå markør på venstre side */
+
 }
