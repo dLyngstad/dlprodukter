@@ -18,6 +18,28 @@ export const showView = (viewId) => {
     }
 };
 
+
+//For å displaye profilportalen
+
+export const renderProfileLink = () => {
+    const user = getUserFromToken(); //Henter bruker
+    const container = document.getElementById('profile-link-container');
+
+    if (user && container) {
+        //Hvis brukeren er logget inn, lag en link
+        container.innerHTML = `
+            <a href="profile.html?user=${escapeHTML(user.username)}">Min Profil</a>
+        `;
+
+    } else if (container) {
+//Hvis ikke må containeren være tom
+    container.innerHTML= '';
+
+    }
+};
+
+
+
 // Viser/skjuler innlogging vs. innlogget status
 export const updateAuthUI = () => {
     const user = getUserFromToken();
