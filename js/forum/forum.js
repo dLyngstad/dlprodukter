@@ -44,44 +44,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- EVENT LISTENERS ---
     
-    // En hoved-lytter for alle 'submit'-hendelser inne i <main>
-    mainContent.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const token = auth.getToken();
+   // En hoved-lytter for alle 'submit'-hendelser inne i <main>
+mainContent.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Forhindrer at siden laster på nytt for alle skjemaer
 
+    // Håndterer opprettelse av ny tråd
+    if (event.target.id === 'new-thread-form') {
+        const token = auth.getToken(); // Sjekker for token kun for denne handlingen
         if (!token) {
-            alert("Du må være logget inn for å utføre denne handlingen.");
+            alert("Du må være logget inn for å opprette en tråd.");
             return;
         }
 
-        // Håndterer opprettelse av ny tråd
-        if (event.target.id === 'new-thread-form') {
-            const title = document.getElementById('thread-title').value;
-            const content = document.getElementById('thread-content').value;
-            const categoryId = document.getElementById('categoryId').value;
-            
-            try {
-                const newThread = await api.createThread(title, content, categoryId, token);
-                // Sender brukeren direkte til den nye tråden
-                window.location.hash = `#thread/${newThread.id}`;
-            } catch (error) {
-                alert(`Kunne ikke opprette tråd: ${error.message}`);
-            }
+        const title = document.getElementById('thread-title').value;
+        const content = document.getElementById('thread-content').value;
+        const categoryId = document.getElementById('categoryId').value;
+
+        try {
+            const newThread = await api.createThread(title, content, categoryId, token);
+            window.location.hash = `#thread/${newThread.id}`;
+        } catch (error) {
+            alert(`Kunne ikke opprette tråd: ${error.message}`);
+        }
+    }
+
+    // Håndterer svar på en tråd
+    if (event.target.id === 'reply-form') {
+        const token = auth.getToken(); // Sjekker for token kun for denne handlingen
+        if (!token) {
+            alert("Du må være logget inn for å sende et svar.");
+            return;
         }
 
-        // Håndterer svar på en tråd
-        if (event.target.id === 'reply-form') {
-            const content = document.getElementById('reply-content').value;
-            const threadId = document.getElementById('threadId').value;
-            
-            try {
-                await api.createPost(content, threadId, token);
-                router(); // Laster visningen på nytt for å vise det nye svaret
-            } catch (error) {
-                alert(`Kunne ikke sende svar: ${error.message}`);
-            }
+        const content = document.getElementById('reply-content').value;
+        const threadId = document.getElementById('threadId').value;
+
+        try {
+            await api.createPost(content, threadId, token);
+            router(); // Laster visningen på nytt
+        } catch (error) {
+            alert(`Kunne ikke sende svar: ${error.message}`);
         }
-    });
+    }
+});
 
     // Innlogging
     loginForm.addEventListener('submit', async (event) => {
