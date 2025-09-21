@@ -63,12 +63,14 @@ export const renderThreads = (threads, category) => {
                     <small>Startet av: ${escapeHTML(thread.author)}</small>
                 </div>
                 <div style="text-align: right;">
+
                     <p>Svar: ${thread.replyCount}</p>
+
                 </div>
             </div>
         `;
     });
-    
+
     if (getUserFromToken()) {
         html += `
             <div class="group-box" style="margin-top: 20px;">
@@ -92,15 +94,13 @@ export const renderThreads = (threads, category) => {
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; ${escapeHTML(category.title)}`;
 };
 
-// Rendrer innleggslisten (KORRIGERT MED MER ROBUST METODE)
+// Rendrer innleggslisten
 export const renderPosts = (posts, threadId) => {
     const loggedInUser = getUserFromToken();
-    let postsHTML = ''; // Start med en tom streng
+    let postsHTML = '';
 
     posts.forEach(post => {
         if (!post || !post.author) return;
-
-        // Bygg HTML for hvert innlegg og legg det til i strengen
         postsHTML += `
             <div class="post">
                 <div class="post-user-info">
@@ -133,8 +133,6 @@ export const renderPosts = (posts, threadId) => {
             </div>
         `;
     }
-
-    // Sett innerHTML kun én gang for hele visningen
     postView.innerHTML = postsHTML + replyFormHTML;
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; Tråd`;
 };
