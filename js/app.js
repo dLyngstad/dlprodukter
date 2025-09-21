@@ -4,6 +4,8 @@
 /**
  * Laster inn gjenbrukbare HTML-deler som header og footer.
  */
+import { renderProfileLink } from './ui.js';
+
 const loadHTML = (filePath, elementId) => {
     fetch(filePath)
         .then(response => response.text())
@@ -106,6 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     renderProducts();
     initializeCarousels();
+    renderProfileLink();
+
 
     const productGrid = document.getElementById('product-grid');
 
