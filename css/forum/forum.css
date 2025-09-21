@@ -103,6 +103,9 @@
     display: flex; /* Aktiverer flexbox for to kolonner */
     flex-direction: row;
     gap: 15px;
+     border-left: 20px solid #000080; /* Legger til en tykk, blå markør på venstre side */
+
+
 }
 
 .post-user-info {
@@ -149,7 +152,7 @@
     background-color: #d1d1d1; /* En litt mørkere gråfarge */
     border: 2px inset #808080; /* En litt tydeligere ramme */
  /* NYE LINJER FOR Å SKAPE SKILLE OG "INNDRAG" */
-    margin-bottom: 25px; /* Legger til ekstra luft under hovedinnlegget */
-    border-left: 5px solid #000080; /* Legger til en tykk, blå markør på venstre side */
+    margin-bottom: 60px; /* Legger til ekstra luft under hovedinnlegget */
+
 
 }
