@@ -9,14 +9,14 @@ const escapeHTML = (str) => {
 
 // Kategorier
 const fetchCategories = async () => {
-    const res = await fetch(`${API_BASE_URL}/categories`);
+    const res = await fetch(`${API_BASE_URL}/categories`, { cache: 'no-cache' }); // ENDRING
     if (!res.ok) throw new Error('Kunne ikke hente kategorier.');
     return res.json();
 };
 
 // Tråder
 const fetchThreadsByCategory = async (categoryId) => {
-    const res = await fetch(`${API_BASE_URL}/threads/category/${categoryId}`);
+    const res = await fetch(`${API_BASE_URL}/threads/category/${categoryId}`, { cache: 'no-cache' }); // ENDRING
     if (!res.ok) throw new Error('Kunne ikke hente tråder.');
     return res.json();
 };
@@ -33,7 +33,7 @@ const createThread = async (title, content, categoryId, token) => {
 
 // Innlegg
 const fetchPostsByThread = async (threadId) => {
-    const res = await fetch(`${API_BASE_URL}/posts/thread/${threadId}`);
+    const res = await fetch(`${API_BASE_URL}/posts/thread/${threadId}`, { cache: 'no-cache' }); // ENDRING
     if (!res.ok) throw new Error('Kunne ikke hente innlegg.');
     return res.json();
 };
@@ -71,7 +71,7 @@ const loginUser = async (username, password) => {
 
 // Profil
 const fetchProfile = async (username) => {
-    const response = await fetch(`${API_BASE_URL}/profile/${username}`);
+    const response = await fetch(`${API_BASE_URL}/profile/${username}`, { cache: 'no-cache' }); // ENDRING
     if (!response.ok) throw new Error('Fant ikke brukerprofil.');
     return await response.json();
 };
@@ -96,7 +96,7 @@ const uploadAvatar = async (formData, token) => {
     return await response.json();
 };
 
-// KORRIGERT EKSPORT-BLOKK: Inkluderer nå ALLE funksjonene
+// Eksporterer alle funksjonene
 export {
     SITE_BASE_URL,
     API_BASE_URL,
