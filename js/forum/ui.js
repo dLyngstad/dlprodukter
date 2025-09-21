@@ -1,5 +1,5 @@
 import { getUserFromToken } from './auth.js';
-import { escapeHTML, SITE_BASE_URL, deletePost } from './api.js'; // Sørg for at deletePost er importert om den brukes herfra
+import { escapeHTML, SITE_BASE_URL } from './api.js';
 
 // Referanser til alle elementer som skal manipuleres
 const categoryView = document.getElementById('category-view');
@@ -63,12 +63,14 @@ export const renderThreads = (threads, category) => {
                     <small>Startet av: ${escapeHTML(thread.author)}</small>
                 </div>
                 <div style="text-align: right;">
+
                     <p>Svar: ${thread.replyCount}</p>
+
                 </div>
             </div>
         `;
     });
-    
+
     if (getUserFromToken()) {
         html += `
             <div class="group-box" style="margin-top: 20px;">
@@ -92,20 +94,13 @@ export const renderThreads = (threads, category) => {
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; ${escapeHTML(category.title)}`;
 };
 
-// Rendrer innleggslisten (MED SLETT-KNAPP-LOGIKK)
+// Rendrer innleggslisten
 export const renderPosts = (posts, threadId) => {
     const loggedInUser = getUserFromToken();
     let postsHTML = '';
 
     posts.forEach(post => {
         if (!post || !post.author) return;
-        
-        let deleteButtonHTML = '';
-        // Sjekk om sletteknappen skal vises
-        if (loggedInUser && loggedInUser.username === post.author.username) {
-            deleteButtonHTML = `<button class="delete-btn" data-post-id="${post.id}">Slett</button>`;
-        }
-
         postsHTML += `
             <div class="post">
                 <div class="post-user-info">
@@ -114,7 +109,9 @@ export const renderPosts = (posts, threadId) => {
                 </div>
                 <div class="post-main">
                     <p class="post-content">${escapeHTML(post.content)}</p>
-                    ${deleteButtonHTML}
+                    ${loggedInUser && loggedInUser.username === post.author.username ?
+                        `<button class="delete-btn" data-post-id="${post.id}">Slett</button>` : ''
+                    }
                 </div>
             </div>
         `;
