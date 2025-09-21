@@ -3,20 +3,25 @@ import * as auth from './auth.js';
 import * as ui from './ui.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Forum-skript lastet og klar."); // SJEKKPUNKT 1
-
+    // Referanser til alle elementer som håndteres her
     const mainContent = document.querySelector('main');
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
     const logoutBtn = document.getElementById('logout-btn');
 
     // --- RUTER-LOGIKK ---
+    // Denne funksjonen leser URL-en og bestemmer hva som skal vises på siden
     const router = async () => {
         const hash = window.location.hash || '#/';
+        
         try {
             if (hash.startsWith('#category/')) {
                 const categoryId = hash.substring(10);
-                const [threads, categories] = await Promise.all([ api.fetchThreadsByCategory(categoryId), api.fetchCategories() ]);
+                // Henter både tråder og kategorier samtidig for effektivitet
+                const [threads, categories] = await Promise.all([
+                    api.fetchThreadsByCategory(categoryId),
+                    api.fetchCategories()
+                ]);
                 const currentCategory = categories.find(c => c.id === categoryId);
                 ui.renderThreads(threads, currentCategory);
                 ui.showView('thread-view');
@@ -26,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ui.renderPosts(posts, threadId);
                 ui.showView('post-view');
             } else {
+                // Standardvisning hvis ingen spesifikk rute er valgt
                 const categories = await api.fetchCategories();
                 ui.renderCategories(categories);
                 ui.showView('category-view');
@@ -38,40 +44,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- EVENT LISTENERS ---
     
+    // En hoved-lytter for alle 'submit'-hendelser inne i <main>
     mainContent.addEventListener('submit', async (event) => {
         event.preventDefault();
-        console.log("Submit-event fanget opp for skjema med ID:", event.target.id); // SJEKKPUNKT 2
-
         const token = auth.getToken();
+
         if (!token) {
-            alert("Du må være logget inn.");
+            alert("Du må være logget inn for å utføre denne handlingen.");
             return;
         }
 
-        // Ny tråd
+        // Håndterer opprettelse av ny tråd
         if (event.target.id === 'new-thread-form') {
-            console.log("Behandler 'new-thread-form'..."); // SJEKKPUNKT 3
             const title = document.getElementById('thread-title').value;
             const content = document.getElementById('thread-content').value;
             const categoryId = document.getElementById('categoryId').value;
             
             try {
                 const newThread = await api.createThread(title, content, categoryId, token);
+                // Sender brukeren direkte til den nye tråden
                 window.location.hash = `#thread/${newThread.id}`;
             } catch (error) {
                 alert(`Kunne ikke opprette tråd: ${error.message}`);
             }
         }
 
-        // Svar på tråd
+        // Håndterer svar på en tråd
         if (event.target.id === 'reply-form') {
-            console.log("Behandler 'reply-form'..."); // SJEKKPUNKT 3
             const content = document.getElementById('reply-content').value;
             const threadId = document.getElementById('threadId').value;
             
             try {
                 await api.createPost(content, threadId, token);
-                router();
+                router(); // Laster visningen på nytt for å vise det nye svaret
             } catch (error) {
                 alert(`Kunne ikke sende svar: ${error.message}`);
             }
@@ -80,21 +85,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Innlogging
     loginForm.addEventListener('submit', async (event) => {
-        // ... (denne koden er uendret) ...
+        event.preventDefault();
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+        try {
+            const result = await api.loginUser(username, password);
+            auth.saveToken(result.token);
+            loginForm.reset();
+            ui.updateAuthUI();
+            router();
+        } catch (error) {
+            alert(`Innlogging feilet: ${error.message}`);
+        }
     });
 
     // Registrering
     registerForm.addEventListener('submit', async (event) => {
-        // ... (denne koden er uendret) ...
+        event.preventDefault();
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
+        try {
+            const result = await api.registerUser(username, password);
+            alert(result.message);
+            registerForm.reset();
+        } catch (error) {
+            alert(`Registrering feilet: ${error.message}`);
+        }
     });
 
     // Utlogging
     logoutBtn.addEventListener('click', () => {
-        // ... (denne koden er uendret) ...
+        auth.removeToken();
+        ui.updateAuthUI();
+        router();
     });
 
     // --- INITIERING ---
-    window.addEventListener('hashchange', router);
-    router();
-    ui.updateAuthUI();
+    window.addEventListener('hashchange', router); // Lytt etter URL-endringer
+    router(); // Kjør ruter når siden lastes for første gang
+    ui.updateAuthUI(); // Sjekk innloggingsstatus
 });
