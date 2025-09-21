@@ -99,8 +99,18 @@ export const renderPosts = (posts, threadId) => {
     const loggedInUser = getUserFromToken();
     let postsHTML = '';
 
-    posts.forEach(post => {
+    posts.forEach(post, index) => {
         if (!post || !post.author) return;
+
+    const postElement = document.createElement('div');
+
+         let postClasses = 'post';
+    if (index === 0) {
+        postClasses += ' original-post';
+    }
+    postElement.className = postClasses;
+
+        
         postsHTML += `
             <div class="post">
                 <div class="post-user-info">
