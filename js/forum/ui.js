@@ -1,5 +1,4 @@
 import { getUserFromToken } from './auth.js';
-// ENDRING: Importerer SITE_BASE_URL i stedet for API_BASE_URL for bilder
 import { escapeHTML, SITE_BASE_URL } from './api.js';
 
 // Referanser til alle elementer som skal manipuleres
@@ -7,15 +6,12 @@ const categoryView = document.getElementById('category-view');
 const threadView = document.getElementById('thread-view');
 const postView = document.getElementById('post-view');
 const breadcrumbs = document.getElementById('breadcrumbs');
-const postsContainer = document.getElementById('posts-container'); // Denne er fra gammel kode, kan fjernes senere
-const postFormContainer = document.getElementById('post-form-container'); // Denne er fra gammel kode
 const authContainer = document.getElementById('auth-container');
 const userStatus = document.getElementById('user-status');
 const usernameDisplay = document.getElementById('username-display');
 
 // Hjelpefunksjon for å bytte mellom hovedvisningene
 export const showView = (viewId) => {
-    // Sørger for at alle visninger er definert før vi prøver å skjule dem
     if (categoryView && threadView && postView) {
         [categoryView, threadView, postView].forEach(view => view.classList.add('hidden'));
         document.getElementById(viewId).classList.remove('hidden');
@@ -37,9 +33,9 @@ export const updateAuthUI = () => {
 
 // Rendrer kategorilisten
 export const renderCategories = (categories) => {
-    categoryView.innerHTML = '<h2>Kategorier</h2>';
+    let html = '<h2>Kategorier</h2>';
     categories.forEach(cat => {
-        categoryView.innerHTML += `
+        html += `
             <div class="post">
                 <div class="post-main">
                     <h3><a href="#category/${cat.id}">${escapeHTML(cat.title)}</a></h3>
@@ -52,14 +48,15 @@ export const renderCategories = (categories) => {
             </div>
         `;
     });
+    categoryView.innerHTML = html;
     breadcrumbs.innerHTML = `<a href="#/">Forum</a>`;
 };
 
 // Rendrer trådlisten
 export const renderThreads = (threads, category) => {
-    threadView.innerHTML = `<h2>Tråder i ${escapeHTML(category.title)}</h2>`;
+    let html = `<h2>Tråder i ${escapeHTML(category.title)}</h2>`;
     threads.forEach(thread => {
-        threadView.innerHTML += `
+        html += `
             <div class="post">
                 <div class="post-main">
                     <p><a href="#thread/${thread.id}">${escapeHTML(thread.title)}</a></p>
@@ -73,7 +70,7 @@ export const renderThreads = (threads, category) => {
     });
     
     if (getUserFromToken()) {
-        threadView.innerHTML += `
+        html += `
             <div class="group-box" style="margin-top: 20px;">
                 <span class="group-box-legend">Start en ny tråd</span>
                 <form id="new-thread-form">
@@ -91,14 +88,20 @@ export const renderThreads = (threads, category) => {
             </div>
         `;
     }
+    threadView.innerHTML = html;
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; ${escapeHTML(category.title)}`;
 };
 
-// Rendrer innleggslisten
+// Rendrer innleggslisten (KORRIGERT MED MER ROBUST METODE)
 export const renderPosts = (posts, threadId) => {
-    postView.innerHTML = ``;
+    const loggedInUser = getUserFromToken();
+    let postsHTML = ''; // Start med en tom streng
+
     posts.forEach(post => {
-        postView.innerHTML += `
+        if (!post || !post.author) return;
+
+        // Bygg HTML for hvert innlegg og legg det til i strengen
+        postsHTML += `
             <div class="post">
                 <div class="post-user-info">
                     <img src="${SITE_BASE_URL}/avatars/${post.author.profileImage}" alt="Profilbilde" class="post-avatar">
@@ -106,13 +109,17 @@ export const renderPosts = (posts, threadId) => {
                 </div>
                 <div class="post-main">
                     <p class="post-content">${escapeHTML(post.content)}</p>
+                    ${loggedInUser && loggedInUser.username === post.author.username ?
+                        `<button class="delete-btn" data-post-id="${post.id}">Slett</button>` : ''
+                    }
                 </div>
             </div>
         `;
     });
 
+    let replyFormHTML = '';
     if (getUserFromToken()) {
-        postView.innerHTML += `
+        replyFormHTML = `
             <div class="group-box" style="margin-top: 20px;">
                 <span class="group-box-legend">Skriv et svar</span>
                 <form id="reply-form">
@@ -126,5 +133,8 @@ export const renderPosts = (posts, threadId) => {
             </div>
         `;
     }
+
+    // Sett innerHTML kun én gang for hele visningen
+    postView.innerHTML = postsHTML + replyFormHTML;
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; Tråd`;
 };
