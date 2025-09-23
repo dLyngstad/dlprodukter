@@ -171,3 +171,22 @@
 .forum-sidebar {
     flex: 0 0 280px; /* Fast bredde på 280px, vokser/krymper ikke */
 }
+
+
+/* --- NYE STILER FOR VALIDERINGSFEIL --- */
+
+.error-message {
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    border-radius: 3px;
+    padding: 8px;
+    margin: 10px 0 5px 0;
+    font-size: 13px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
