@@ -46,11 +46,40 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
 
         if (event.target.id === 'new-thread-form') {
-            //... (uendret)
+            const token = auth.getToken();
+            if (!token) {
+                alert("Du må være logget inn for å opprette en tråd.");
+                return;
+            }
+    
+            const title = document.getElementById('thread-title').value;
+            const content = document.getElementById('thread-content').value;
+            const categoryId = document.getElementById('categoryId').value;
+    
+            try {
+                const newThread = await api.createThread(title, content, categoryId, token);
+                window.location.hash = `#thread/${newThread.id}`;
+            } catch (error) {
+                alert(`Kunne ikke opprette tråd: ${error.message}`);
+            }
         }
 
         if (event.target.id === 'reply-form') {
-            //... (uendret)
+            const token = auth.getToken();
+            if (!token) {
+                alert("Du må være logget inn for å sende et svar.");
+                return;
+            }
+    
+            const content = document.getElementById('reply-content').value;
+            const threadId = document.getElementById('threadId').value;
+    
+            try {
+                await api.createPost(content, threadId, token);
+                router(); // Laster visningen på nytt
+            } catch (error) {
+                alert(`Kunne ikke sende svar: ${error.message}`);
+            }
         }
     });
 
@@ -111,11 +140,17 @@ document.addEventListener('DOMContentLoaded', () => {
         router();
     });
 
-    // --- INITIERING --- (ENDRING: Kaller den nye async-funksjonen)
+    // --- INITIERING --- (ENDRING: Mer robust initialisering)
     const initializePage = async () => {
-        await ui.updateAuthUI();
-        window.addEventListener('hashchange', router);
-        router();
+        try {
+            await ui.updateAuthUI();
+        } catch (error) {
+            console.error("Feil under initialisering av UI:", error);
+        } finally {
+            // Denne koden kjører uansett om try-blokken lyktes eller feilet
+            window.addEventListener('hashchange', router);
+            router();
+        }
     };
 
     initializePage();
