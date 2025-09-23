@@ -1,5 +1,5 @@
 import { getUserFromToken } from './auth.js';
-import { escapeHTML, SITE_BASE_URL } from './api.js';
+import { escapeHTML, SITE_BASE_URL, fetchProfile } from './api.js';
 
 // Referanser til alle elementer som skal manipuleres
 const categoryView = document.getElementById('category-view');
@@ -18,27 +18,39 @@ export const showView = (viewId) => {
     }
 };
 
-
 //For å displaye profilportalen
-
-export const renderProfileLink = () => {
-    const user = getUserFromToken(); //Henter bruker
+export const renderProfileLink = async () => {
     const container = document.getElementById('profile-link-container');
+    if (!container) return; // Avslutt hvis container ikke finnes
 
-    if (user && container) {
-        //Hvis brukeren er logget inn, lag en link
-        container.innerHTML = `
-            <a href="profile.html?user=${escapeHTML(user.username)}">Min Profil</a>
-        `;
+    const user = getUserFromToken();
 
-    } else if (container) {
-//Hvis ikke må containeren være tom
-    container.innerHTML= '';
+    if (user && user.username) {
+        try {
+            const profileData = await fetchProfile(user.username);
+            // Bruker default.jpg hvis brukeren ikke har et profilbilde
+            const avatarUrl = `${SITE_BASE_URL}/avatars/${profileData.profileImage || 'default.jpg'}`;
 
+            container.innerHTML = `
+                <div class="group-box profile-widget">
+                    <span class="group-box-legend">Min profil</span>
+                    <a href="profile.html?user=${escapeHTML(user.username)}" class="profile-widget-link">
+                        <img src="${avatarUrl}" alt="Profilbilde" class="profile-widget-avatar">
+                        <span>Gå til din profil</span>
+                    </a>
+                </div>
+            `;
+            container.classList.remove('hidden'); // Vis elementet
+        } catch (error) {
+            console.error("Kunne ikke hente profildata for widget:", error);
+            container.innerHTML = ''; // Tøm ved feil
+            container.classList.add('hidden');
+        }
+    } else {
+        container.innerHTML = ''; // Tøm hvis ikke innlogget
+        container.classList.add('hidden');
     }
 };
-
-
 
 // Viser/skjuler innlogging vs. innlogget status
 export const updateAuthUI = () => {
@@ -114,12 +126,12 @@ export const renderThreads = (threads, category) => {
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; ${escapeHTML(category.title)}`;
 };
 
-// Rendrer innleggslisten (MED LOGIKK FOR ORIGINAL-POST)
+// Rendrer innleggslisten
 export const renderPosts = (posts, threadId) => {
     const loggedInUser = getUserFromToken();
     let postsHTML = '';
 
-    posts.forEach((post, index) => { // Legger til 'index' for å vite hvilket innlegg vi er på
+    posts.forEach((post, index) => {
         if (!post || !post.author) return;
 
         let deleteButtonHTML = '';
@@ -127,10 +139,9 @@ export const renderPosts = (posts, threadId) => {
             deleteButtonHTML = `<button class="delete-btn" data-post-id="${post.id}">Slett</button>`;
         }
         
-        // NY LOGIKK: Sjekker om det er det første innlegget (index === 0)
         let postClasses = 'post';
         if (index === 0) {
-            postClasses += ' original-post'; // Legger til den nye klassen
+            postClasses += ' original-post';
         }
 
         postsHTML += `
