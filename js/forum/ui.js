@@ -18,17 +18,17 @@ export const showView = (viewId) => {
     }
 };
 
-//For å displaye profilportalen
+// Rendrer profil-widgeten
 export const renderProfileLink = async () => {
     const container = document.getElementById('profile-link-container');
-    if (!container) return; // Avslutt hvis container ikke finnes
+    if (!container) return; 
 
     const user = getUserFromToken();
 
     if (user && user.username) {
         try {
+            // Henter fersk profildata for å få riktig bilde
             const profileData = await fetchProfile(user.username);
-            // Bruker default.jpg hvis brukeren ikke har et profilbilde
             const avatarUrl = `${SITE_BASE_URL}/avatars/${profileData.profileImage || 'default.jpg'}`;
 
             container.innerHTML = `
@@ -40,20 +40,20 @@ export const renderProfileLink = async () => {
                     </a>
                 </div>
             `;
-            container.classList.remove('hidden'); // Vis elementet
+            container.classList.remove('hidden');
         } catch (error) {
             console.error("Kunne ikke hente profildata for widget:", error);
-            container.innerHTML = ''; // Tøm ved feil
+            container.innerHTML = '';
             container.classList.add('hidden');
         }
     } else {
-        container.innerHTML = ''; // Tøm hvis ikke innlogget
+        container.innerHTML = '';
         container.classList.add('hidden');
     }
 };
 
-// Viser/skjuler innlogging vs. innlogget status
-export const updateAuthUI = () => {
+// Viser/skjuler innlogging vs. innlogget status, og kaller renderProfileLink
+export const updateAuthUI = async () => {
     const user = getUserFromToken();
     if (user) {
         authContainer.classList.add('hidden');
@@ -63,6 +63,7 @@ export const updateAuthUI = () => {
         authContainer.classList.remove('hidden');
         userStatus.classList.add('hidden');
     }
+    await renderProfileLink(); // Sikrer at widgeten oppdateres
 };
 
 // Rendrer kategorilisten
@@ -177,3 +178,4 @@ export const renderPosts = (posts, threadId) => {
     postView.innerHTML = postsHTML + replyFormHTML;
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; Tråd`;
 };
+
