@@ -17,10 +17,8 @@
             <h1>Forum</h1>
         </div>
         <main>
-            <!-- NY LAYOUT-CONTAINER -->
             <div class="forum-layout">
 
-                <!-- HOVEDINNHOLD (VENSTRE) -->
                 <div class="forum-main-content">
                     <div id="user-status" class="hidden">
                         <p>Innlogget som: <strong id="username-display"></strong></p>
@@ -42,7 +40,6 @@
                                 <button type="submit" class="submit-btn">Logg inn</button>
                             </form>
                         </div>
-                        <!-- Registreringsboksen er flyttet herfra -->
                     </div>
 
                     <div id="breadcrumbs" style="margin-bottom: 15px;"></div>
@@ -51,7 +48,6 @@
                     <div id="post-view" class="hidden"></div>
                 </div>
 
-                <!-- SIDEBAR (HØYRE) -->
                 <aside class="forum-sidebar">
                     <div id="register-container">
                         <div class="group-box">
@@ -65,6 +61,13 @@
                                     <label for="register-password">Passord:</label>
                                     <input type="password" id="register-password" required>
                                 </div>
+                                <!-- NYTT FELT -->
+                                <div class="form-group">
+                                    <label for="register-password-confirm">Bekreft passord:</label>
+                                    <input type="password" id="register-password-confirm" required>
+                                </div>
+                                <!-- NY PARAGRAF FOR FEILMELDING -->
+                                <p id="password-error" class="error-message hidden"></p>
                                 <button type="submit" class="submit-btn">Registrer</button>
                             </form>
                         </div>
@@ -85,3 +88,4 @@
     </script>
 </body>
 </html>
+
