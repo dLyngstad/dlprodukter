@@ -190,3 +190,37 @@
     display: none;
 }
 
+/* --- NYE STILER FOR PROFIL-WIDGET --- */
+.profile-widget {
+    margin-bottom: 20px;
+}
+
+.profile-widget-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+}
+
+.profile-widget-link:hover {
+    background-color: #d1d1d1;
+}
+
+.profile-widget-avatar {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #808080;
+    background-color: #fff;
+    border-top-color: #000000;
+    border-left-color: #000000;
+    border-right-color: #FFFFFF;
+    border-bottom-color: #FFFFFF;
+    padding: 2px;
+}
+
+.profile-widget-link span {
+    font-weight: bold;
+}
+
