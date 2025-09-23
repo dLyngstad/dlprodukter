@@ -16,8 +16,8 @@ const POPUP_CONFIG = [
       blink: true,
       showCloseButton: true,
       contentHTML: `
-        <p>Få 10% rabatt på din neste bestilling med koden under:</p>
-        <div class="promo-code">HØSTTILBUD10</div>
+        <p>Sjekk ut vårt <a href="forum.html">forum</a>!.</p>
+        <div class="promo-code">dlprodukter</div>
       `
     }
   },
