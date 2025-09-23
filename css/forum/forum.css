@@ -156,3 +156,18 @@
 
 
 }
+/* --- NYE STILER FOR FORUM-LAYOUT --- */
+
+.forum-layout {
+    display: flex;
+    gap: 20px; /* Avstand mellom hovedinnhold og sidebar */
+}
+
+.forum-main-content {
+    flex: 1; /* Tar opp all tilgjengelig plass */
+    min-width: 0; /* Hindrer overflyt i flex-containere */
+}
+
+.forum-sidebar {
+    flex: 0 0 280px; /* Fast bredde på 280px, vokser/krymper ikke */
+}
