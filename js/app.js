@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     renderProducts();
     initializeCarousels();
-    renderProfileLink();
+   
 
 
     const productGrid = document.getElementById('product-grid');
