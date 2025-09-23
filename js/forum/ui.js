@@ -1,4 +1,3 @@
-Ui.js
 import { getUserFromToken } from './auth.js';
 import { escapeHTML, SITE_BASE_URL, fetchProfile } from './api.js';
 
