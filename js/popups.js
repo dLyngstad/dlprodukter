@@ -12,7 +12,7 @@ const POPUP_CONFIG = [
     pages: ['index.html', 'products.html'], // Vises KUN på disse sidene. Tom liste [] betyr alle sider.
     position: 'left',
     options: {
-      title: 'TILBUD!',
+      title: 'Forum!',
       blink: true,
       showCloseButton: true,
       contentHTML: `
