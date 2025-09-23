@@ -11,14 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.renderProfileLink(); // rendrer en profillink hvis man er innlogget
 
     // --- RUTER-LOGIKK ---
-    // Denne funksjonen leser URL-en og bestemmer hva som skal vises på siden
     const router = async () => {
         const hash = window.location.hash || '#/';
         
         try {
             if (hash.startsWith('#category/')) {
                 const categoryId = hash.substring(10);
-                // Henter både tråder og kategorier samtidig for effektivitet
                 const [threads, categories] = await Promise.all([
                     api.fetchThreadsByCategory(categoryId),
                     api.fetchCategories()
@@ -32,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ui.renderPosts(posts, threadId);
                 ui.showView('post-view');
             } else {
-                // Standardvisning hvis ingen spesifikk rute er valgt
                 const categories = await api.fetchCategories();
                 ui.renderCategories(categories);
                 ui.showView('category-view');
@@ -51,7 +48,7 @@ mainContent.addEventListener('submit', async (event) => {
 
     // Håndterer opprettelse av ny tråd
     if (event.target.id === 'new-thread-form') {
-        const token = auth.getToken(); // Sjekker for token kun for denne handlingen
+        const token = auth.getToken();
         if (!token) {
             alert("Du må være logget inn for å opprette en tråd.");
             return;
@@ -71,7 +68,7 @@ mainContent.addEventListener('submit', async (event) => {
 
     // Håndterer svar på en tråd
     if (event.target.id === 'reply-form') {
-        const token = auth.getToken(); // Sjekker for token kun for denne handlingen
+        const token = auth.getToken();
         if (!token) {
             alert("Du må være logget inn for å sende et svar.");
             return;
@@ -108,8 +105,22 @@ mainContent.addEventListener('submit', async (event) => {
     // Registrering
     registerForm.addEventListener('submit', async (event) => {
         event.preventDefault();
+        
+        // HENT VERDIER OG FEILMELDINGSELEMENT
         const username = document.getElementById('register-username').value;
         const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('register-password-confirm').value;
+        const errorElement = document.getElementById('password-error');
+
+        // VALIDER AT PASSORDENE ER LIKE
+        if (password !== confirmPassword) {
+            errorElement.textContent = 'Passordene er ikke like.';
+            errorElement.classList.remove('hidden'); // Vis feilmeldingen
+            return; // Avbryt innsending
+        }
+
+        errorElement.classList.add('hidden'); // Skjul feilmeldingen hvis alt er ok
+
         try {
             const result = await api.registerUser(username, password);
             alert(result.message);
@@ -127,9 +138,8 @@ mainContent.addEventListener('submit', async (event) => {
     });
 
     // --- INITIERING ---
-    window.addEventListener('hashchange', router); // Lytt etter URL-endringer
-    router(); // Kjør ruter når siden lastes for første gang
-    ui.updateAuthUI(); // Sjekk innloggingsstatus
-
+    window.addEventListener('hashchange', router);
+    router();
+    ui.updateAuthUI();
 
 });
