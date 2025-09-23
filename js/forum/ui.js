@@ -1,7 +1,8 @@
+Ui.js
 import { getUserFromToken } from './auth.js';
 import { escapeHTML, SITE_BASE_URL, fetchProfile } from './api.js';
 
-// ... (referanser til elementer som før) ...
+// Referanser til alle elementer som skal manipuleres
 const categoryView = document.getElementById('category-view');
 const threadView = document.getElementById('thread-view');
 const postView = document.getElementById('post-view');
@@ -10,21 +11,25 @@ const authContainer = document.getElementById('auth-container');
 const userStatus = document.getElementById('user-status');
 const usernameDisplay = document.getElementById('username-display');
 
-
+// Hjelpefunksjon for å bytte mellom hovedvisningene
 export const showView = (viewId) => {
-    // ... (uendret) ...
+    if (categoryView && threadView && postView) {
+        [categoryView, threadView, postView].forEach(view => view.classList.add('hidden'));
+        document.getElementById(viewId).classList.remove('hidden');
+    }
 };
 
-// ENDRING: Denne er nå async og henter profildata
+//For å displaye profilportalen
 export const renderProfileLink = async () => {
     const container = document.getElementById('profile-link-container');
-    if (!container) return; 
+    if (!container) return; // Avslutt hvis container ikke finnes
 
     const user = getUserFromToken();
 
     if (user && user.username) {
         try {
             const profileData = await fetchProfile(user.username);
+            // Bruker default.jpg hvis brukeren ikke har et profilbilde
             const avatarUrl = `${SITE_BASE_URL}/avatars/${profileData.profileImage || 'default.jpg'}`;
 
             container.innerHTML = `
@@ -36,20 +41,20 @@ export const renderProfileLink = async () => {
                     </a>
                 </div>
             `;
-            container.classList.remove('hidden');
+            container.classList.remove('hidden'); // Vis elementet
         } catch (error) {
             console.error("Kunne ikke hente profildata for widget:", error);
-            container.innerHTML = '';
+            container.innerHTML = ''; // Tøm ved feil
             container.classList.add('hidden');
         }
     } else {
-        container.innerHTML = '';
+        container.innerHTML = ''; // Tøm hvis ikke innlogget
         container.classList.add('hidden');
     }
 };
 
-// ENDRING: Denne funksjonen er nå async og kaller renderProfileLink
-export const updateAuthUI = async () => {
+// Viser/skjuler innlogging vs. innlogget status
+export const updateAuthUI = () => {
     const user = getUserFromToken();
     if (user) {
         authContainer.classList.add('hidden');
@@ -59,11 +64,9 @@ export const updateAuthUI = async () => {
         authContainer.classList.remove('hidden');
         userStatus.classList.add('hidden');
     }
-    // Kaller alltid denne for å sikre at profil-widgeten vises/skjules korrekt
-    await renderProfileLink();
 };
 
-// ... (resten av filen, renderCategories, renderThreads, etc. er uendret) ...
+// Rendrer kategorilisten
 export const renderCategories = (categories) => {
     let html = '<h2>Kategorier</h2>';
     categories.forEach(cat => {
@@ -84,6 +87,7 @@ export const renderCategories = (categories) => {
     breadcrumbs.innerHTML = `<a href="#/">Forum</a>`;
 };
 
+// Rendrer trådlisten
 export const renderThreads = (threads, category) => {
     let html = `<h2>Tråder i ${escapeHTML(category.title)}</h2>`;
     threads.forEach(thread => {
@@ -123,6 +127,7 @@ export const renderThreads = (threads, category) => {
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; ${escapeHTML(category.title)}`;
 };
 
+// Rendrer innleggslisten
 export const renderPosts = (posts, threadId) => {
     const loggedInUser = getUserFromToken();
     let postsHTML = '';
@@ -173,4 +178,3 @@ export const renderPosts = (posts, threadId) => {
     postView.innerHTML = postsHTML + replyFormHTML;
     breadcrumbs.innerHTML = `<a href="#/">Forum</a> &gt; Tråd`;
 };
-
