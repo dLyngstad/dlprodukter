@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum - DLProdukter</title>
-    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/forum/forum.css">
 </head>
 <body>
@@ -17,48 +17,61 @@
             <h1>Forum</h1>
         </div>
         <main>
-            <div id="user-status" class="hidden">
-                <p>Innlogget som: <strong id="username-display"></strong></p>
-                <button id="logout-btn" class="submit-btn">Logg ut</button>
-            </div>
+            <!-- NY LAYOUT-CONTAINER -->
+            <div class="forum-layout">
 
-            <div id="auth-container">
-                <div class="group-box">
-                    <span class="group-box-legend">Logg inn</span>
-                    <form id="login-form">
-                        <div class="form-group">
-                            <label for="login-username">Brukernavn:</label>
-                            <input type="text" id="login-username" required>
+                <!-- HOVEDINNHOLD (VENSTRE) -->
+                <div class="forum-main-content">
+                    <div id="user-status" class="hidden">
+                        <p>Innlogget som: <strong id="username-display"></strong></p>
+                        <button id="logout-btn" class="submit-btn">Logg ut</button>
+                    </div>
+
+                    <div id="auth-container">
+                        <div class="group-box">
+                            <span class="group-box-legend">Logg inn</span>
+                            <form id="login-form">
+                                <div class="form-group">
+                                    <label for="login-username">Brukernavn:</label>
+                                    <input type="text" id="login-username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="login-password">Passord:</label>
+                                    <input type="password" id="login-password" required>
+                                </div>
+                                <button type="submit" class="submit-btn">Logg inn</button>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="login-password">Passord:</label>
-                            <input type="password" id="login-password" required>
-                        </div>
-                        <button type="submit" class="submit-btn">Logg inn</button>
-                    </form>
+                        <!-- Registreringsboksen er flyttet herfra -->
+                    </div>
+
+                    <div id="breadcrumbs" style="margin-bottom: 15px;"></div>
+                    <div id="category-view"></div>
+                    <div id="thread-view" class="hidden"></div>
+                    <div id="post-view" class="hidden"></div>
                 </div>
-                <div class="group-box">
-                    <span class="group-box-legend">Eller registrer ny bruker</span>
-                    <form id="register-form">
-                        <div class="form-group">
-                            <label for="register-username">Brukernavn:</label>
-                            <input type="text" id="register-username" required>
+
+                <!-- SIDEBAR (HØYRE) -->
+                <aside class="forum-sidebar">
+                    <div id="register-container">
+                        <div class="group-box">
+                            <span class="group-box-legend">Registrer ny bruker</span>
+                            <form id="register-form">
+                                <div class="form-group">
+                                    <label for="register-username">Brukernavn:</label>
+                                    <input type="text" id="register-username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-password">Passord:</label>
+                                    <input type="password" id="register-password" required>
+                                </div>
+                                <button type="submit" class="submit-btn">Registrer</button>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="register-password">Passord:</label>
-                            <input type="password" id="register-password" required>
-                        </div>
-                        <button type="submit" class="submit-btn">Registrer</button>
-                    </form>
-                </div>
+                    </div>
+                </aside>
+
             </div>
-
-            <div id="breadcrumbs" style="margin-bottom: 15px;"></div>
-
-            <div id="category-view"></div>
-            <div id="thread-view" class="hidden"></div>
-            <div id="post-view" class="hidden"></div>
-            
         </main>
     </div>
 
