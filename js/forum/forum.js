@@ -106,17 +106,30 @@ mainContent.addEventListener('submit', async (event) => {
     registerForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         
-        // HENT VERDIER OG FEILMELDINGSELEMENT
         const username = document.getElementById('register-username').value;
         const password = document.getElementById('register-password').value;
         const confirmPassword = document.getElementById('register-password-confirm').value;
         const errorElement = document.getElementById('password-error');
 
-        // VALIDER AT PASSORDENE ER LIKE
+        // Valideringssjekk 1: Passordene må være like
         if (password !== confirmPassword) {
             errorElement.textContent = 'Passordene er ikke like.';
-            errorElement.classList.remove('hidden'); // Vis feilmeldingen
-            return; // Avbryt innsending
+            errorElement.classList.remove('hidden');
+            return;
+        }
+
+        // Valideringssjekk 2: Passordlengde
+        if (password.length < 6) {
+            errorElement.textContent = 'Passordet må være minst 6 tegn langt.';
+            errorElement.classList.remove('hidden');
+            return;
+        }
+
+        // Valideringssjekk 3: Passordet må inneholde et tall
+        if (!/\d/.test(password)) {
+            errorElement.textContent = 'Passordet må inneholde minst ett tall.';
+            errorElement.classList.remove('hidden');
+            return;
         }
 
         errorElement.classList.add('hidden'); // Skjul feilmeldingen hvis alt er ok
@@ -143,3 +156,4 @@ mainContent.addEventListener('submit', async (event) => {
     ui.updateAuthUI();
 
 });
+
