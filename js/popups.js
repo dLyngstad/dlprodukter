@@ -16,8 +16,8 @@ const POPUP_CONFIG = [
       blink: true,
       showCloseButton: true,
       contentHTML: `
-        <p>Sjekk ut forumet øverst til høyre!</p>
-        <div class="promo-code">dlprodukter</div>
+        <p>Sjekk ut vårt forum!</p>
+        <div class="promo-code"><a href="forum.html">Klikk her! Gå til forumet!</a></div>
       `
     }
   },
