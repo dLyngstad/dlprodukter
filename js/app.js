@@ -14,6 +14,45 @@ const loadHTML = (filePath, elementId) => {
             if (element) element.innerHTML = data;
         });
 };
+/**
+ * Initialiserer og viser besøkstelleren.
+ */
+const initializeVisitorCounter = async () => {
+    const counterElement = document.getElementById('visitor-count');
+    if (!counterElement) return;
+
+    // Definerer base-URL her for å holde det samlet
+    const API_BASE_URL = 'https://forum.dlprodukter.com/api';
+
+    try {
+        // 1. Inkrementer telleren på serveren. Vi trenger ikke vente på svaret.
+        fetch(`${API_BASE_URL}/visits/increment`, { method: 'POST' });
+
+        // 2. Hent det oppdaterte totale antallet.
+        const response = await fetch(`${API_BASE_URL}/visits`);
+        if (!response.ok) throw new Error('Kunne ikke hente data.');
+        
+        const data = await response.json();
+        
+        // 3. Oppdater teksten på siden.
+        counterElement.textContent = data.visits;
+
+    } catch (error) {
+        console.error('Feil med besøksteller:', error);
+        counterElement.textContent = 'N/A'; // Vis en feilmelding
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Bygger et produktkort med en bildekarusell.
@@ -108,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     renderProducts();
     initializeCarousels();
+    initializeVisitorCounter(); // NY LINJE
    
 
 
