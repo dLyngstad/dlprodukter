@@ -149,11 +149,11 @@
 
 /* Egen stil for det første innlegget i en tråd */
 .original-post {
-    background-color: #d1d1d1; /* En litt mørkere gråfarge */
-    border: 2px inset #808080; /* En litt tydeligere ramme */
- /* NYE LINJER FOR Å SKAPE SKILLE OG "INNDRAG" */
-    margin-bottom: 60px; /* Legger til ekstra luft under hovedinnlegget */
-
+  background-color: #d1d1d1; /* Behold distinkt bakgrunn */
+    margin-bottom: 30px; /* Legg til luft under original-posten */
+    padding-bottom: 20px; /* Mer luft internt før bunnlinjen */
+    /* Legg til en tydelig separator under original-posten */
+    border-bottom: 2px solid #808080;
 
 }
 /* --- NYE STILER FOR FORUM-LAYOUT --- */
