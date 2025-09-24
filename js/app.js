@@ -14,31 +14,35 @@ const loadHTML = (filePath, elementId) => {
 };
 
 /**
- * Initialiserer og viser besøkstelleren.
+ * Initialiserer og viser besøkstelleren på en mer pålitelig måte.
+ * Teller kun én gang per nettleser-sesjon.
  */
 const initializeVisitorCounter = async () => {
     const counterElement = document.getElementById('visitor-count');
     if (!counterElement) return;
 
-    // Definerer base-URL her for å holde det samlet
     const API_BASE_URL = 'https://forum.dlprodukter.com/api';
+    const hasBeenCounted = sessionStorage.getItem('visitorCounted');
 
     try {
-        // 1. Inkrementer telleren på serveren. Vi trenger ikke vente på svaret.
-        fetch(`${API_BASE_URL}/visits/increment`, { method: 'POST' });
+        // 1. Inkrementer KUN hvis brukeren ikke er telt i denne sesjonen
+        if (!hasBeenCounted) {
+            // Vi trenger ikke vente på svaret, men sender forespørselen
+            fetch(`${API_BASE_URL}/visits/increment`, { method: 'POST' });
+            // Sett en markør slik at vi ikke teller igjen
+            sessionStorage.setItem('visitorCounted', 'true');
+        }
 
-        // 2. Hent det oppdaterte totale antallet.
+        // 2. Hent ALLTID det nyeste tallet for å vise det
         const response = await fetch(`${API_BASE_URL}/visits`);
         if (!response.ok) throw new Error('Kunne ikke hente data.');
         
         const data = await response.json();
-        
-        // 3. Oppdater teksten på siden.
         counterElement.textContent = data.visits;
 
     } catch (error) {
         console.error('Feil med besøksteller:', error);
-        counterElement.textContent = 'N/A'; // Vis en feilmelding
+        counterElement.textContent = 'N/A';
     }
 };
 
@@ -128,12 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Denne koden kjører på ALLE sider
     loadHTML('partials/header.html', 'header-placeholder');
     loadHTML('partials/footer.html', 'footer-placeholder');
-    initializeVisitorCounter(); // Denne har en intern sjekk, så den er trygg
+    initializeVisitorCounter();
 
-    // === START PÅ FIKSEN ===
     // Koden nedenfor skal KUN kjøre på produktsiden
     const productGrid = document.getElementById('product-grid');
-    
     if (productGrid) {
         // Alt som har med produkter å gjøre, legges trygt inni her
         renderProducts();
@@ -184,7 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const zoomLens = document.getElementById('zoom-lens');
         const zoomResult = document.getElementById('zoom-result');
-        const zoomedImage = document.getElementById('zoomed-image'); // The new <img> tag
+        const zoomedImage = document.getElementById('zoomed-image');
         const imageSection = document.querySelector('.lightbox-image-section');
 
         let currentLightboxProduct = null;
@@ -201,17 +203,17 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const zoomFactor = 2.5;
 
-            const updateZoomDimensions = () => {
+            const updateZoom = () => {
                 zoomedImage.style.width = `${sourceImage.offsetWidth * zoomFactor}px`;
                 zoomedImage.style.height = `${sourceImage.offsetHeight * zoomFactor}px`;
                 lens.style.width = `${resultPane.offsetWidth / zoomFactor}px`;
                 lens.style.height = `${resultPane.offsetHeight / zoomFactor}px`;
             };
-            
+
             if (sourceImage.complete) {
-                updateZoomDimensions();
+                updateZoom();
             } else {
-                sourceImage.onload = updateZoomDimensions;
+                sourceImage.onload = updateZoom;
             }
 
             const moveLens = (e) => {
@@ -334,8 +336,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 closeLightbox();
             }
         });
-    } // === SLUTT PÅ FIKSEN ===
-
+    } // Slutten på if(productGrid)
+    
     const ecwidScript = document.createElement('script');
     ecwidScript.setAttribute('data-cfasync', 'false');
     ecwidScript.setAttribute('type', 'text/javascript');
