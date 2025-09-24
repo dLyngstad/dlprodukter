@@ -580,3 +580,52 @@ main {
         font-size: 28px;
     }
 }
+
+
+
+/* Layout for forside med sidekolonne */
+.main-layout {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+}
+
+.main-content {
+    flex-grow: 1; /* Hovedinnhold tar mesteparten av plassen */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-sidebar {
+    flex: 0 0 220px; /* Fast bredde for sidekolonnen */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Stil for navigasjonslinker i sidekolonnen */
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 8px;
+}
+
+.sidebar-nav a {
+    text-decoration: none;
+    color: #0000EE; /* Standard link-farge */
+}
+
+.sidebar-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Velkomstbanner-styling */
+.welcome-banner {
+    background-color: #f0f0f0; /* Litt annen bakgrunn for å skille seg ut */
+}
+
