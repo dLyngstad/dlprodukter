@@ -21,51 +21,62 @@
     <div class="window">
         
         <div class="title-bar">
-            <h1>Velkommen til DL Produkter</h1><br>
-            <p></p>
+            <h1>Hovedmeny - DL Produkter</h1>
         </div>
 
         <main>
-            <!-- NY OG RYDDIGERE LAYOUT-CONTAINER -->
+            <!-- HELT NY, KREATIV LAYOUT -->
             <div class="main-layout">
                 
-                <!-- Hovedinnhold venstre -->
-                <div class="main-content">
+                <!-- VENSTRE SIDEKOLONNE FOR NAVIGASJON -->
+                <aside class="main-sidebar">
                     
-                    <!-- 1. Velkomstboks -->
+                    <!-- Boks 1: Handlinger -->
                     <div class="group-box">
-                        <span class="group-box-legend">Velkommen!</span>
-                        <h1>Din leverandør av unike løsninger</h1>
-                        <p>Takk for at du stikker innom! Her finner du et utvalg av våre produkter og et aktivt forum for diskusjon og hjelp.</p>
+                        <span class="group-box-legend">Snarveier</span>
+                        <ul class="sidebar-nav">
+                            <li><a href="products.html">→ Utforsk produkter</a></li>
+                            <li><a href="forum.html">→ Gå til forumet</a></li>
+                            <li><a href="contact.html">→ Kontaktinformasjon</a></li>
+                        </ul>
                     </div>
 
-                    <!-- 2. Hoved-handlingsknapp (Call to Action) -->
+                    <!-- Boks 2: Statistikk -->
                     <div class="group-box">
-                        <span class="group-box-legend">Utforsk Butikken</span>
-                        <p>Se vårt utvalg av produkter og finn det du leter etter.</p>
-                        <div class="cta-container">
-                            <a href="products.html" class="button-link">
-                                <button class="cta-button">Se alle produkter</button>
-                            </a>
+                        <span class="group-box-legend">Systeminformasjon</span>
+                        <p style="margin-bottom: 5px;">Besøkende på siden:</p>
+                        <p id="visitor-count" style="font-size: 1.5em; font-weight: bold; text-align: center;">Laster...</p>
+                    </div>
+
+                    <!-- Boks 3: Logo -->
+                    <div class="group-box" style="text-align: center;">
+                        <span class="group-box-legend">Om Oss</span>
+                        <img src="Bilder/logo_dl_grey.png" alt="DL Produkter Logo" class="showcase-logo-img">
+                    </div>
+
+                </aside>
+
+                <!-- HØYRE HOVEDINNHOLD -->
+                <div class="main-content">
+                    
+                    <!-- Stor velkomstbanner -->
+                    <div class="group-box welcome-banner">
+                        <div>
+                            <h1>Velkommen til DL Produkter</h1>
+                            <p>Din kilde for unike løsninger og et engasjerende nettsamfunn. Vi er glade for å ha deg her!</p>
                         </div>
                     </div>
 
-                    <!-- 3. Logo/Partner-boks -->
-                    <div class="group-box logo-showcase">
-                         <span class="group-box-legend">Betalingsløsninger</span>
-                         <img src="Bilder/logo_dl_grey.png" alt="DL Produkter Logo" class="showcase-logo-img">
-                         <img src="Bilder/vippslogo.png" alt="Betal med Vipps!" class="showcase-logo-img" style="width:50%; height: auto;">
+                    <!-- Boks for betalingsløsninger -->
+                    <div class="group-box">
+                        <span class="group-box-legend">Trygg og Enkel Handel</span>
+                        <p>Vi benytter kjente og kjære betalingsløsninger for din sikkerhet.</p>
+                        <div class="logo-showcase" style="justify-content: center; margin-top: 15px;">
+                             <img src="Bilder/vippslogo.png" alt="Betal med Vipps!" class="showcase-logo-img" style="width:120px; height: auto;">
+                        </div>
                     </div>
 
                 </div>
-
-                <!-- SIDEKOLONNE HØYRE -->
-                <aside class="main-sidebar">
-                    <div class="group-box">
-                        <span class="group-box-legend">Statistikk</span>
-                        <p>Antall besøkende: <span id="visitor-count">Laster...</span></p>
-                    </div>
-                </aside>
 
             </div>
         </main>
