@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-      <link rel="icon" type="image/png" href="Bilder/favicon_3.png">
+    <link rel="icon" type="image/png" href="Bilder/favicon_3.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Velkommen til DL Produkter</title>
     
     <link rel="stylesheet" href="css/style.css"> 
-      <script src="js/analytics.js"></script>
+    <script src="js/analytics.js"></script>
 
     <link rel="stylesheet" href="css/promo-style.css">
     
     <script src="js/popups.js" defer></script>
     
-
 </head>
 <body>
 
@@ -23,41 +22,53 @@
         
         <div class="title-bar">
             <h1>Velkommen til DL Produkter</h1><br>
-<p></p>
+            <p></p>
         </div>
 
         <main>
+            <!-- NY OG RYDDIGERE LAYOUT-CONTAINER -->
+            <div class="main-layout">
+                
+                <!-- Hovedinnhold venstre -->
+                <div class="main-content">
+                    
+                    <!-- 1. Velkomstboks -->
+                    <div class="group-box">
+                        <span class="group-box-legend">Velkommen!</span>
+                        <h1>Din leverandør av unike løsninger</h1>
+                        <p>Takk for at du stikker innom! Her finner du et utvalg av våre produkter og et aktivt forum for diskusjon og hjelp.</p>
+                    </div>
 
-            <div class="group-box">
-                <span class="group-box-legend">Velkommen</span>
-                <p>Velkommen!</p>
+                    <!-- 2. Hoved-handlingsknapp (Call to Action) -->
+                    <div class="group-box">
+                        <span class="group-box-legend">Utforsk Butikken</span>
+                        <p>Se vårt utvalg av produkter og finn det du leter etter.</p>
+                        <div class="cta-container">
+                            <a href="products.html" class="button-link">
+                                <button class="cta-button">Se alle produkter</button>
+                            </a>
+                        </div>
+                    </div>
 
-                <h1>Takk for besøket!</h1>
-                    <p style="text-align: center; margin-top: 20px;">Antall besøkende: <strong id="visitor-count">Laster...</strong></p>
+                    <!-- 3. Logo/Partner-boks -->
+                    <div class="group-box logo-showcase">
+                         <span class="group-box-legend">Betalingsløsninger</span>
+                         <img src="Bilder/logo_dl_grey.png" alt="DL Produkter Logo" class="showcase-logo-img">
+                         <img src="Bilder/vippslogo.png" alt="Betal med Vipps!" class="showcase-logo-img" style="width:50%; height: auto;">
+                    </div>
 
-            </div>
-
-            <div class="group-box logo-showcase">
-                <img src="Bilder/logo_dl_grey.png" alt="DL Produkter Logo" class="showcase-logo-img">
-                  <img src="Bilder/vippslogo.png" alt="betal med vipps!" class="showcase-logo-img" style="width:50%; height: auto;">
-            </div>
-
-            <div class="group-box">
-                <span class="group-box-legend">Utforsk Butikken</span>
-                <div class="cta-container">
-                    <a href="products.html" class="button-link">
-                        <button class="cta-button">Se alle produkter</button>
-                              <div class="group-box">
-                                   Takk for besøket!
-                              </div>
-
-
-                    </a>
                 </div>
+
+                <!-- SIDEKOLONNE HØYRE -->
+                <aside class="main-sidebar">
+                    <div class="group-box">
+                        <span class="group-box-legend">Statistikk</span>
+                        <p>Antall besøkende: <span id="visitor-count">Laster...</span></p>
+                    </div>
+                </aside>
+
             </div>
-
         </main>
-
     </div> 
     
     <div id="my-cart"></div>
@@ -69,3 +80,4 @@
 
 </body>
 </html>
+
