@@ -18,5 +18,14 @@ const products = [
         description: 'Blander melk, fløte Osv.',
         moreInfo: 'Vårt beste produkt hittil!'
     },
+        {
+        id: 'prod_007',
+        ecwidId: '778180876',
+        name: 'Hodelykt',
+        price: '199',
+        images: ['Bilder/milkfrotherimages/milkfrotherA.png','Bilder/milkfrotherimages/milkfrotherB.png','Bilder/milkfrotherimages/milkfrotherC.png','Bilder/milkfrotherimages/milkfrotherD.png','Bilder/milkfrotherimages/milkfrotherE.png','Bilder/milkfrotherimages/milkfrotherF.png'],
+        description: 'Multifunctional headlight',
+        moreInfo: 'Headlight, with many purposes.'
+    },
    
 ];
