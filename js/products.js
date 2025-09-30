@@ -23,9 +23,29 @@ const products = [
         ecwidId: '778180876',
         name: 'Hodelykt',
         price: '199',
-        images: ['Bilder/milkfrotherimages/milkfrotherA.png','Bilder/milkfrotherimages/milkfrotherB.png','Bilder/milkfrotherimages/milkfrotherC.png','Bilder/milkfrotherimages/milkfrotherD.png','Bilder/milkfrotherimages/milkfrotherE.png','Bilder/milkfrotherimages/milkfrotherF.png'],
+        images: ['Bilder/favicon.png'],
         description: 'Multifunctional headlight',
         moreInfo: 'Headlight, with many purposes.'
     },
+    {
+        id: 'prod_008',
+        ecwidId: '778180876',
+        name: 'LED lenke',
+        price: '120',
+        images: ['Bilder/favicon.png'],
+        description: 'LED lenke du kan henge på veggen',
+        moreInfo: 'Går på strøm'
+    },
+        {
+        id: 'prod_009',
+        ecwidId: '778180876',
+        name: 'Alko blåser',
+        price: '320',
+        images: ['Bilder/favicon.png'],
+        description: 'Sjekke alkoholprosent i blodet',
+        moreInfo: 'OBS! Kan være unøyaktig. '
+    },
+   
+   
    
 ];
