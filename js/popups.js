@@ -21,13 +21,12 @@ const POPUP_CONFIG = [
       `
     }
   },
-
-    {
+  {
     id: 'nyvare',
     enabled: true,
     chance: 99, // Sjanse i prosent (1-100)
     pages: ['index.html'], // Vises KUN på disse sidene. Tom liste [] betyr alle sider.
-    position: 'right',
+    position: 'left',
     options: {
       title: 'Ny vare!',
       blink: true,
