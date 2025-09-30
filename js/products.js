@@ -14,7 +14,7 @@ const products = [
         ecwidId: '778175166',
         name: 'Melke skummer',
         price: '149',
-        images: ['Bilder/milkfrotherimages/milkfrotherA.png','Bilder/milkfrotherimages/milkfrotherB.png','Bilder/milkfrotherimages/milkfrotherC.png','Bilder/milkfrotherimages/milkfrotherD.png','Bilder/milkfrotherimages/milkfrotherE.png','Bilder/milkfrotherimages/milkfrotherF.png'],
+        images: ['Bilder/favicon.png'],
         description: 'Blander melk, fløte Osv.',
         moreInfo: 'Vårt beste produkt hittil!'
     },
