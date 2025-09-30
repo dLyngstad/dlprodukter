@@ -21,6 +21,23 @@ const POPUP_CONFIG = [
       `
     }
   },
+
+    {
+    id: 'nyvare',
+    enabled: true,
+    chance: 99, // Sjanse i prosent (1-100)
+    pages: ['index.html'], // Vises KUN på disse sidene. Tom liste [] betyr alle sider.
+    position: 'right',
+    options: {
+      title: 'Ny vare!',
+      blink: true,
+      showCloseButton: true,
+      contentHTML: `
+        <p>Vi har en ny vare!</p>
+        <div class="promo-code"> <img src="Bilder/favicon.png"><a href="products.html">Se produktet!</a></div>
+      `
+    }
+  },
   {
     id: 'delivery',
     enabled: true,
