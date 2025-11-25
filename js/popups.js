@@ -28,12 +28,12 @@ const POPUP_CONFIG = [
     pages: ['products.html'], // Vises KUN på produktsiden
     position: 'left',
     options: {
-      title: 'Gratis Levering!',
+      title: 'KONKURS SALG!',
       blink: true,
       showCloseButton: true,
       contentHTML: `
         <p style="text-align: center; font-size: 1.2em; padding-top: 15px;">
-          Gratis frakt på alle ordre til <strong>Trondheim</strong>!
+          Ting er billigere! Vi er snart KONKURS! Kjøp nå! <strong>Trondheim</strong>!
         </p>
       `
     }
