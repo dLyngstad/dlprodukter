@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printable Brochure Creator</title>
+    <style>
+        /* --- 1. SCREEN STYLING (How it looks in your browser) --- */
+        body {
+            background-color: #525659; /* Dark gray like a PDF viewer */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .toolbar {
+            background: #333;
+            width: 100%;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover { background-color: #0056b3; }
+
+        /* The Paper Sheet */
+        .brochure-page {
+            background: white;
+            width: 11in;
+            height: 8.5in;
+            margin: 40px 0;
+            display: flex;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* The Three Panels */
+        .panel {
+            flex: 1;
+            height: 100%;
+            padding: 0.5in; /* Safe margin for text */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px dashed #eee; /* Visual fold guide on screen */
+        }
+
+        .panel:last-child { border-right: none; }
+
+        /* Typography */
+        h1 { color: #222; margin-top: 0; font-size: 24pt; }
+        p { color: #444; line-height: 1.6; font-size: 11pt; }
+        
+        .front-cover { background-color: #f8f9fa; text-align: center; justify-content: center; }
+        .accent-bar { width: 50px; height: 5px; background: #007bff; margin: 20px auto; }
+
+        /* --- 2. PRINT STYLING (How it looks when downloaded/printed) --- */
+        @media print {
+            @page {
+                size: letter landscape;
+                margin: 0;
+            }
+            body { background: none; padding: 0; margin: 0; }
+            .toolbar { display: none !important; } /* Hides the button */
+            .brochure-page {
+                margin: 0;
+                box-shadow: none;
+                width: 11in;
+                height: 8.5in;
+                border: none;
+            }
+            .panel { border-right: none; } /* Hide fold guides when printing */
+            
+            /* High-quality color printing */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <button onclick="window.print()">Download / Print Brochure</button>
+    </div>
+
+    <div class="brochure-page">
+        
+        <section class="panel">
+            <h1>About Us</h1>
+            <p>This is the leftmost panel when the brochure is fully opened. It's a great place for your mission statement or a list of services.</p>
+            <ul>
+                <li>High Quality Design</li>
+                <li>Print Ready PDF</li>
+                <li>Fully Responsive</li>
+            </ul>
+        </section>
+
+        <section class="panel">
+            <h1>Contact</h1>
+            <p>The middle panel usually serves as the back of the brochure once it is folded.</p>
+            <p><strong>Address:</strong><br>123 Web Design Way<br>Internet, World 10101</p>
+            <p><strong>Email:</strong><br>hello@example.com</p>
+        </section>
+
+        <section class="panel front-cover">
+            <div class="accent-bar"></div>
+            <h1>MY BRAND</h1>
+            <p>Professional Brochure</p>
+            <div style="margin-top: 50px; font-style: italic; color: #777;">
+                (Fold here to see the front)
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
