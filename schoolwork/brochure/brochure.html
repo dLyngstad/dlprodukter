@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Master Gatefold</title>
+    <title>Professional Gatefold</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 </head>
@@ -10,38 +10,34 @@
 
     <div class="admin-sidebar">
         <h2>Gatefold Editor</h2>
-        <button class="print-btn" onclick="window.print()">
-            ⎙ Generate PDF
-        </button>
-        <p style="font-size: 12px; color: #aaa; margin-top: 15px;">
-            <strong>Mac Settings:</strong><br>
+        <button class="print-btn" onclick="window.print()">⎙ Generate PDF</button>
+        <p style="font-size: 11px; color: #aaa; margin-top: 15px;">
+            <b>IMPORTANT MAC SETTINGS:</b><br>
             1. Layout: <b>Landscape</b><br>
             2. Margins: <b>None</b><br>
-            3. Scale: <b>100%</b>
+            3. Scale: <b>100</b> (Not "Fit to Page")
         </p>
     </div>
 
     <div class="brochure-page">
         <div class="panel">
-            <div class="content"><h3>Left Flap</h3><p>Content for inside door.</p></div>
+            <div class="content"><h3>Left Flap</h3><p>Inside door content.</p></div>
         </div>
-        <div class="panel" style="width: 5.5in; border-right: 1px dashed #eee;">
-            <div class="content"><h3>Back Cover</h3><p>Address & Logo</p></div>
+        
+        <div class="panel back-cover">
+            <div class="content"><h3>Back Cover</h3><p>Address & Contact Details</p></div>
         </div>
-        <div class="panel" style="background: #f9f9f9;">
-            <div class="content" style="text-align: center; justify-content: center;">
-                <h1>FRONT COVER</h1>
-            </div>
+
+        <div class="panel front-cover">
+            <div class="content"><h1>FRONT COVER</h1></div>
         </div>
     </div>
 
     <div class="brochure-page">
-        <div class="inner-spread">
-            <div class="panel"><div class="content"><h3>Inside 1</h3></div></div>
-            <div class="panel"><div class="content"><h3>Inside 2</h3></div></div>
-            <div class="panel"><div class="content"><h3>Inside 3</h3></div></div>
-            <div class="panel"><div class="content"><h3>Inside 4</h3></div></div>
-        </div>
+        <div class="panel"><div class="content"><h3>Inside 1</h3></div></div>
+        <div class="panel"><div class="content"><h3>Inside 2</h3></div></div>
+        <div class="panel"><div class="content"><h3>Inside 3</h3></div></div>
+        <div class="panel"><div class="content"><h3>Inside 4</h3></div></div>
     </div>
 
 </body>
