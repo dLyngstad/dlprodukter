@@ -6,64 +6,71 @@
 }
 
 .print-btn {
-    background: #007bff; color: white; border: none; padding: 15px;
+    background: #27ae60; color: white; border: none; padding: 15px;
     width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer;
+    font-size: 16px;
 }
 
-/* --- BROCHURE BASE --- */
+/* --- THE VIEWPORT --- */
 body {
-    background-color: #444; margin: 0; padding-left: 240px;
+    background-color: #333; margin: 0; padding-left: 240px;
     display: flex; flex-direction: column; align-items: center;
 }
 
+/* The Paper Sheet */
 .brochure-page {
     background: white;
-    width: 11in;
-    height: 8.5in;
+    width: 11in;   /* Strictly 11 inches */
+    height: 8.5in; /* Strictly 8.5 inches */
     margin: 40px 0;
     display: flex;
     box-shadow: 0 0 50px rgba(0,0,0,0.5);
-    page-break-after: always; /* Forces new page in PDF */
-    overflow: hidden;
-}
-
-.panel {
-    flex: 1;
-    height: 100%;
+    position: relative;
     box-sizing: border-box;
-    border-right: 1px dashed #eee;
+    overflow: hidden;
+    page-break-after: always; /* Forces new page in PDF */
 }
 
-.content { padding: 0.5in; }
-
-/* --- PAGE 1 THEMES --- */
-.front-cover { background-color: #f8f9fa; text-align: center; justify-content: center; display: flex; flex-direction: column; }
-.back-cover { flex: 2; border-right: 1px dashed #eee; } /* Takes up the middle two panels */
-
-.logo-box {
-    width: 60px; height: 60px; background: #333; color: white;
-    margin: 0 auto 20px; line-height: 60px; font-weight: bold;
-}
-
-/* --- PAGE 2 THEMES --- */
-.inner-spread {
-    width: 100%;
-    padding: 1in;
-    background: linear-gradient(135deg, #ffffff 0%, #f1f1f1 100%);
+/* Force the 4-panel Gatefold grid */
+.panel {
+    width: 2.75in; /* 11 divided by 4 */
+    height: 8.5in;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    box-sizing: border-box;
+    border-right: 1px dashed #eee; /* Visual fold guide */
 }
 
-.feature-grid { display: flex; gap: 40px; margin-top: 40px; }
-.feature { flex: 1; border-top: 3px solid #007bff; padding-top: 20px; }
+.panel:last-child { border-right: none; }
 
-/* --- PRINT SETTINGS --- */
+.content {
+    padding: 0.4in;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Special styling for the Inside Spread (Page 2) */
+.inner-spread {
+    display: flex;
+    width: 11in;
+    height: 8.5in;
+    background: #fff;
+}
+
+/* --- PRINT ENGINE (The "Anti-Squash" Logic) --- */
 @media print {
-    @page { size: letter landscape; margin: 0; }
+    @page {
+        size: letter landscape; /* Forces the PDF to be Landscape */
+        margin: 0;
+    }
     body { padding: 0; margin: 0; background: white; }
     .admin-sidebar { display: none !important; }
-    .brochure-page { margin: 0; box-shadow: none; border: none; }
+    .brochure-page {
+        margin: 0 !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
     .panel { border-right: none; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
