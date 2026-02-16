@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Gatefold Brochure</title>
-    <link rel="stylesheet" href="bstyle.css">
-    <script src="bscript.js"></script>
+    <title>Double-Sided Gatefold</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
 
@@ -14,45 +14,45 @@
             ⎙ Generate Document
         </button>
         <div class="guide">
-            <p><strong>Gatefold Logic:</strong></p>
-            <ul>
-                <li>Panels 1 & 4 are the "Doors" (Front/Back)</li>
-                <li>Panels 2 & 3 are the "Inner Spread"</li>
-            </ul>
+            <p><strong>Printing Tip:</strong></p>
+            <p>Print page 1, then flip your paper over to print page 2 on the back.</p>
         </div>
     </div>
 
     <div class="brochure-page">
-        
-        <div class="panel door left-door">
+        <div class="panel door">
             <div class="content">
                 <h2>The Mission</h2>
-                <p>This is the left "wing" of your brochure that folds inward.</p>
+                <p>Visible when the left door is open.</p>
             </div>
         </div>
 
-        <div class="panel inner">
+        <div class="panel back-cover">
             <div class="content">
-                <h1>Main Feature</h1>
-                <p>This is the high-impact area revealed when the doors are opened.</p>
+                <h2>Contact & Location</h2>
+                <p>123 Business Lane<br>City, State 54321</p>
             </div>
         </div>
 
-        <div class="panel inner">
-            <div class="content">
-                <h1>Contact Us</h1>
-                <p>The second half of your main inside message.</p>
-            </div>
-        </div>
-
-        <div class="panel door right-door">
+        <div class="panel front-cover">
             <div class="content">
                 <div class="logo-box">LOGO</div>
-                <h1>FRONT COVER</h1>
-                <p>Company Tagline Here</p>
+                <h1>COMPANY NAME</h1>
+                <p>Excellence in Design</p>
             </div>
         </div>
+    </div>
 
+    <div class="brochure-page">
+        <div class="inner-spread">
+            <h1>Welcome to the Full Experience</h1>
+            <p>Because this is a gatefold, the inside is often one large, beautiful spread rather than separated columns. Use this space for high-impact photos or a detailed breakdown of your services.</p>
+            
+            <div class="feature-grid">
+                <div class="feature"><h3>Service A</h3><p>Details about what you do.</p></div>
+                <div class="feature"><h3>Service B</h3><p>Details about what you do.</p></div>
+            </div>
+        </div>
     </div>
 
 </body>
