@@ -1,0 +1,3 @@
+function downloadBrochure() {
+    window.print();
+}
