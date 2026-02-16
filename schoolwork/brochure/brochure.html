@@ -2,42 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Professional Gatefold</title>
+    <title>Professional Trifold</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 </head>
 <body>
 
     <div class="admin-sidebar">
-        <h2>Gatefold Editor</h2>
+        <h2>Trifold Editor</h2>
         <button class="print-btn" onclick="window.print()">⎙ Generate PDF</button>
         <p style="font-size: 11px; color: #aaa; margin-top: 15px;">
-            <b>IMPORTANT MAC SETTINGS:</b><br>
+            <b>MAC PRINT SETTINGS:</b><br>
             1. Layout: <b>Landscape</b><br>
             2. Margins: <b>None</b><br>
-            3. Scale: <b>100</b> (Not "Fit to Page")
+            3. Scale: <b>100</b>
         </p>
     </div>
 
     <div class="brochure-page">
         <div class="panel">
-            <div class="content"><h3>Left Flap</h3><p>Inside door content.</p></div>
+            <div class="content">
+                <h3>Inside Flap</h3>
+                <p>This panel folds inward first.</p>
+            </div>
         </div>
         
-        <div class="panel back-cover">
-            <div class="content"><h3>Back Cover</h3><p>Address & Contact Details</p></div>
+        <div class="panel back-panel">
+            <div class="content">
+                <h3>Back Cover</h3>
+                <p>Contact info and address.</p>
+            </div>
         </div>
 
         <div class="panel front-cover">
-            <div class="content"><h1>FRONT COVER</h1></div>
+            <div class="content">
+                <h1>FRONT COVER</h1>
+                <p>Company Name</p>
+            </div>
         </div>
     </div>
 
     <div class="brochure-page">
-        <div class="panel"><div class="content"><h3>Inside 1</h3></div></div>
-        <div class="panel"><div class="content"><h3>Inside 2</h3></div></div>
-        <div class="panel"><div class="content"><h3>Inside 3</h3></div></div>
-        <div class="panel"><div class="content"><h3>Inside 4</h3></div></div>
+        <div class="panel"><div class="content"><h3>Main Content 1</h3></div></div>
+        <div class="panel"><div class="content"><h3>Main Content 2</h3></div></div>
+        <div class="panel"><div class="content"><h3>Main Content 3</h3></div></div>
     </div>
 
 </body>
