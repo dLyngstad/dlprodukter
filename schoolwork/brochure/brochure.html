@@ -2,35 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Brochure</title>
-    <link rel="stylesheet" href="bstyle.css">
-    <script src="bscript.js"></script>
+    <title>Gatefold Brochure</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
 
     <div class="admin-sidebar">
-        <h2>Brochure Editor</h2>
+        <h2>Gatefold Editor</h2>
         <button class="print-btn" onclick="downloadBrochure()">
             ⎙ Generate Document
         </button>
-        <p>Edit your text in the HTML file, then click above to save as PDF.</p>
+        <div class="guide">
+            <p><strong>Gatefold Logic:</strong></p>
+            <ul>
+                <li>Panels 1 & 4 are the "Doors" (Front/Back)</li>
+                <li>Panels 2 & 3 are the "Inner Spread"</li>
+            </ul>
+        </div>
     </div>
 
     <div class="brochure-page">
         
-        <div class="panel">
-            <h1>Inside Left</h1>
-            <p>Your content here...</p>
+        <div class="panel door left-door">
+            <div class="content">
+                <h2>The Mission</h2>
+                <p>This is the left "wing" of your brochure that folds inward.</p>
+            </div>
         </div>
 
-        <div class="panel">
-            <h1>Back Cover</h1>
-            <p>Your address/contact info...</p>
+        <div class="panel inner">
+            <div class="content">
+                <h1>Main Feature</h1>
+                <p>This is the high-impact area revealed when the doors are opened.</p>
+            </div>
         </div>
 
-        <div class="panel" style="background: #f9f9f9; text-align: center; justify-content: center;">
-            <h1>FRONT COVER</h1>
-            <p>Your Tagline Here</p>
+        <div class="panel inner">
+            <div class="content">
+                <h1>Contact Us</h1>
+                <p>The second half of your main inside message.</p>
+            </div>
+        </div>
+
+        <div class="panel door right-door">
+            <div class="content">
+                <div class="logo-box">LOGO</div>
+                <h1>FRONT COVER</h1>
+                <p>Company Tagline Here</p>
+            </div>
         </div>
 
     </div>
