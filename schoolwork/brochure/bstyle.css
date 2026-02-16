@@ -8,7 +8,6 @@
 .print-btn {
     background: #27ae60; color: white; border: none; padding: 15px;
     width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer;
-    font-size: 16px;
 }
 
 /* --- THE VIEWPORT --- */
@@ -20,48 +19,42 @@ body {
 /* The Paper Sheet */
 .brochure-page {
     background: white;
-    width: 11in;   /* Strictly 11 inches */
-    height: 8.5in; /* Strictly 8.5 inches */
+    width: 11in;   /* Physical width */
+    height: 8.5in; /* Physical height */
     margin: 40px 0;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Forces exactly 4 panels */
     box-shadow: 0 0 50px rgba(0,0,0,0.5);
-    position: relative;
-    box-sizing: border-box;
     overflow: hidden;
-    page-break-after: always; /* Forces new page in PDF */
+    page-break-after: always;
 }
 
-/* Force the 4-panel Gatefold grid */
+/* --- PANEL STYLING --- */
 .panel {
-    width: 2.75in; /* 11 divided by 4 */
-    height: 8.5in;
+    height: 100%;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    border-right: 1px dashed #eee; /* Visual fold guide */
+    border-right: 1px dashed #eee; /* Fold lines */
 }
 
 .panel:last-child { border-right: none; }
 
 .content {
-    padding: 0.4in;
+    padding: 0.5in;
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-/* Special styling for the Inside Spread (Page 2) */
-.inner-spread {
-    display: flex;
-    width: 11in;
-    height: 8.5in;
-    background: #fff;
-}
+/* Specific Gatefold Sections */
+.back-cover { grid-column: span 2; } /* Middle section takes 2 panels */
+.front-cover { background: #fcfcfc; text-align: center; justify-content: center; }
 
 /* --- PRINT ENGINE (The "Anti-Squash" Logic) --- */
 @media print {
     @page {
-        size: letter landscape; /* Forces the PDF to be Landscape */
+        size: letter landscape;
         margin: 0;
     }
     body { padding: 0; margin: 0; background: white; }
@@ -69,7 +62,8 @@ body {
     .brochure-page {
         margin: 0 !important;
         box-shadow: none !important;
-        transform: none !important;
+        width: 11in !important;
+        height: 8.5in !important;
     }
     .panel { border-right: none; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
