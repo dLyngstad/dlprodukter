@@ -3,132 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printable Brochure Creator</title>
+    <title>Brochure Document Creator</title>
     <style>
-        /* --- 1. SCREEN STYLING (How it looks in your browser) --- */
-        body {
-            background-color: #525659; /* Dark gray like a PDF viewer */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
+        /* --- 1. THE SIDEBAR (Control Panel) --- */
+        .admin-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 200px;
+            background: #2c3e50;
+            padding: 30px 20px;
+            color: white;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            z-index: 999;
         }
 
-        .toolbar {
-            background: #333;
-            width: 100%;
-            padding: 15px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        .admin-sidebar h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
         }
 
-        button {
-            padding: 10px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            background-color: #007bff;
+        .download-btn {
+            background: #27ae60;
             color: white;
             border: none;
-            border-radius: 5px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
+            font-size: 14px;
+            transition: transform 0.1s, background 0.2s;
+            text-align: center;
         }
 
-        button:hover { background-color: #0056b3; }
+        .download-btn:hover { background: #2ecc71; transform: translateY(-2px); }
+        .download-btn:active { transform: translateY(0); }
 
-        /* The Paper Sheet */
+        /* --- 2. SCREEN VIEWPORT --- */
+        body {
+            background-color: #e9ecef;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding-left: 200px; /* Leaves room for the sidebar */
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* The Paper */
         .brochure-page {
             background: white;
             width: 11in;
             height: 8.5in;
-            margin: 40px 0;
+            margin: 50px;
             display: flex;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             box-sizing: border-box;
-            overflow: hidden;
+            position: relative;
         }
 
-        /* The Three Panels */
+        /* The Panels */
         .panel {
             flex: 1;
-            height: 100%;
-            padding: 0.5in; /* Safe margin for text */
+            padding: 0.6in;
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px dashed #eee; /* Visual fold guide on screen */
+            border-right: 1px dashed #ddd; /* Visual fold line */
+            position: relative;
         }
 
         .panel:last-child { border-right: none; }
 
-        /* Typography */
-        h1 { color: #222; margin-top: 0; font-size: 24pt; }
-        p { color: #444; line-height: 1.6; font-size: 11pt; }
-        
-        .front-cover { background-color: #f8f9fa; text-align: center; justify-content: center; }
-        .accent-bar { width: 50px; height: 5px; background: #007bff; margin: 20px auto; }
+        /* Typography Styles */
+        h1 { font-size: 28pt; margin-top: 0; color: #2c3e50; }
+        p { font-size: 12pt; line-height: 1.6; color: #555; }
 
-        /* --- 2. PRINT STYLING (How it looks when downloaded/printed) --- */
+        /* Cover Specific Styling */
+        .cover {
+            background: #fdfdfd;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* --- 3. PRINT LOGIC (Hides everything but the paper) --- */
         @media print {
             @page {
                 size: letter landscape;
                 margin: 0;
             }
-            body { background: none; padding: 0; margin: 0; }
-            .toolbar { display: none !important; } /* Hides the button */
+            body { padding: 0; background: white; }
+            .admin-sidebar { display: none !important; }
             .brochure-page {
                 margin: 0;
                 box-shadow: none;
                 width: 11in;
                 height: 8.5in;
-                border: none;
             }
-            .panel { border-right: none; } /* Hide fold guides when printing */
-            
-            /* High-quality color printing */
+            .panel { border-right: none; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
 </head>
 <body>
 
-    <div class="toolbar">
-        <button onclick="window.print()">Download / Print Brochure</button>
+    <div class="admin-sidebar">
+        <h3>Document Controls</h3>
+        <button class="download-btn" onclick="window.print()">
+            ⎙ Download PDF
+        </button>
+        <p style="font-size: 11px; color: #bdc3c7; line-height: 1.4;">
+            Tip: In the print menu, set 'Margins' to 'None' and 'Background Graphics' to 'On'.
+        </p>
     </div>
 
     <div class="brochure-page">
         
-        <section class="panel">
-            <h1>About Us</h1>
-            <p>This is the leftmost panel when the brochure is fully opened. It's a great place for your mission statement or a list of services.</p>
-            <ul>
-                <li>High Quality Design</li>
-                <li>Print Ready PDF</li>
-                <li>Fully Responsive</li>
-            </ul>
-        </section>
+        <div class="panel">
+            <h1>Our Mission</h1>
+            <p>Paste your content here for the inside-left flap.</p>
+        </div>
 
-        <section class="panel">
-            <h1>Contact</h1>
-            <p>The middle panel usually serves as the back of the brochure once it is folded.</p>
-            <p><strong>Address:</strong><br>123 Web Design Way<br>Internet, World 10101</p>
-            <p><strong>Email:</strong><br>hello@example.com</p>
-        </section>
+        <div class="panel">
+            <h1>Contact Us</h1>
+            <p>Middle panel (Back of brochure).</p>
+            <p><strong>Phone:</strong> 555-0199<br><strong>Web:</strong> yoursite.com</p>
+        </div>
 
-        <section class="panel front-cover">
-            <div class="accent-bar"></div>
-            <h1>MY BRAND</h1>
-            <p>Professional Brochure</p>
-            <div style="margin-top: 50px; font-style: italic; color: #777;">
-                (Fold here to see the front)
-            </div>
-        </section>
+        <div class="panel cover">
+            <div class="logo-placeholder"></div>
+            <h1>THE FRONT</h1>
+            <p>Subheading or Tagline</p>
+        </div>
 
     </div>
 
