@@ -8,6 +8,7 @@
 .print-btn {
     background: #27ae60; color: white; border: none; padding: 15px;
     width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer;
+    font-size: 16px;
 }
 
 /* --- THE VIEWPORT --- */
@@ -19,11 +20,11 @@ body {
 /* The Paper Sheet */
 .brochure-page {
     background: white;
-    width: 11in;   /* Physical width */
-    height: 8.5in; /* Physical height */
+    width: 11in;   /* Physical Landscape Width */
+    height: 8.5in; /* Physical Landscape Height */
     margin: 40px 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Forces exactly 4 panels */
+    grid-template-columns: repeat(3, 1fr); /* 3 Equal Panels */
     box-shadow: 0 0 50px rgba(0,0,0,0.5);
     overflow: hidden;
     page-break-after: always;
@@ -35,7 +36,7 @@ body {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    border-right: 1px dashed #eee; /* Fold lines */
+    border-right: 1px dashed #eee; /* Visual fold guides */
 }
 
 .panel:last-child { border-right: none; }
@@ -47,11 +48,11 @@ body {
     height: 100%;
 }
 
-/* Specific Gatefold Sections */
-.back-cover { grid-column: span 2; } /* Middle section takes 2 panels */
+/* Special Themes */
 .front-cover { background: #fcfcfc; text-align: center; justify-content: center; }
+.back-panel { background: #fdfdfd; }
 
-/* --- PRINT ENGINE (The "Anti-Squash" Logic) --- */
+/* --- PRINT ENGINE --- */
 @media print {
     @page {
         size: letter landscape;
