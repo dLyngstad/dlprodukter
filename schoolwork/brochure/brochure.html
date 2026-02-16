@@ -2,56 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Double-Sided Gatefold</title>
-    <link rel="stylesheet" href="bstyle.css">
-    <script src="bscript.js"></script>
+    <title>Master Gatefold</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
 
     <div class="admin-sidebar">
         <h2>Gatefold Editor</h2>
-        <button class="print-btn" onclick="downloadBrochure()">
-            ⎙ Generate Document
+        <button class="print-btn" onclick="window.print()">
+            ⎙ Generate PDF
         </button>
-        <div class="guide">
-            <p><strong>Printing Tip:</strong></p>
-            <p>Print page 1, then flip your paper over to print page 2 on the back.</p>
-        </div>
+        <p style="font-size: 12px; color: #aaa; margin-top: 15px;">
+            <strong>Mac Settings:</strong><br>
+            1. Layout: <b>Landscape</b><br>
+            2. Margins: <b>None</b><br>
+            3. Scale: <b>100%</b>
+        </p>
     </div>
 
     <div class="brochure-page">
-        <div class="panel door">
-            <div class="content">
-                <h2>The Mission</h2>
-                <p>Visible when the left door is open.</p>
-            </div>
+        <div class="panel">
+            <div class="content"><h3>Left Flap</h3><p>Content for inside door.</p></div>
         </div>
-
-        <div class="panel back-cover">
-            <div class="content">
-                <h2>Contact & Location</h2>
-                <p>123 Business Lane<br>City, State 54321</p>
-            </div>
+        <div class="panel" style="width: 5.5in; border-right: 1px dashed #eee;">
+            <div class="content"><h3>Back Cover</h3><p>Address & Logo</p></div>
         </div>
-
-        <div class="panel front-cover">
-            <div class="content">
-                <div class="logo-box">LOGO</div>
-                <h1>COMPANY NAME</h1>
-                <p>Excellence in Design</p>
+        <div class="panel" style="background: #f9f9f9;">
+            <div class="content" style="text-align: center; justify-content: center;">
+                <h1>FRONT COVER</h1>
             </div>
         </div>
     </div>
 
     <div class="brochure-page">
         <div class="inner-spread">
-            <h1>Welcome to the Full Experience</h1>
-            <p>Because this is a gatefold, the inside is often one large, beautiful spread rather than separated columns. Use this space for high-impact photos or a detailed breakdown of your services.</p>
-            
-            <div class="feature-grid">
-                <div class="feature"><h3>Service A</h3><p>Details about what you do.</p></div>
-                <div class="feature"><h3>Service B</h3><p>Details about what you do.</p></div>
-            </div>
+            <div class="panel"><div class="content"><h3>Inside 1</h3></div></div>
+            <div class="panel"><div class="content"><h3>Inside 2</h3></div></div>
+            <div class="panel"><div class="content"><h3>Inside 3</h3></div></div>
+            <div class="panel"><div class="content"><h3>Inside 4</h3></div></div>
         </div>
     </div>
 
