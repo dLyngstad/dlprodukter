@@ -84,3 +84,8 @@ function loadProject(event) {
     };
     reader.readAsText(file);
 }
+
+function changeTextColor(color) {
+    // Dette endrer fargen på den teksten brukeren har markert
+    document.execCommand('foreColor', false, color);
+}
