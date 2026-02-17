@@ -11,7 +11,11 @@ document.addEventListener('selectionchange', () => {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-        const closestContent = range.commonAncestorContainer.parentElement.closest('.content');
+        // Look for the closest .content div to ensure we are in a valid panel
+        const closestContent = range.commonAncestorContainer.nodeType === 1 
+            ? range.commonAncestorContainer.closest('.content') 
+            : range.commonAncestorContainer.parentElement.closest('.content');
+            
         if (closestContent) {
             savedRange = range;
         }
@@ -32,7 +36,7 @@ function insertImageAtCursor(input) {
         reader.onload = function(e) {
             const img = document.createElement('img');
             img.src = e.target.result;
-            img.className = 'inserted-image';
+            img.className = 'inserted-image'; // Added for styling
             img.style.width = "100%"; // Default size
             
             const selection = window.getSelection();
@@ -48,14 +52,17 @@ function insertImageAtCursor(input) {
     }
 }
 
-// NEW: IMAGE RESIZE ON CLICK
+// --- REPAIRED IMAGE RESIZE LOGIC ---
 document.addEventListener('click', function(e) {
-    if (e.target.tagName === 'IMG' && 
-        e.target.classList.contains('inserted-image') && 
-        e.target.closest('.content[contenteditable="true"]')) {
+    // Check if the clicked element is an image AND is inside a brochure panel
+    if (e.target.tagName === 'IMG' && e.target.closest('.content')) {
+        
+        // Prevent browser from doing its own image selection
+        e.preventDefault(); 
         
         const currentWidthStr = e.target.style.width || '100%';
         const currentVal = parseInt(currentWidthStr.replace('%', ''));
+        
         const newWidth = prompt("Enter new image width in percentage (1-100):", currentVal);
 
         if (newWidth !== null) {
@@ -106,11 +113,10 @@ function loadProject(event) {
                 const area = document.getElementById(panelId);
                 if (area) {
                     area.innerHTML = projectData.panels[panelId];
-                    // FIX: Force editable state after loading
-                    area.contentEditable = "true";
+                    area.contentEditable = "true"; // Ensure it stays editable
                 }
             }
-            alert("Project Loaded! You can now click and edit directly.");
+            alert("Project Loaded!");
         } catch (err) { 
             alert("Error loading file: " + err); 
         }
