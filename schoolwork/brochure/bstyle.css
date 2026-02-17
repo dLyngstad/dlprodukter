@@ -42,3 +42,14 @@ p { line-height: 1.6; color: #333; font-size: 11pt; }
     .admin-sidebar { display: none !important; }
     .brochure-page { margin: 0 auto !important; transform: scale(0.95); transform-origin: top center; border: none; }
 }
+
+.image-container {
+    width: 100%;
+    min-height: 100px;
+    background: #f0f0f0; /* Light gray box shows where image will sit */
+    border: 1px dashed #ccc;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
