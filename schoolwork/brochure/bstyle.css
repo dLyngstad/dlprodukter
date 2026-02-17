@@ -100,3 +100,36 @@ p { line-height: 1.6; color: #333; font-size: 11pt; }
 .save-btn:hover {
     background: #2980b9;
 }
+
+
+/* ... Keep your existing styles ... */
+
+.image-btn {
+    background: #e67e22; /* Orange color to stand out */
+    color: white; border: none; padding: 12px;
+    width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer;
+    margin-bottom: 10px;
+}
+.image-btn:hover { background: #d35400; }
+
+/* Styles for the images you drop in */
+.inserted-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+/* When you click an image to "select" it (visual feedback) */
+.inserted-image:hover {
+    outline: 2px solid #27ae60;
+}
+
+/* ... Keep your existing PRINT styles ... */
+@media print {
+    /* Ensure images print! */
+    img { max-width: 100% !important; display: block; }
+    /* ... rest of your print css ... */
+}
