@@ -1,70 +1,44 @@
 /* --- UI/SIDEBAR --- */
 .admin-sidebar {
-    position: fixed; left: 0; top: 0; bottom: 0; width: 240px;
-    background: #1a1a1a; padding: 30px 20px; color: white;
-    z-index: 1000; font-family: sans-serif;
+    position: fixed; left: 0; top: 0; bottom: 0; width: 260px;
+    background: #1a1a1a; padding: 25px; color: white;
+    z-index: 1000; font-family: 'Inter', sans-serif; overflow-y: auto;
 }
-
+.admin-sidebar h2 { font-size: 18px; color: #27ae60; border-bottom: 1px solid #333; padding-bottom: 10px; }
+.control-group { margin-top: 15px; font-size: 12px; }
 .print-btn {
     background: #27ae60; color: white; border: none; padding: 15px;
-    width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer;
+    width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 25px;
 }
 
 /* --- THE VIEWPORT --- */
 body {
-    background-color: #333; margin: 0; padding-left: 240px;
-    display: flex; flex-direction: column; align-items: center;
+    background-color: #333; margin: 0; padding-left: 260px;
+    display: flex; flex-direction: column; align-items: center; font-family: 'Georgia', serif;
 }
+
+[contenteditable="true"]:hover { outline: 2px dashed #27ae60; outline-offset: 4px; }
 
 .brochure-page {
-    background: white;
-    width: 11in;
-    height: 8.5in;
-    margin: 40px 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    box-shadow: 0 0 50px rgba(0,0,0,0.5);
-    overflow: hidden;
-    page-break-after: always;
+    background: white; width: 11in; height: 8.5in;
+    margin: 40px 0; display: grid; grid-template-columns: repeat(3, 1fr);
+    box-shadow: 0 0 50px rgba(0,0,0,0.5); overflow: hidden;
+    page-break-after: always; position: relative;
 }
 
-.panel {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-}
+.panel { height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+.content { padding: 0.7in; display: flex; flex-direction: column; height: 100%; }
 
-/* INCREASED PADDING: This keeps text away from the folds and edges */
-.content {
-    padding: 0.6in; /* Increased from 0.4in to keep text safe */
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
+h1, h2, h3 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-top: 0; }
+p { line-height: 1.6; color: #333; font-size: 11pt; }
 
-/* --- THE PRINT FIX --- */
+/* --- IMAGE HANDLING --- */
+.image-container { width: 100%; margin: 15px 0; border: 1px solid #eee; }
+.image-container img { width: 100%; height: auto; display: block; }
+
 @media print {
-    @page {
-        size: letter landscape;
-        margin: 0.25in; /* Adds a small physical margin to the PDF */
-    }
-    body { 
-        padding: 0; 
-        margin: 0; 
-        background: white; 
-        display: block; /* Reset flex for printing */
-    }
+    @page { size: letter landscape; margin: 0.25in; }
+    body { padding: 0; margin: 0; background: white; display: block; }
     .admin-sidebar { display: none !important; }
-    
-    .brochure-page {
-        margin: 0 auto !important;
-        box-shadow: none !important;
-        /* SCALE DOWN: This shrinks the 11x8.5 design to fit inside the margins */
-        transform: scale(0.95); 
-        transform-origin: top center;
-        border: 1px solid #eee; /* Light line to help you see the edges */
-    }
-    
-    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .brochure-page { margin: 0 auto !important; transform: scale(0.95); transform-origin: top center; border: none; }
 }
