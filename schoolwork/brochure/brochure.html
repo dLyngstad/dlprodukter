@@ -22,6 +22,14 @@
         <p style="font-size: 11px; color: #aaa; margin-top: 15px;">
             <b>PRO TIP:</b> Click any text to edit. Bold text using Cmd+B.
         </p>
+        
+<div class="control-group">
+    <button class="save-btn" onclick="saveProject()">💾 Save Project File</button>
+    <label style="margin-top:10px;">Load Project File:</label>
+    <input type="file" id="load-project" accept=".json" onchange="loadProject(event)">
+</div>
+
+        
     </div>
 
     <div class="brochure-page">
