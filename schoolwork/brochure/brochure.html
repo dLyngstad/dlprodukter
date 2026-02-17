@@ -5,6 +5,22 @@
     <title>Science in Motion</title>
     <link rel="stylesheet" href="bstyle.css">
     <script src="bscript.js"></script>
+    <style>
+        /* A4 Override for your specific paper size */
+        @media print {
+            @page { size: A4 landscape; margin: 0; }
+            .brochure-page { 
+                width: 297mm !important; 
+                height: 209mm !important; /* Slightly less than 210 to prevent blank page overflow */
+                margin: 0 auto !important;
+            }
+        }
+        /* Screen preview adjustment for A4 */
+        .brochure-page {
+            width: 297mm;
+            height: 210mm;
+        }
+    </style>
 </head>
 <body>
 
@@ -27,9 +43,9 @@
     </div>
 
     <div class="brochure-page">
+        
         <div class="panel"><div class="content" id="p1-c1">
             <h3 contenteditable="true" style="color:#27ae60;">Why Gesture?</h3>
-            <p contenteditable="true">Click here and try inserting an image between these lines!</p>
             <p contenteditable="true">Gesticulation provides a spatial scaffold for abstract thoughts.</p>
         </div></div>
         
@@ -44,8 +60,10 @@
                 <p contenteditable="true">Mastering Gesticulation</p>
             </div>
         </div>
+
     </div> 
     <div class="brochure-page">
+        
         <div class="panel"><div class="content" id="p2-c1">
             <h2 contenteditable="true">1. Scale</h2>
             <p contenteditable="true">Place diagrams here to show the Z-Axis pull.</p>
@@ -60,6 +78,7 @@
             <h2 contenteditable="true">3. Forces</h2>
             <p contenteditable="true">Use muscle tension examples here.</p>
         </div></div>
+
     </div>
     </body>
 </html>
