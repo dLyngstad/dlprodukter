@@ -1,11 +1,7 @@
 function downloadBrochure() {
     window.print();
 }
-// Test to see if the file is connected
-console.log("Script loaded successfully!");
-
 function downloadBrochure() {
-    // We give the browser a moment to 'solidify' images before printing
     window.print();
 }
 
@@ -17,7 +13,7 @@ function uploadImage(panelId) {
         const reader = new FileReader();
         
         reader.onload = function(e) {
-            // Find or create the image container
+            // Check if an image container already exists
             let container = targetPanel.querySelector('.image-container');
             if (!container) {
                 container = document.createElement('div');
@@ -25,9 +21,8 @@ function uploadImage(panelId) {
                 targetPanel.appendChild(container);
             }
             
-            // Clear old image and add new one
-            container.innerHTML = `<img src="${e.target.result}" style="width:100%; height:auto; display:block; margin:10px 0;">`;
-            console.log("Image injected into " + panelId);
+            // Inject the image as a base64 string
+            container.innerHTML = `<img src="${e.target.result}" style="width:100%; height:auto; display:block; margin:15px 0;">`;
         };
         
         reader.readAsDataURL(input.files[0]);
