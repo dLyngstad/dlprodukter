@@ -33,6 +33,14 @@
             <input type="file" id="global-image-input" style="display: none;" onchange="insertImageAtCursor(this)">
         </div>
 
+        <div class="control-group" style="border-top: 1px solid #444; padding-top: 15px; margin-top: 15px;">
+    <label>Text Color:</label>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="color" id="text-color-picker" onchange="changeTextColor(this.value)" style="width: 50px; height: 30px; border: none; cursor: pointer;">
+        <span style="font-size: 10px; color: #aaa;">Highlight text first!</span>
+    </div>
+</div>
+
         <div class="control-group" style="border-top: 1px solid #444; padding-top: 20px; margin-top: 20px;">
             <button class="save-btn" onclick="saveProject()">💾 Save Project</button>
             <label style="margin-top:10px; font-size: 11px;">Load Project File:</label>
