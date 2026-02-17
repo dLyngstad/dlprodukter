@@ -86,3 +86,19 @@ p { line-height: 1.6; color: #333; font-size: 11pt; }
     /* 4. Force colors and images */
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
+
+
+input[type="color"] {
+    background: transparent;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+/* Sørger for at fargen vi velger faktisk vises i PDF-en */
+@media print {
+    [contenteditable="true"] {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
