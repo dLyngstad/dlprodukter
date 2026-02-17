@@ -1,9 +1,51 @@
+function saveProject() {
+    const projectData = {
+        panels: {}
+    };
+
+    // Capture all text and images from each content area
+    const contentAreas = document.querySelectorAll('.content');
+    contentAreas.forEach(area => {
+        projectData.panels[area.id] = area.innerHTML;
+    });
+
+    const blob = new Blob([JSON.stringify(projectData)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'my_brochure_project.json';
+    link.click();
+}
+
+function loadProject(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const projectData = JSON.parse(e.target.result);
+        
+        for (const panelId in projectData.panels) {
+            const area = document.getElementById(panelId);
+            if (area) {
+                area.innerHTML = projectData.panels[panelId];
+            }
+        }
+        alert("Project Loaded Successfully!");
+    };
+    reader.readAsText(file);
+}
+
+// Keep your existing uploadImage and downloadBrochure functions below this!
+
+
+
+
+
 function downloadBrochure() {
     window.print();
 }
-function downloadBrochure() {
-    window.print();
-}
+
 
 function uploadImage(panelId) {
     const input = document.getElementById(`file-${panelId}`);
