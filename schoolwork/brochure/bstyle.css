@@ -29,7 +29,7 @@ body {
 .panel { height: 100%; box-sizing: border-box; display: flex; flex-direction: column; border-right: 1px dashed #eee; }
 .panel:last-child { border-right: none; }
 
-/* REDIGERINGS-SONE */
+/* EDITABLE ZONE */
 .content { 
     padding: 0.7in; display: flex; flex-direction: column; height: 100%; 
     outline: none; cursor: text;
@@ -46,9 +46,19 @@ body {
 h1, h2, h3 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-top: 0; }
 p { line-height: 1.6; color: #333; font-size: 11pt; }
 
-.inserted-image { max-width: 100%; height: auto; display: block; margin: 10px 0; border-radius: 4px; }
+/* IMAGES */
+.inserted-image { 
+    max-width: 100%; height: auto; display: block; 
+    margin: 10px 0; border-radius: 4px; 
+    cursor: pointer; transition: opacity 0.2s;
+}
 
-/* PRINT ENGINE */
+.inserted-image:hover {
+    opacity: 0.8;
+    outline: 2px solid #3498db;
+}
+
+/* PRINT ENGINE (THE NUCLEAR FIX) */
 @media print {
     @page { size: A4 landscape; margin: 0; }
     
@@ -66,6 +76,7 @@ p { line-height: 1.6; color: #333; font-size: 11pt; }
         width: 297mm !important; height: 209mm !important;
         page-break-after: always !important; 
         break-after: page !important;
+        box-shadow: none !important;
     }
 
     .panel { border: none !important; }
