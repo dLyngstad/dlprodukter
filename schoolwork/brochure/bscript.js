@@ -1,16 +1,17 @@
-// 1. PRINT FUNCTION
+// 1. UTSKRIFT
 function downloadBrochure() {
     window.print();
 }
 
-// 2. IMAGE HANDLING
+// 2. BILDEHÅNDTERING
 let savedRange = null;
 
 document.addEventListener('selectionchange', () => {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-        if (range.commonAncestorContainer.parentElement.closest('.content')) {
+        const closestContent = range.commonAncestorContainer.parentElement.closest('.content');
+        if (closestContent) {
             savedRange = range;
         }
     }
@@ -18,7 +19,7 @@ document.addEventListener('selectionchange', () => {
 
 function triggerImageUpload() {
     if (!savedRange) {
-        alert("Please click inside the brochure text first!");
+        alert("Klikk i et tekstfelt før du setter inn bilde!");
         return;
     }
     document.getElementById('global-image-input').click();
@@ -45,37 +46,50 @@ function insertImageAtCursor(input) {
     }
 }
 
-// 3. TEXT COLOR FUNCTION (THE FIX)
+// 3. TEKSTFARGE
 function changeTextColor(color) {
+    if (savedRange) {
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(savedRange);
+    }
     document.execCommand('foreColor', false, color);
 }
 
-// 4. SAVE & LOAD PROJECT
+// 4. LAGRE & LASTE PROSJEKT
 function saveProject() {
     const projectData = { panels: {} };
     document.querySelectorAll('.content').forEach(area => {
         projectData.panels[area.id] = area.innerHTML;
     });
-    const blob = new Blob([JSON.stringify(projectData)], { type: 'application/json' });
+    
+    const blob = new Blob([JSON.stringify(projectData, null, 2)], { type: 'application/json' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'brochure_project.json';
+    link.download = 'mitt_brosjyre_prosjekt.json';
     link.click();
 }
 
 function loadProject(event) {
     const file = event.target.files[0];
     if (!file) return;
+    
     const reader = new FileReader();
     reader.onload = function(e) {
         try {
             const projectData = JSON.parse(e.target.result);
             for (const panelId in projectData.panels) {
                 const area = document.getElementById(panelId);
-                if (area) area.innerHTML = projectData.panels[panelId];
+                if (area) {
+                    area.innerHTML = projectData.panels[panelId];
+                    // Tvinger feltet til å være redigerbart etter innlasting
+                    area.contentEditable = "true";
+                }
             }
-            alert("Project Loaded!");
-        } catch (err) { alert("Error loading: " + err); }
+            alert("Prosjektet er lastet og klart til redigering!");
+        } catch (err) { 
+            alert("Kunne ikke laste fil: " + err); 
+        }
     };
     reader.readAsText(file);
 }
