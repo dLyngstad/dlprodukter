@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Brosjyre-mal</title>
+    <title>Brochure Template</title>
     <link rel="stylesheet" href="bstyle.css">
     <script src="bscript.js"></script>
     <style>
-        /* A4 Overstyring for korrekt utskriftsstørrelse */
+        /* A4 Override for your specific paper size */
         @media print {
             @page { size: A4 landscape; margin: 0; }
             .brochure-page { 
@@ -15,7 +15,7 @@
                 margin: 0 auto !important;
             }
         }
-        /* Skjermvisning for A4 */
+        /* Screen preview adjustment for A4 */
         .brochure-page {
             width: 297mm;
             height: 210mm;
@@ -25,39 +25,46 @@
 <body>
 
     <div class="admin-sidebar">
-        <h2>Brosjyre-editor</h2>
+        <h2>Brochure Editor</h2>
         
         <div class="control-group">
-            <p style="color: #ccc; margin-bottom: 5px;">1. Klikk i teksten.<br>2. Sett inn bilde.</p>
-            <button class="image-btn" onclick="triggerImageUpload()">📸 Sett inn bilde her</button>
+            <p style="color: #ccc; margin-bottom: 5px;">1. Click inside the brochure text.<br>2. Click the button below.</p>
+            <button class="image-btn" onclick="triggerImageUpload()">📸 Insert Image at Cursor</button>
             <input type="file" id="global-image-input" style="display: none;" onchange="insertImageAtCursor(this)">
         </div>
 
         <div class="control-group" style="border-top: 1px solid #444; padding-top: 20px; margin-top: 20px;">
-            <button class="save-btn" onclick="saveProject()">💾 Lagre prosjekt</button>
-            <label style="margin-top:10px; font-size: 11px;">Last opp prosjekt:</label>
+            <button class="save-btn" onclick="saveProject()">💾 Save Project</button>
+            <label style="margin-top:10px; font-size: 11px;">Load Project File:</label>
             <input type="file" id="load-project" accept=".json" onchange="loadProject(event)">
         </div>
 
-        <button class="print-btn" onclick="downloadBrochure()">⎙ Lag PDF / Print</button>
+        <button class="print-btn" onclick="downloadBrochure()">⎙ Download PDF / Print</button>
+
+        <div style="margin-top: 20px; font-size: 10px; color: #888; line-height: 1.4;">
+            <strong>PRINT SETTINGS:</strong><br>
+            • Orientation: <b>Landscape</b><br>
+            • Two-Sided: <b>Short-Edge Binding</b><br>
+            • <b>Check</b> Background Graphics
+        </div>
     </div>
 
     <div class="brochure-page">
         
         <div class="panel"><div class="content" id="p1-c1">
-            <h3 contenteditable="true" style="color:#27ae60;">Side 1: Innbrett</h3>
-            <p contenteditable="true">Skriv her...</p>
+            <h3 contenteditable="true" style="color:#27ae60;">Page 1: Inside Flap</h3>
+            <p contenteditable="true">Type here...</p>
         </div></div>
         
         <div class="panel" style="background:#f9f9f9;"><div class="content" id="p1-c2">
-            <h3 contenteditable="true">Side 2: Bakside</h3>
-            <p contenteditable="true">Skriv her...</p>
+            <h3 contenteditable="true">Page 2: Back Cover</h3>
+            <p contenteditable="true">Type here...</p>
         </div></div>
 
         <div class="panel" style="background:#2c3e50; color:white; text-align:center;">
             <div class="content" id="p1-c3" style="justify-content:center;">
-                <h1 contenteditable="true">SIDE 3: FORSIDE</h1>
-                <p contenteditable="true">Skriv tittel her...</p>
+                <h1 contenteditable="true">PAGE 3: FRONT COVER</h1>
+                <p contenteditable="true">Type title here...</p>
             </div>
         </div>
 
@@ -66,18 +73,18 @@
     <div class="brochure-page">
         
         <div class="panel"><div class="content" id="p2-c1">
-            <h2 contenteditable="true">Side 4</h2>
-            <p contenteditable="true">Skriv her...</p>
+            <h2 contenteditable="true">Page 4</h2>
+            <p contenteditable="true">Type here...</p>
         </div></div>
 
         <div class="panel"><div class="content" id="p2-c2">
-            <h2 contenteditable="true">Side 5</h2>
-            <p contenteditable="true">Skriv her...</p>
+            <h2 contenteditable="true">Page 5</h2>
+            <p contenteditable="true">Type here...</p>
         </div></div>
 
         <div class="panel"><div class="content" id="p2-c3">
-            <h2 contenteditable="true">Side 6</h2>
-            <p contenteditable="true">Skriv her...</p>
+            <h2 contenteditable="true">Page 6</h2>
+            <p contenteditable="true">Type here...</p>
         </div></div>
 
     </div>
