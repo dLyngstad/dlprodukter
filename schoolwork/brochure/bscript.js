@@ -1,84 +1,86 @@
-// 1. DOWNLOAD FUNCTION
-function downloadBrochure() {
-    window.print();
-}
+let savedRange = null;
 
-// 2. IMAGE UPLOAD FUNCTION
-function uploadImage(panelId) {
-    // Note: This matches the 'onchange' event in your HTML
-    // You might be passing 'event' or 'panelId' depending on your HTML. 
-    // This handles the string ID version you are using.
-    const input = document.getElementById(`file-${panelId}`); 
-    
-    // Fallback: If your HTML passes the event object instead (like in the single-file version)
-    // we need to handle that. But based on your previous 'bscript', you use IDs.
-    if (!input) {
-        console.error("Could not find input with ID: file-" + panelId);
+// Track the cursor position whenever you click or type
+document.addEventListener('selectionchange', () => {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        // Only save if we are inside a content area
+        if (range.commonAncestorContainer.parentElement.closest('.content')) {
+            savedRange = range;
+        }
+    }
+});
+
+function triggerImageUpload() {
+    if (!savedRange) {
+        alert("Please click inside the brochure text first so I know where to put the image!");
         return;
     }
+    document.getElementById('global-image-input').click();
+}
 
-    const targetPanel = document.getElementById(panelId);
-    
+function insertImageAtCursor(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         
         reader.onload = function(e) {
-            let container = targetPanel.querySelector('.image-container');
-            if (!container) {
-                container = document.createElement('div');
-                container.className = 'image-container';
-                targetPanel.appendChild(container);
-            }
-            container.innerHTML = `<img src="${e.target.result}" style="width:100%; height:auto; display:block; margin:15px 0;">`;
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.className = 'inserted-image'; // Uses the CSS styling
+            
+            // Restore the saved cursor position
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(savedRange);
+            
+            // Insert the image
+            savedRange.deleteContents();
+            savedRange.insertNode(img);
+            
+            // Move cursor after the image
+            savedRange.collapse(false);
+            
+            // Reset input so you can upload the same file again if needed
+            input.value = '';
         };
         
         reader.readAsDataURL(input.files[0]);
     }
 }
 
-// 3. SAVE PROJECT FUNCTION
-function saveProject() {
-    const projectData = {
-        panels: {}
-    };
+// --- KEEP YOUR EXISTING SAVE/LOAD/PRINT FUNCTIONS BELOW ---
 
-    // We look for all divs with class 'content' and save their inner HTML
+function downloadBrochure() {
+    window.print();
+}
+
+function saveProject() {
+    const projectData = { panels: {} };
     const contentAreas = document.querySelectorAll('.content');
     contentAreas.forEach(area => {
-        // We save the HTML so bold text, images, and new paragraphs are kept
         projectData.panels[area.id] = area.innerHTML;
     });
-
-    // Create a downloadable text file
     const blob = new Blob([JSON.stringify(projectData)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.href = url;
+    link.href = URL.createObjectURL(blob);
     link.download = 'my_brochure_project.json';
     link.click();
 }
 
-// 4. LOAD PROJECT FUNCTION
 function loadProject(event) {
     const file = event.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = function(e) {
         try {
             const projectData = JSON.parse(e.target.result);
-            
-            // Loop through the saved data and put it back into the panels
             for (const panelId in projectData.panels) {
                 const area = document.getElementById(panelId);
-                if (area) {
-                    area.innerHTML = projectData.panels[panelId];
-                }
+                if (area) area.innerHTML = projectData.panels[panelId];
             }
-            alert("Project Loaded Successfully!");
-        } catch (err) {
-            alert("Error loading file: " + err);
-        }
+            alert("Project Loaded!");
+        } catch (err) { alert("Error: " + err); }
     };
     reader.readAsText(file);
 }
