@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Interactive Trifold Editor</title>
+    <title>Trifold Editor - English</title>
     <link rel="stylesheet" href="bstyle.css">
     <script src="bscript.js"></script>
 </head>
@@ -13,29 +13,29 @@
         
         <div class="control-group">
             <p style="color: #ccc; margin-bottom: 5px; font-size: 11px;">
-                1. Click inside a text panel.<br>
-                2. Click the button below.<br>
-                <span style="color:#3498db;">PRO TIP: Click an image to resize!</span>
+                1. Click inside a panel.<br>
+                2. Insert your image.<br>
+                <span style="color:#3498db;">PRO TIP: Click images to <b>Resize</b> or <b>Wrap Text</b>!</span>
             </p>
-            <button class="image-btn" onclick="triggerImageUpload()">📸 Insert Image at Cursor</button>
+            <button class="image-btn" onclick="triggerImageUpload()">📸 Insert Image</button>
             <input type="file" id="global-image-input" style="display: none;" onchange="insertImageAtCursor(this)">
         </div>
 
         <div class="control-group" style="border-top: 1px solid #444; padding-top: 15px; margin-top: 15px;">
             <label>Text Color:</label>
             <div style="display: flex; gap: 10px; align-items: center;">
-                <input type="color" id="text-color-picker" onchange="changeTextColor(this.value)" style="width: 50px; height: 30px; border: none; cursor: pointer;">
+                <input type="color" onchange="changeTextColor(this.value)" style="width: 50px; height: 30px; border: none; cursor: pointer;">
                 <span style="font-size: 10px; color: #aaa;">Highlight text first!</span>
             </div>
         </div>
 
         <div class="control-group" style="border-top: 1px solid #444; padding-top: 20px; margin-top: 20px;">
-            <button class="save-btn" onclick="saveProject()">💾 Save Project (.json)</button>
-            <label style="margin-top:10px; display: block; font-size: 11px;">Load Project File:</label>
-            <input type="file" id="load-project" accept=".json" onchange="loadProject(event)">
+            <button class="save-btn" onclick="saveProject()">💾 Save Project</button>
+            <label style="margin-top:10px; display: block; font-size: 11px;">Load Project:</label>
+            <input type="file" accept=".json" onchange="loadProject(event)">
         </div>
 
-        <button class="print-btn" onclick="downloadBrochure()">⎙ Download PDF / Print</button>
+        <button class="print-btn" onclick="downloadBrochure()">⎙ Print to PDF</button>
 
         <div class="print-instructions">
             <strong>PRINT SETTINGS:</strong><br>
@@ -46,49 +46,17 @@
     </div>
 
     <div class="brochure-page">
-        <div class="panel">
-            <div class="content" id="p1-c1" contenteditable="true">
-                <h3 style="color:#27ae60;">Inside Flap</h3>
-                <p>This is the panel that folds in first.</p>
-            </div>
-        </div>
-        
-        <div class="panel" style="background:#f9f9f9;">
-            <div class="content" id="p1-c2" contenteditable="true">
-                <h3>Back Cover</h3>
-                <p>Contact info or a summary usually goes here.</p>
-            </div>
-        </div>
-
+        <div class="panel"><div class="content" id="p1-c1" contenteditable="true"><h3>Inside Flap</h3><p>Text wrap works here...</p></div></div>
+        <div class="panel" style="background:#f9f9f9;"><div class="content" id="p1-c2" contenteditable="true"><h3>Back Cover</h3></div></div>
         <div class="panel" style="background:#2c3e50; color:white; text-align:center;">
-            <div class="content" id="p1-c3" contenteditable="true" style="justify-content:center;">
-                <h1>FRONT COVER TITLE</h1>
-                <p>Your subtitle or tagline here</p>
-            </div>
+            <div class="content" id="p1-c3" contenteditable="true" style="justify-content:center;"><h1>FRONT COVER</h1></div>
         </div>
     </div> 
 
     <div class="brochure-page">
-        <div class="panel">
-            <div class="content" id="p2-c1" contenteditable="true">
-                <h2>Left Inside</h2>
-                <p>Start your main content here...</p>
-            </div>
-        </div>
-
-        <div class="panel">
-            <div class="content" id="p2-c2" contenteditable="true">
-                <h2>Middle Inside</h2>
-                <p>The core of your brochure story.</p>
-            </div>
-        </div>
-
-        <div class="panel">
-            <div class="content" id="p2-c3" contenteditable="true">
-                <h2>Right Inside</h2>
-                <p>Closing points and final thoughts.</p>
-            </div>
-        </div>
+        <div class="panel"><div class="content" id="p2-c1" contenteditable="true"><h2>Left Page</h2></div></div>
+        <div class="panel"><div class="content" id="p2-c2" contenteditable="true"><h2>Middle Page</h2></div></div>
+        <div class="panel"><div class="content" id="p2-c3" contenteditable="true"><h2>Right Page</h2></div></div>
     </div>
 
 </body>
