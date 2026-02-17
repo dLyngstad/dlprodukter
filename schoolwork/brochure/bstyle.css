@@ -53,3 +53,34 @@ p { line-height: 1.6; color: #333; font-size: 11pt; }
     align-items: center;
     justify-content: center;
 }
+
+/* ... keep your existing styles above ... */
+
+@media print {
+    @page { 
+        size: letter landscape; 
+        margin: 0; 
+    }
+    body { 
+        padding: 0; 
+        margin: 0; 
+        background: white; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        height: 100vh; 
+    }
+    .admin-sidebar { display: none !important; }
+    .brochure-page {
+        margin: 0 !important;
+        box-shadow: none !important;
+        transform: scale(0.93); 
+        transform-origin: center center;
+    }
+    /* This forces the images to show in the PDF */
+    img {
+        max-width: 100% !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
