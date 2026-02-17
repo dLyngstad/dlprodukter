@@ -6,16 +6,15 @@ function downloadBrochure() {
 // 2. IMAGE HANDLING
 let savedRange = null;
 
-// Track cursor position to insert images in the right place
 document.addEventListener('selectionchange', () => {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-        // Look for the closest .content div to ensure we are in a valid panel
-        const closestContent = range.commonAncestorContainer.nodeType === 1 
-            ? range.commonAncestorContainer.closest('.content') 
-            : range.commonAncestorContainer.parentElement.closest('.content');
-            
+        const container = range.commonAncestorContainer.nodeType === 1 
+            ? range.commonAncestorContainer 
+            : range.commonAncestorContainer.parentElement;
+        
+        const closestContent = container.closest('.content');
         if (closestContent) {
             savedRange = range;
         }
@@ -36,8 +35,8 @@ function insertImageAtCursor(input) {
         reader.onload = function(e) {
             const img = document.createElement('img');
             img.src = e.target.result;
-            img.className = 'inserted-image'; // Added for styling
-            img.style.width = "100%"; // Default size
+            img.className = 'img-center'; // Default alignment
+            img.style.width = "100%";
             
             const selection = window.getSelection();
             selection.removeAllRanges();
@@ -52,26 +51,32 @@ function insertImageAtCursor(input) {
     }
 }
 
-// --- REPAIRED IMAGE RESIZE LOGIC ---
+// UPDATED: IMAGE RESIZE & WRAP LOGIC
 document.addEventListener('click', function(e) {
-    // Check if the clicked element is an image AND is inside a brochure panel
     if (e.target.tagName === 'IMG' && e.target.closest('.content')) {
-        
-        // Prevent browser from doing its own image selection
         e.preventDefault(); 
         
+        // 1. Prompt for Size
         const currentWidthStr = e.target.style.width || '100%';
         const currentVal = parseInt(currentWidthStr.replace('%', ''));
-        
-        const newWidth = prompt("Enter new image width in percentage (1-100):", currentVal);
+        const newWidth = prompt("Enter width in % (1-100):", currentVal);
 
         if (newWidth !== null) {
             const widthNum = parseInt(newWidth);
             if (!isNaN(widthNum) && widthNum > 0 && widthNum <= 100) {
                 e.target.style.width = widthNum + "%";
-                e.target.style.height = "auto"; 
-            } else {
-                alert("Please enter a valid number between 1 and 100.");
+            }
+            
+            // 2. Prompt for Alignment (Text Wrap)
+            const align = prompt("Align: 'L' (Left/Wrap), 'R' (Right/Wrap), or 'C' (Center/No Wrap):", "C");
+            
+            if (align) {
+                const choice = align.toLowerCase();
+                e.target.className = ""; // Clear existing classes
+                
+                if (choice === 'l') e.target.classList.add('img-left');
+                else if (choice === 'r') e.target.classList.add('img-right');
+                else e.target.classList.add('img-center');
             }
         }
     }
@@ -87,24 +92,22 @@ function changeTextColor(color) {
     document.execCommand('foreColor', false, color);
 }
 
-// 4. SAVE & LOAD PROJECT
+// 4. SAVE & LOAD
 function saveProject() {
     const projectData = { panels: {} };
     document.querySelectorAll('.content').forEach(area => {
         projectData.panels[area.id] = area.innerHTML;
     });
-    
     const blob = new Blob([JSON.stringify(projectData, null, 2)], { type: 'application/json' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'my_brochure_project.json';
+    link.download = 'brochure_project.json';
     link.click();
 }
 
 function loadProject(event) {
     const file = event.target.files[0];
     if (!file) return;
-    
     const reader = new FileReader();
     reader.onload = function(e) {
         try {
@@ -113,13 +116,10 @@ function loadProject(event) {
                 const area = document.getElementById(panelId);
                 if (area) {
                     area.innerHTML = projectData.panels[panelId];
-                    area.contentEditable = "true"; // Ensure it stays editable
+                    area.contentEditable = "true";
                 }
             }
-            alert("Project Loaded!");
-        } catch (err) { 
-            alert("Error loading file: " + err); 
-        }
+        } catch (err) { alert("Error: " + err); }
     };
     reader.readAsText(file);
 }
