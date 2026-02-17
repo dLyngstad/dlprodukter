@@ -1,118 +1,131 @@
-/* --- UI/SIDEBAR --- */
+/* =========================================
+   1. UI & SIDEBAR (The Editor Interface)
+   ========================================= */
 .admin-sidebar {
-    position: fixed; left: 0; top: 0; bottom: 0; width: 260px;
-    background: #1a1a1a; padding: 25px; color: white;
-    z-index: 1000; font-family: 'Inter', sans-serif; overflow-y: auto;
+    position: fixed; 
+    left: 0; 
+    top: 0; 
+    bottom: 0; 
+    width: 260px;
+    background: #1a1a1a; 
+    padding: 25px; 
+    color: white;
+    z-index: 1000; 
+    font-family: 'Inter', sans-serif; 
+    overflow-y: auto;
 }
-.admin-sidebar h2 { font-size: 18px; color: #27ae60; border-bottom: 1px solid #333; padding-bottom: 10px; }
-.control-group { margin-top: 15px; font-size: 12px; }
+
+.admin-sidebar h2 { 
+    font-size: 18px; 
+    color: #27ae60; 
+    border-bottom: 1px solid #333; 
+    padding-bottom: 10px; 
+}
+
+.control-group { 
+    margin-top: 15px; 
+    font-size: 12px; 
+}
+
+/* --- BUTTON STYLES --- */
 .print-btn {
-    background: #27ae60; color: white; border: none; padding: 15px;
-    width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 25px;
+    background: #27ae60; /* Green */
+    color: white; 
+    border: none; 
+    padding: 15px;
+    width: 100%; 
+    border-radius: 4px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    margin-top: 25px;
 }
-
-/* --- THE VIEWPORT --- */
-body {
-    background-color: #333; margin: 0; padding-left: 260px;
-    display: flex; flex-direction: column; align-items: center; font-family: 'Georgia', serif;
-}
-
-[contenteditable="true"]:hover { outline: 2px dashed #27ae60; outline-offset: 4px; }
-
-.brochure-page {
-    background: white; width: 11in; height: 8.5in;
-    margin: 40px 0; display: grid; grid-template-columns: repeat(3, 1fr);
-    box-shadow: 0 0 50px rgba(0,0,0,0.5); overflow: hidden;
-    page-break-after: always; position: relative;
-}
-
-.panel { height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
-.content { padding: 0.7in; display: flex; flex-direction: column; height: 100%; }
-
-h1, h2, h3 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-top: 0; }
-p { line-height: 1.6; color: #333; font-size: 11pt; }
-
-/* --- IMAGE HANDLING --- */
-.image-container { width: 100%; margin: 15px 0; border: 1px solid #eee; }
-.image-container img { width: 100%; height: auto; display: block; }
-
-@media print {
-    @page { size: letter landscape; margin: 0.25in; }
-    body { padding: 0; margin: 0; background: white; display: block; }
-    .admin-sidebar { display: none !important; }
-    .brochure-page { margin: 0 auto !important; transform: scale(0.95); transform-origin: top center; border: none; }
-}
-
-.image-container {
-    width: 100%;
-    min-height: 100px;
-    background: #f0f0f0; /* Light gray box shows where image will sit */
-    border: 1px dashed #ccc;
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* ... keep your existing styles above ... */
-
-@media print {
-    @page { 
-        size: letter landscape; 
-        margin: 0; 
-    }
-    body { 
-        padding: 0; 
-        margin: 0; 
-        background: white; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        height: 100vh; 
-    }
-    .admin-sidebar { display: none !important; }
-    .brochure-page {
-        margin: 0 !important;
-        box-shadow: none !important;
-        transform: scale(0.93); 
-        transform-origin: center center;
-    }
-    /* This forces the images to show in the PDF */
-    img {
-        max-width: 100% !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-}
-
+.print-btn:hover { background: #219150; }
 
 .save-btn {
-    background: #3498db;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
+    background: #3498db; /* Blue */
+    color: white; 
+    border: none; 
+    padding: 12px; 
+    border-radius: 4px; 
+    font-weight: bold; 
+    cursor: pointer; 
     margin-top: 10px;
+    width: 100%;
 }
-
-.save-btn:hover {
-    background: #2980b9;
-}
-
-
-/* ... Keep your existing styles ... */
+.save-btn:hover { background: #2980b9; }
 
 .image-btn {
-    background: #e67e22; /* Orange color to stand out */
-    color: white; border: none; padding: 12px;
-    width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer;
+    background: #e67e22; /* Orange */
+    color: white; 
+    border: none; 
+    padding: 12px;
+    width: 100%; 
+    border-radius: 4px; 
+    font-weight: bold; 
+    cursor: pointer;
     margin-bottom: 10px;
 }
 .image-btn:hover { background: #d35400; }
 
-/* Styles for the images you drop in */
+
+/* =========================================
+   2. SCREEN VIEWPORT (How it looks on Mac)
+   ========================================= */
+body {
+    background-color: #333; 
+    margin: 0; 
+    padding-left: 260px; /* Space for sidebar */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    font-family: 'Georgia', serif;
+}
+
+/* Highlight editable text when hovering */
+[contenteditable="true"]:hover { 
+    outline: 2px dashed #27ae60; 
+    outline-offset: 4px; 
+}
+
+/* THE PAPER SHEET (Defaulting to A4 Ratio for consistency) */
+.brochure-page {
+    background: white; 
+    width: 297mm;  /* A4 Landscape Width */
+    height: 210mm; /* A4 Landscape Height */
+    margin: 40px 0; 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); /* 3 Columns */
+    box-shadow: 0 0 50px rgba(0,0,0,0.5); 
+    overflow: hidden;
+    position: relative;
+}
+
+.panel { 
+    height: 100%; 
+    box-sizing: border-box; 
+    display: flex; 
+    flex-direction: column; 
+    /* Optional: dashed line to see folds on screen */
+    border-right: 1px dashed #eee; 
+}
+.panel:last-child { border-right: none; }
+
+.content { 
+    padding: 0.7in; 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+}
+
+/* Typography Defaults */
+h1, h2, h3 { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-top: 0; }
+p { line-height: 1.6; color: #333; font-size: 11pt; }
+
+
+/* =========================================
+   3. IMAGE HANDLING
+   ========================================= */
+/* Style for images inserted at cursor */
 .inserted-image {
     max-width: 100%;
     height: auto;
@@ -121,15 +134,76 @@ p { line-height: 1.6; color: #333; font-size: 11pt; }
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     cursor: pointer;
 }
-
-/* When you click an image to "select" it (visual feedback) */
 .inserted-image:hover {
     outline: 2px solid #27ae60;
 }
 
-/* ... Keep your existing PRINT styles ... */
+/* Legacy container style (if needed) */
+.image-container {
+    width: 100%;
+    min-height: 100px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================
+   4. THE PRINT ENGINE (CRITICAL FIXES)
+   ========================================= */
 @media print {
-    /* Ensure images print! */
-    img { max-width: 100% !important; display: block; }
-    /* ... rest of your print css ... */
+    @page { 
+        size: A4 landscape; 
+        margin: 0; 
+    }
+    
+    body { 
+        padding: 0; 
+        margin: 0; 
+        background: white; 
+        
+        /* FIX: 'block' allows pages to flow naturally. 
+           'flex' + '100vh' was causing the squash! */
+        display: block !important; 
+        height: auto !important;   
+    }
+
+    /* Hide the UI */
+    .admin-sidebar { display: none !important; }
+    
+    /* Clean up the paper for printing */
+    .brochure-page {
+        margin: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        
+        /* Force Exact A4 Dimensions */
+        width: 297mm !important;
+        height: 209mm !important; /* Slightly under 210 to prevent overflow */
+        
+        /* Force Page Breaks */
+        page-break-after: always;
+        break-after: page;
+        
+        /* Optional: Slight scale to ensure safety from printer margins */
+        transform: scale(0.99); 
+        transform-origin: top left;
+    }
+
+    /* Prevent blank page after the last sheet */
+    .brochure-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+    }
+
+    .panel { border-right: none !important; }
+
+    /* Force Images & Colors to Print */
+    img {
+        max-width: 100% !important;
+        display: block;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
 }
