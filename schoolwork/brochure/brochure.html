@@ -2,83 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Science in Motion: Gesticulation Guide</title>
+    <title>Science in Motion</title>
     <link rel="stylesheet" href="bstyle.css">
-    <script type="text/javascript" src="bscript.js"></script>
+    <script src="bscript.js"></script>
 </head>
 <body>
 
     <div class="admin-sidebar">
-        <h2>Science Gesticulation Editor</h2>
-        <div class="editor-controls">
-            <div class="control-group">
-                <label>Add Diagrams/Photos:</label>
-                <input type="file" id="file-panel-left" onchange="uploadImage('panel-left')">
-                <input type="file" id="file-panel-mid" onchange="uploadImage('panel-mid')">
-                <input type="file" id="file-panel-right" onchange="uploadImage('panel-right')">
-            </div>
+        <h2>Brochure Editor</h2>
+        
+        <div class="control-group">
+            <p style="color: #ccc; margin-bottom: 5px;">1. Click inside the brochure text.<br>2. Click the button below.</p>
+            <button class="image-btn" onclick="triggerImageUpload()">📸 Insert Image at Cursor</button>
+            <input type="file" id="global-image-input" style="display: none;" onchange="insertImageAtCursor(this)">
         </div>
+
+        <div class="control-group" style="border-top: 1px solid #444; padding-top: 20px; margin-top: 20px;">
+            <button class="save-btn" onclick="saveProject()">💾 Save Project</button>
+            <label style="margin-top:10px; font-size: 11px;">Load Project:</label>
+            <input type="file" id="load-project" accept=".json" onchange="loadProject(event)">
+        </div>
+
         <button class="print-btn" onclick="downloadBrochure()">⎙ Download PDF</button>
-        <p style="font-size: 11px; color: #aaa; margin-top: 15px;">
-            <b>PRO TIP:</b> Click any text to edit. Bold text using Cmd+B.
-        </p>
-        
-<div class="control-group">
-    <button class="save-btn" onclick="saveProject()">💾 Save Project File</button>
-    <label style="margin-top:10px;">Load Project File:</label>
-    <input type="file" id="load-project" accept=".json" onchange="loadProject(event)">
-</div>
-
-        
     </div>
 
     <div class="brochure-page">
-        <div class="panel">
-            <div class="content" id="panel-left">
-                <h3 contenteditable="true" style="color:#27ae60;">Why Gesture?</h3>
-                <p contenteditable="true">Gesticulation isn't just "hand-waving." It provides a <b>spatial scaffold</b> for abstract thoughts. By using your hands, you reduce the cognitive load on your audience, allowing them to "see" the math or physics in the air.</p>
-                <p contenteditable="true"><i>"If you can't move it, you don't understand it."</i></p>
-            </div>
-        </div>
+        <div class="panel"><div class="content" id="p1-c1">
+            <h3 contenteditable="true" style="color:#27ae60;">Why Gesture?</h3>
+            <p contenteditable="true">Click here and try inserting an image between these lines!</p>
+            <p contenteditable="true">Gesticulation provides a spatial scaffold for abstract thoughts.</p>
+        </div></div>
         
-        <div class="panel" style="background:#f4f4f4;">
-            <div class="content" id="panel-mid">
-                <h3 contenteditable="true">Resources</h3>
-                <p contenteditable="true"><b>The Embodied Cognition Lab</b><br>Exploring how movement helps memory.</p>
-                <p contenteditable="true"><b>Scientific Speaking 101</b><br>A guide to stage presence in the lab.</p>
-                <div style="margin-top:auto; font-size:10px; color:#999;" contenteditable="true">Printed via Scientific Gestures Framework v1.0</div>
-            </div>
-        </div>
+        <div class="panel" style="background:#f9f9f9;"><div class="content" id="p1-c2">
+            <h3 contenteditable="true">Resources</h3>
+            <p contenteditable="true">You can place logos here too.</p>
+        </div></div>
 
-        <div class="panel" style="background: linear-gradient(to bottom, #2c3e50, #1a1a1a); color: white; text-align: center;">
-            <div class="content" id="panel-right" style="justify-content: center;">
-                <div style="font-size: 40px; margin-bottom: 20px;">⚛️</div>
-                <h1 contenteditable="true" style="font-size: 28pt; margin: 0;">SCIENCE IN MOTION</h1>
-                <div style="width: 40px; height: 3px; background: #27ae60; margin: 20px auto;"></div>
-                <p contenteditable="true" style="text-transform: uppercase; letter-spacing: 2px; font-size: 10pt;">Mastering Gesticulation to Explain the Invisible</p>
+        <div class="panel" style="background:#2c3e50; color:white; text-align:center;">
+            <div class="content" id="p1-c3" style="justify-content:center;">
+                <h1 contenteditable="true">SCIENCE IN MOTION</h1>
+                <p contenteditable="true">Mastering Gesticulation</p>
             </div>
         </div>
     </div>
 
     <div class="brochure-page">
-        <div class="panel">
-            <div class="content">
-                <h2 contenteditable="true">1. Scaling the Universe</h2>
-                <p contenteditable="true">When explaining size (from atoms to galaxies), use the <b>"Z-Axis Pull."</b> Start with hands close together at eye level, then pull them apart while stepping backward. This physical expansion anchors the concept of "exponential growth" in the viewer's mind.</p>
-            </div>
-        </div>
-        <div class="panel" style="border-left: 1px solid #eee; border-right: 1px solid #eee;">
-            <div class="content">
-                <h2 contenteditable="true">2. The Molecular Dance</h2>
-                <p contenteditable="true">Explain <b>Entropy</b> by using sharp, chaotic finger movements versus slow, fluid arm movements for <b>Laminar Flow</b>. Mimicking the physical state of matter makes thermodynamics visceral rather than just mathematical.</p>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="content">
-                <h2 contenteditable="true">3. Invisible Forces</h2>
-                <p contenteditable="true">Use <b>Resistance Gestures</b> to explain Magnetic Fields or Gravity. Tension in your muscles while "pulling" an invisible object helps the audience "feel" the force acting upon the system.</p>
-            </div>
-        </div>
+        <div class="panel"><div class="content" id="p2-c1">
+            <h2 contenteditable="true">1. Scale</h2>
+            <p contenteditable="true">Place diagrams here to show the Z-Axis pull.</p>
+        </div></div>
+
+        <div class="panel"><div class="content" id="p2-c2">
+            <h2 contenteditable="true">2. Entropy</h2>
+            <p contenteditable="true">Images of chaotic movement go here.</p>
+        </div></div>
+
+        <div class="panel"><div class="content" id="p2-c3">
+            <h2 contenteditable="true">3. Forces</h2>
+            <p contenteditable="true">Use muscle tension examples here.</p>
+        </div></div>
     </div>
 
 </body>
