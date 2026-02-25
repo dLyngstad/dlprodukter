@@ -92,6 +92,34 @@ function changeTextColor(color) {
     document.execCommand('foreColor', false, color);
 }
 
+// 3.5 TEXT FORMATTING (Bold, Italic, Underline, Size)
+function formatText(command) {
+    if (savedRange) {
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(savedRange);
+    }
+    document.execCommand(command, false, null);
+}
+
+function changeFontSize(size) {
+    if (!size) return; // Do nothing if they select the placeholder
+    
+    if (savedRange) {
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(savedRange);
+    }
+    document.execCommand('fontSize', false, size);
+    
+    // Reset the dropdown back to "Size..." after clicking
+    document.getElementById('fontSizeSelect').selectedIndex = 0;
+}
+
+
+
+
+
 // 4. SAVE & LOAD
 function saveProject() {
     const projectData = { panels: {} };
