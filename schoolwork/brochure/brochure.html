@@ -29,6 +29,28 @@
             </div>
         </div>
 
+<div class="control-group" style="border-top: 1px solid #444; padding-top: 15px; margin-top: 15px;">
+            <label>Text Formatting:</label>
+            <div style="display: flex; gap: 5px; margin-top: 5px; margin-bottom: 5px;">
+                <button class="format-btn" onclick="formatText('bold')" style="font-weight: bold;">B</button>
+                <button class="format-btn" onclick="formatText('italic')" style="font-style: italic;">I</button>
+                <button class="format-btn" onclick="formatText('underline')" style="text-decoration: underline;">U</button>
+                
+                <select id="fontSizeSelect" class="format-select" onchange="changeFontSize(this.value)">
+                    <option value="">Size...</option>
+                    <option value="1">Smallest</option>
+                    <option value="2">Small</option>
+                    <option value="3">Normal</option>
+                    <option value="4">Large</option>
+                    <option value="5">Larger</option>
+                    <option value="6">Huge</option>
+                    <option value="7">Max</option>
+                </select>
+            </div>
+            <span style="font-size: 10px; color: #aaa;">Highlight text first!</span>
+        </div>
+        
+
         <div class="control-group" style="border-top: 1px solid #444; padding-top: 20px; margin-top: 20px;">
             <button class="save-btn" onclick="saveProject()">💾 Save Project</button>
             <label style="margin-top:10px; display: block; font-size: 11px;">Load Project:</label>
