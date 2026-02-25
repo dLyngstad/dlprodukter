@@ -31,8 +31,8 @@ body {
 
 /* EDITABLE ZONE */
 .content { 
-    padding: 0.7in; display: flex; flex-direction: column; height: 100%; 
-    outline: none; cursor: text;
+    padding: 0.7in; display: block; flex-direction: column; height: 100%; 
+    outline: none; cursor: text; text-align: inherit;
 }
 
 .content[contenteditable="true"]:hover { 
