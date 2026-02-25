@@ -14,6 +14,41 @@
 
 .print-instructions { margin-top: 20px; font-size: 10px; color: #888; line-height: 1.4; border: 1px solid #333; padding: 10px; }
 
+
+/* TEXT FORMATTING BUTTONS */
+.format-btn {
+    background: #333; 
+    color: white; 
+    border: 1px solid #555; 
+    padding: 6px 10px; 
+    border-radius: 4px; 
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.format-btn:hover {
+    background: #27ae60;
+    border-color: #27ae60;
+}
+
+.format-select {
+    background: #333; 
+    color: white; 
+    border: 1px solid #555; 
+    padding: 5px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    flex-grow: 1;
+}
+
+.format-select:focus {
+    outline: none;
+    border-color: #27ae60;
+}
+
+
+
+
 /* SCREEN VIEWPORT */
 body {
     background-color: #333; margin: 0; padding-left: 260px;
