@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestikulering | Didactic Hand Modelling</title>
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --transition: 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filtering Navigation */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 2rem 1rem;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        /* Gesture Grid */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Individual Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border-top: 5px solid var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-category {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+        }
+
+        .card p {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .card strong {
+            color: var(--primary-color);
+        }
+
+        /* Utility Class for JS Filtering */
+        .hidden {
+            display: none !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Gestikulering</h1>
+        <p>A Catalog of Didactic Hand Modelling in Science.</p>
+    </header>
+
+    <nav class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="physics">⚛️ Physics</button>
+        <button class="filter-btn" data-filter="chemistry">🧪 Chemistry</button>
+        <button class="filter-btn" data-filter="biology">🧬 Biology</button>
+        <button class="filter-btn" data-filter="earth">🌍 Earth Science</button>
+    </nav>
+
+    <div class="container">
+        <div class="grid" id="gesture-grid">
+            
+            <div class="card" data-category="physics">
+                <span class="card-category">Physics</span>
+                <h3>The Right-Hand Rule</h3>
+                <p><strong>The Model:</strong> Point the thumb in the direction of the current. Let the fingers curl inward.</p>
+                <p><strong>The Concept:</strong> Shows the direction of the circular magnetic field around a wire.</p>
+            </div>
+            
+            <div class="card" data-category="physics">
+                <span class="card-category">Physics</span>
+                <h3>Wave Types</h3>
+                <p><strong>The Model:</strong> Snake-like up/down motion (Transverse) vs. pulsing push/pull motion (Longitudinal).</p>
+                <p><strong>The Concept:</strong> Medium movement relative to wave direction (e.g., light vs. sound).</p>
+            </div>
+
+            <div class="card" data-category="physics">
+                <span class="card-category">Physics</span>
+                <h3>Particle States</h3>
+                <p><strong>The Model:</strong> Fists vibrating together (solid), sliding over each other (liquid), bouncing far apart (gas).</p>
+                <p><strong>The Concept:</strong> The kinetic theory of matter.</p>
+            </div>
+
+            <div class="card" data-category="chemistry">
+                <span class="card-category">Chemistry</span>
+                <h3>Chirality</h3>
+                <p><strong>The Model:</strong> Palms up, showing they are mirror images but cannot be perfectly superimposed.</p>
+                <p><strong>The Concept:</strong> Enantiomers and "handedness" in molecular structures.</p>
+            </div>
+
+            <div class="card" data-category="chemistry">
+                <span class="card-category">Chemistry</span>
+                <h3>Enzyme "Lock & Key"</h3>
+                <p><strong>The Model:</strong> Hand in a rigid "C" shape docking with a fist from the other hand.</p>
+                <p><strong>The Concept:</strong> Enzyme-substrate specificity.</p>
+            </div>
+
+            <div class="card" data-category="biology">
+                <span class="card-category">Biology</span>
+                <h3>Sliding Filaments</h3>
+                <p><strong>The Model:</strong> Point fingers of both hands together, then slide them deeply between one another.</p>
+                <p><strong>The Concept:</strong> Actin and myosin sliding during muscle contraction.</p>
+            </div>
+
+            <div class="card" data-category="biology">
+                <span class="card-category">Biology</span>
+                <h3>Phagocytosis</h3>
+                <p><strong>The Model:</strong> A "pac-man" hand wrapping around a small object and pulling inward.</p>
+                <p><strong>The Concept:</strong> Cell membrane engulfing large particles.</p>
+            </div>
+
+            <div class="card" data-category="earth">
+                <span class="card-category">Earth Science</span>
+                <h3>Tectonic Plates</h3>
+                <p><strong>The Model:</strong> Flat hands sliding apart (Divergent), pushing to buckle (Convergent), or rubbing edges (Transform).</p>
+                <p><strong>The Concept:</strong> Plate boundaries and resulting geography.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 1. Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // 2. Add active class to clicked button
+                    btn.classList.add('active');
+
+                    // 3. Get the filter category
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    // 4. Show/Hide cards based on category
+                    cards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
