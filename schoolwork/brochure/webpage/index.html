@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestikulering | Didactic Hand Modelling</title>
-    <link rel="stylesheet" href="wstyle.css">
+    <link rel="stylesheet" href="css/wstyle.css">
 </head>
 <body>
 
@@ -35,6 +35,32 @@
         <button class="filter-btn" data-filter="physics">⚛️ Physics</button>
         <button class="filter-btn" data-filter="chemistry">🧪 Chemistry</button>
         <button class="filter-btn" data-filter="biology">🧬 Biology</button>
+        <button class="filter-btn" data-filter="earth">🌍 Earth Science</button>
+    </nav>
+
+    <div class="container">
+        <div class="grid" id="gesture-grid"></div>
+        <div id="no-results" style="display: none;">No hand models found matching your search. Try adjusting your filters!</div>
+    </div>
+
+    <div id="gesture-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-btn" id="close-modal">&times;</button>
+            <span class="card-category" id="modal-category"></span>
+            <h2 id="modal-title"></h2>
+            <div class="modal-body">
+                <p><strong>The Model:</strong> <span id="modal-model"></span></p>
+                <p><strong>The Concept:</strong> <span id="modal-concept"></span></p>
+                <hr>
+                <h3>Didactic Application</h3>
+                <p id="modal-extra"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/wjs.js"></script>
+</body>
+</html>        <button class="filter-btn" data-filter="biology">🧬 Biology</button>
         <button class="filter-btn" data-filter="earth">🌍 Earth Science</button>
     </nav>
 
