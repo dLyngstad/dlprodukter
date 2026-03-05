@@ -165,25 +165,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 6. INITIALIZATION ---
     renderCards(); 
-});        }
-    }
-
-    // Listen for Category Button Clicks
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Update active styling
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            // Update state and run filter
-            currentCategory = btn.getAttribute('data-filter');
-            updateFilters();
-        });
-    });
-
-    // Listen for Search Bar typing
-    searchBar.addEventListener('input', (e) => {
-        searchQuery = e.target.value.toLowerCase().trim();
-        updateFilters();
-    });
 });
