@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEMPERATURE SIMULATOR 2000</title>
+    <style>
+        /* --- 90s RETRO CORE STYLES --- */
+        :root {
+            --primary-color: #000080;
+            --bg-color: #c0c0c0;
+            --win-border-light: #ffffff;
+            --win-border-dark: #808080;
+            --win-border-black: #000000;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            background-color: var(--bg-color);
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: #ffff00;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            border: 3px outset var(--win-border-light);
+            margin-bottom: 20px;
+        }
+
+        /* --- THERMOMETER STYLES --- */
+        .gauge-window {
+            background-color: var(--bg-color);
+            border: 3px outset var(--win-border-light);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.5);
+        }
+
+        .thermometer-container {
+            width: 60px;
+            height: 300px;
+            background: #eee;
+            margin: 20px auto;
+            border-top: 3px solid var(--win-border-dark);
+            border-left: 3px solid var(--win-border-dark);
+            border-right: 3px solid var(--win-border-light);
+            border-bottom: 3px solid var(--win-border-light);
+            position: relative;
+            padding: 5px;
+        }
+
+        #mercury {
+            width: 100%;
+            height: 20%; /* Controlled by JS */
+            background: linear-gradient(to right, #ff0000, #a00000);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transition: height 0.5s ease-in-out;
+        }
+
+        /* --- CONTROLS --- */
+        .controls {
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: var(--bg-color);
+            border-top: 2px solid var(--win-border-light);
+            border-left: 2px solid var(--win-border-light);
+            border-right: 2px solid var(--win-border-black);
+            border-bottom: 2px solid var(--win-border-black);
+            padding: 10px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: "MS Sans Serif", Geneva, sans-serif;
+        }
+
+        .btn:active {
+            border-top: 2px solid var(--win-border-black);
+            border-left: 2px solid var(--win-border-black);
+            border-right: 2px solid var(--win-border-light);
+            border-bottom: 2px solid var(--win-border-light);
+        }
+
+        #status-display {
+            margin-top: 15px;
+            font-family: "Courier New", Courier, monospace;
+            background: #000;
+            color: #0f0;
+            padding: 5px;
+            border: 2px inset var(--win-border-light);
+        }
+
+        .instruction-box {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            border: 1px dashed #000;
+            padding: 10px;
+            background: #ffffcc;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><marquee scrollamount="5">*** HEATWAVE SIMULATOR v1.0 ***</marquee></h1>
+</header>
+
+<div class="gauge-window">
+    <h2 style="color: #800000;">Global Temp Monitor</h2>
+    
+    <div class="thermometer-container">
+        <div id="mercury"></div>
+    </div>
+
+    <div id="status-display">SYSTEM READY...</div>
+
+    <div class="controls">
+        <button class="btn" id="startBtn" onclick="toggleSimulation()">START</button>
+    </div>
+</div>
+
+<div class="instruction-box">
+    <strong>STUDENT GUIDE:</strong><br>
+    LOW TEMP = Still Hands<br>
+    HIGH TEMP = Shaky Hands!
+</div>
+
+<script>
+    let isRunning = false;
+    let interval = null;
+    const mercury = document.getElementById('mercury');
+    const status = document.getElementById('status-display');
+    const btn = document.getElementById('startBtn');
+
+    function toggleSimulation() {
+        if (isRunning) {
+            clearInterval(interval);
+            isRunning = false;
+            btn.innerText = "START";
+            status.innerText = "SIMULATION PAUSED";
+        } else {
+            isRunning = true;
+            btn.innerText = "STOP";
+            runSimulation();
+        }
+    }
+
+    function runSimulation() {
+        interval = setInterval(() => {
+            // Generate a random temperature percentage between 10% and 95%
+            const temp = Math.floor(Math.random() * 85) + 10;
+            mercury.style.height = temp + "%";
+
+            if (temp > 70) {
+                status.innerText = "STATUS: SCORCHING!";
+                status.style.color = "#ff0000";
+            } else if (temp > 40) {
+                status.innerText = "STATUS: WARMING UP";
+                status.style.color = "#ff8c00";
+            } else {
+                status.innerText = "STATUS: CHILLY";
+                status.style.color = "#00ffff";
+            }
+        }, 2000); // Changes every 2 seconds
+    }
+</script>
+
+</body>
+</html>
