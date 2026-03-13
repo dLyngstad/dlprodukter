@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TEMPERATURE SIMULATOR 2000</title>
+    <title>TEMPERATURE GAUGE v2.0 - CLASSROOM EDITION</title>
     <style>
-        /* --- 90s RETRO CORE STYLES --- */
         :root {
             --primary-color: #000080;
             --bg-color: #c0c0c0;
@@ -17,7 +16,6 @@
             font-family: "Times New Roman", Times, serif;
             background-color: var(--bg-color);
             background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
-            color: #000;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -32,56 +30,79 @@
             text-align: center;
             border: 3px outset var(--win-border-light);
             margin-bottom: 20px;
+            box-shadow: 4px 4px 0px #444;
         }
 
-        /* --- THERMOMETER STYLES --- */
+        /* --- THE GAUGE WINDOW --- */
         .gauge-window {
             background-color: var(--bg-color);
             border: 3px outset var(--win-border-light);
-            padding: 20px;
-            width: 300px;
-            text-align: center;
-            box-shadow: 5px 5px 0px rgba(0,0,0,0.5);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
+        }
+
+        /* Container for the thermometer and its markings */
+        .thermometer-wrapper {
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            margin: 20px 0;
+            padding-right: 60px; /* Space for the "paint" markings */
         }
 
         .thermometer-container {
-            width: 60px;
-            height: 300px;
-            background: #eee;
-            margin: 20px auto;
+            width: 50px;
+            height: 450px; /* Longer gauge */
+            background: #d1d1d1;
             border-top: 3px solid var(--win-border-dark);
             border-left: 3px solid var(--win-border-dark);
             border-right: 3px solid var(--win-border-light);
             border-bottom: 3px solid var(--win-border-light);
             position: relative;
-            padding: 5px;
+            overflow: hidden;
         }
 
         #mercury {
             width: 100%;
-            height: 20%; /* Controlled by JS */
-            background: linear-gradient(to right, #ff0000, #a00000);
+            height: 20%; 
             position: absolute;
             bottom: 0;
             left: 0;
-            transition: height 0.5s ease-in-out;
+            /* Slower, smoother movement */
+            transition: height 3s ease-in-out, background-color 3s ease-in-out;
+            border-top: 2px solid rgba(255,255,255,0.5);
         }
 
-        /* --- CONTROLS --- */
-        .controls {
-            margin-top: 20px;
+        /* --- PAINT MARKINGS --- */
+        .marking {
+            position: absolute;
+            right: -65px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            border-bottom: 2px solid #555;
+            width: 55px;
+            padding-bottom: 2px;
         }
 
+        .marking.gas { top: 5%; color: #800000; border-color: #800000; }
+        .marking.ice { bottom: 5%; color: #000080; border-color: #000080; }
+
+        /* --- UI ELEMENTS --- */
         .btn {
             background-color: var(--bg-color);
             border-top: 2px solid var(--win-border-light);
             border-left: 2px solid var(--win-border-light);
             border-right: 2px solid var(--win-border-black);
             border-bottom: 2px solid var(--win-border-black);
-            padding: 10px 25px;
+            padding: 10px 30px;
             font-weight: bold;
             cursor: pointer;
-            font-family: "MS Sans Serif", Geneva, sans-serif;
+            margin-top: 20px;
         }
 
         .btn:active {
@@ -96,43 +117,30 @@
             font-family: "Courier New", Courier, monospace;
             background: #000;
             color: #0f0;
-            padding: 5px;
+            padding: 8px;
             border: 2px inset var(--win-border-light);
-        }
-
-        .instruction-box {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            border: 1px dashed #000;
-            padding: 10px;
-            background: #ffffcc;
+            width: 200px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1><marquee scrollamount="5">*** HEATWAVE SIMULATOR v1.0 ***</marquee></h1>
+    <h1><marquee behavior="alternate" scrollamount="3">TEMPERATURE SENSOR SYSTEM ONLINE</marquee></h1>
 </header>
 
 <div class="gauge-window">
-    <h2 style="color: #800000;">Global Temp Monitor</h2>
-    
-    <div class="thermometer-container">
-        <div id="mercury"></div>
+    <div class="thermometer-wrapper">
+        <div class="thermometer-container">
+            <div id="mercury" style="background-color: #0000ff; height: 10%;"></div>
+        </div>
+        <div class="marking gas">GAS (Hot)</div>
+        <div class="marking ice">ICE (Cold)</div>
     </div>
 
-    <div id="status-display">SYSTEM READY...</div>
-
-    <div class="controls">
-        <button class="btn" id="startBtn" onclick="toggleSimulation()">START</button>
-    </div>
-</div>
-
-<div class="instruction-box">
-    <strong>STUDENT GUIDE:</strong><br>
-    LOW TEMP = Still Hands<br>
-    HIGH TEMP = Shaky Hands!
+    <div id="status-display">READY...</div>
+    <button class="btn" id="startBtn" onclick="toggleSimulation()">START ENGINE</button>
 </div>
 
 <script>
@@ -146,32 +154,44 @@
         if (isRunning) {
             clearInterval(interval);
             isRunning = false;
-            btn.innerText = "START";
-            status.innerText = "SIMULATION PAUSED";
+            btn.innerText = "START ENGINE";
+            status.innerText = "HALTED";
         } else {
             isRunning = true;
-            btn.innerText = "STOP";
+            btn.innerText = "STOP ENGINE";
+            status.innerText = "CALIBRATING...";
             runSimulation();
         }
     }
 
     function runSimulation() {
-        interval = setInterval(() => {
-            // Generate a random temperature percentage between 10% and 95%
-            const temp = Math.floor(Math.random() * 85) + 10;
+        const update = () => {
+            // Random temp between 5 and 95
+            const temp = Math.floor(Math.random() * 90) + 5;
+            
+            // Apply height
             mercury.style.height = temp + "%";
 
-            if (temp > 70) {
-                status.innerText = "STATUS: SCORCHING!";
-                status.style.color = "#ff0000";
-            } else if (temp > 40) {
-                status.innerText = "STATUS: WARMING UP";
-                status.style.color = "#ff8c00";
+            // Calculate Color: 240 is Blue, 0 is Red.
+            // When temp is high (95), hue is near 0. When temp is low (5), hue is near 240.
+            const hue = 240 - (temp * 2.4);
+            mercury.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+
+            // Update Status text
+            if (temp > 75) {
+                status.innerText = "STATE: BOILING!";
+                status.style.color = "#ff4444";
+            } else if (temp < 25) {
+                status.innerText = "STATE: FREEZING";
+                status.style.color = "#4444ff";
             } else {
-                status.innerText = "STATUS: CHILLY";
-                status.style.color = "#00ffff";
+                status.innerText = "STATE: STABLE";
+                status.style.color = "#00ff00";
             }
-        }, 2000); // Changes every 2 seconds
+        };
+
+        update(); // Run once immediately
+        interval = setInterval(update, 5000); // Changes slowly every 5 seconds
     }
 </script>
 
