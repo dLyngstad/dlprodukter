@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TEMPERATURE GAUGE v2.0 - CLASSROOM EDITION</title>
+    <title>THERMO-MASTER v3.0 - CONTROL PANEL</title>
     <style>
         :root {
             --primary-color: #000080;
@@ -14,26 +14,57 @@
 
         body {
             font-family: "Times New Roman", Times, serif;
-            background-color: var(--bg-color);
+            background-color: #008080; /* Classic Teal Desktop Background */
             background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
         }
 
         header {
             background-color: var(--primary-color);
             color: #ffff00;
             width: 100%;
-            padding: 10px;
+            padding: 5px;
             text-align: center;
-            border: 3px outset var(--win-border-light);
-            margin-bottom: 20px;
-            box-shadow: 4px 4px 0px #444;
+            border-bottom: 3px outset var(--win-border-light);
+            box-shadow: 0 4px 5px rgba(0,0,0,0.3);
         }
 
-        /* --- THE GAUGE WINDOW --- */
+        /* --- LAYOUT --- */
+        .main-workspace {
+            display: flex;
+            flex-direction: row;
+            margin-top: 20px;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        /* --- SIDEBAR PANEL --- */
+        .sidebar {
+            background-color: var(--bg-color);
+            border: 3px outset var(--win-border-light);
+            padding: 15px;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
+        }
+
+        .sidebar-title {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 2px 5px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* --- GAUGE WINDOW --- */
         .gauge-window {
             background-color: var(--bg-color);
             border: 3px outset var(--win-border-light);
@@ -44,65 +75,55 @@
             box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
         }
 
-        /* Container for the thermometer and its markings */
         .thermometer-wrapper {
             display: flex;
             align-items: flex-end;
             position: relative;
-            margin: 20px 0;
-            padding-right: 60px; /* Space for the "paint" markings */
+            padding-right: 70px;
         }
 
         .thermometer-container {
-            width: 50px;
-            height: 450px; /* Longer gauge */
-            background: #d1d1d1;
-            border-top: 3px solid var(--win-border-dark);
-            border-left: 3px solid var(--win-border-dark);
-            border-right: 3px solid var(--win-border-light);
-            border-bottom: 3px solid var(--win-border-light);
+            width: 60px;
+            height: 400px;
+            background: #999;
+            border: 3px inset var(--win-border-light);
             position: relative;
             overflow: hidden;
         }
 
         #mercury {
             width: 100%;
-            height: 20%; 
+            height: 50%;
             position: absolute;
             bottom: 0;
             left: 0;
-            /* Slower, smoother movement */
-            transition: height 3s ease-in-out, background-color 3s ease-in-out;
-            border-top: 2px solid rgba(255,255,255,0.5);
+            /* Transition speed updated by JS depending on mode */
+            transition: height 0.5s linear, background-color 0.5s linear;
         }
 
-        /* --- PAINT MARKINGS --- */
         .marking {
             position: absolute;
-            right: -65px;
+            right: -75px;
             font-weight: bold;
-            font-family: Arial, sans-serif;
             font-size: 14px;
-            color: #333;
-            border-bottom: 2px solid #555;
-            width: 55px;
-            padding-bottom: 2px;
+            width: 65px;
+            border-bottom: 2px solid #000;
         }
+        .marking.gas { top: 5%; color: #800000; }
+        .marking.ice { bottom: 5%; color: #000080; }
 
-        .marking.gas { top: 5%; color: #800000; border-color: #800000; }
-        .marking.ice { bottom: 5%; color: #000080; border-color: #000080; }
-
-        /* --- UI ELEMENTS --- */
+        /* --- BUTTONS --- */
         .btn {
             background-color: var(--bg-color);
             border-top: 2px solid var(--win-border-light);
             border-left: 2px solid var(--win-border-light);
             border-right: 2px solid var(--win-border-black);
             border-bottom: 2px solid var(--win-border-black);
-            padding: 10px 30px;
+            padding: 8px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
+            text-align: left;
         }
 
         .btn:active {
@@ -110,6 +131,13 @@
             border-left: 2px solid var(--win-border-black);
             border-right: 2px solid var(--win-border-light);
             border-bottom: 2px solid var(--win-border-light);
+            padding-left: 10px; /* Slight visual nudge */
+        }
+
+        .btn.active-mode {
+            background-color: #d1d1d1;
+            color: #000080;
+            border: 2px inset #fff;
         }
 
         #status-display {
@@ -117,82 +145,98 @@
             font-family: "Courier New", Courier, monospace;
             background: #000;
             color: #0f0;
-            padding: 8px;
+            padding: 5px;
             border: 2px inset var(--win-border-light);
-            width: 200px;
-            text-align: center;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1><marquee behavior="alternate" scrollamount="3">TEMPERATURE SENSOR SYSTEM ONLINE</marquee></h1>
+    <h1><marquee scrollamount="2" width="50%">CLASSROOM THERMAL SIMULATOR v3.0</marquee></h1>
 </header>
 
-<div class="gauge-window">
-    <div class="thermometer-wrapper">
-        <div class="thermometer-container">
-            <div id="mercury" style="background-color: #0000ff; height: 10%;"></div>
-        </div>
-        <div class="marking gas">GAS (Hot)</div>
-        <div class="marking ice">ICE (Cold)</div>
+<div class="main-workspace">
+    <div class="sidebar">
+        <div class="sidebar-title">Control Menu</div>
+        <button class="btn" onclick="startDemo()">1. Steady Demo</button>
+        <button class="btn" onclick="startRandom()">2. Random (3s)</button>
+        <hr>
+        <button class="btn" style="color: #a00;" onclick="pauseSim()">[ PAUSE ]</button>
+        
+        <div id="status-display">IDLE...</div>
     </div>
 
-    <div id="status-display">READY...</div>
-    <button class="btn" id="startBtn" onclick="toggleSimulation()">START ENGINE</button>
+    <div class="gauge-window">
+        <div class="thermometer-wrapper">
+            <div class="thermometer-container">
+                <div id="mercury"></div>
+            </div>
+            <div class="marking gas">HOT (Gas)</div>
+            <div class="marking ice">COLD (Ice)</div>
+        </div>
+    </div>
 </div>
 
 <script>
-    let isRunning = false;
     let interval = null;
+    let currentTemp = 50;
+    let demoDirection = 1; // 1 for up, -1 for down
+    
     const mercury = document.getElementById('mercury');
     const status = document.getElementById('status-display');
-    const btn = document.getElementById('startBtn');
 
-    function toggleSimulation() {
-        if (isRunning) {
-            clearInterval(interval);
-            isRunning = false;
-            btn.innerText = "START ENGINE";
-            status.innerText = "HALTED";
-        } else {
-            isRunning = true;
-            btn.innerText = "STOP ENGINE";
-            status.innerText = "CALIBRATING...";
-            runSimulation();
-        }
+    function updateVisuals(temp, transitionTime) {
+        mercury.style.transition = `height ${transitionTime}s linear, background-color ${transitionTime}s linear`;
+        mercury.style.height = temp + "%";
+        
+        // Color mapping
+        const hue = 240 - (temp * 2.4);
+        mercury.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+        
+        // Status text
+        if (temp > 75) status.innerText = "MODE: SCORCHING";
+        else if (temp < 25) status.innerText = "MODE: FREEZING";
+        else status.innerText = "MODE: STABLE";
     }
 
-    function runSimulation() {
-        const update = () => {
-            // Random temp between 5 and 95
-            const temp = Math.floor(Math.random() * 90) + 5;
+    function pauseSim() {
+        clearInterval(interval);
+        status.innerText = "STATUS: PAUSED";
+    }
+
+    // MODE 1: STEADY DEMO (Moves 1% every 100ms for a very smooth drift)
+    function startDemo() {
+        pauseSim();
+        status.innerText = "MODE: STEADY";
+        interval = setInterval(() => {
+            currentTemp += (1 * demoDirection);
             
-            // Apply height
-            mercury.style.height = temp + "%";
-
-            // Calculate Color: 240 is Blue, 0 is Red.
-            // When temp is high (95), hue is near 0. When temp is low (5), hue is near 240.
-            const hue = 240 - (temp * 2.4);
-            mercury.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
-
-            // Update Status text
-            if (temp > 75) {
-                status.innerText = "STATE: BOILING!";
-                status.style.color = "#ff4444";
-            } else if (temp < 25) {
-                status.innerText = "STATE: FREEZING";
-                status.style.color = "#4444ff";
-            } else {
-                status.innerText = "STATE: STABLE";
-                status.style.color = "#00ff00";
-            }
-        };
-
-        update(); // Run once immediately
-        interval = setInterval(update, 5000); // Changes slowly every 5 seconds
+            if (currentTemp >= 95) demoDirection = -1;
+            if (currentTemp <= 5) demoDirection = 1;
+            
+            updateVisuals(currentTemp, 0.1);
+        }, 100);
     }
+
+    // MODE 2: RANDOM (Jumps every 3 seconds)
+    function startRandom() {
+        pauseSim();
+        status.innerText = "MODE: RANDOM";
+        const jump = () => {
+            currentTemp = Math.floor(Math.random() * 90) + 5;
+            updateVisuals(currentTemp, 2.5); // Smooth jump over 2.5 seconds
+        };
+        jump();
+        interval = setInterval(jump, 3000);
+    }
+
+    // Initial State
+    updateVisuals(currentTemp, 0.5);
+
 </script>
 
 </body>
