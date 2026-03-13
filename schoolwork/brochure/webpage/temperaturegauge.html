@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
-    <title>THERMO-MASTER v3.0 - CONTROL PANEL</title>
+    <title>TERMOMETER-SIMULATOR v4.0</title>
     <style>
         :root {
             --primary-color: #000080;
@@ -14,12 +14,11 @@
 
         body {
             font-family: "Times New Roman", Times, serif;
-            background-color: #008080; /* Classic Teal Desktop Background */
+            background-color: #008080; /* Klassisk Teal-bakgrunn */
             background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0;
             margin: 0;
             height: 100vh;
         }
@@ -31,60 +30,52 @@
             padding: 5px;
             text-align: center;
             border-bottom: 3px outset var(--win-border-light);
-            box-shadow: 0 4px 5px rgba(0,0,0,0.3);
         }
 
-        /* --- LAYOUT --- */
         .main-workspace {
             display: flex;
             flex-direction: row;
-            margin-top: 20px;
-            gap: 20px;
+            margin-top: 30px;
+            gap: 30px;
             align-items: flex-start;
         }
 
-        /* --- SIDEBAR PANEL --- */
+        /* --- KONTROLLPANEL --- */
         .sidebar {
             background-color: var(--bg-color);
             border: 3px outset var(--win-border-light);
-            padding: 15px;
-            width: 200px;
+            padding: 10px;
+            width: 220px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
         }
 
         .sidebar-title {
             background: linear-gradient(90deg, #000080, #1084d0);
             color: white;
-            padding: 2px 5px;
+            padding: 3px 8px;
             font-size: 14px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
-        /* --- GAUGE WINDOW --- */
+        /* --- TERMOMETER-BOKS --- */
         .gauge-window {
             background-color: var(--bg-color);
             border: 3px outset var(--win-border-light);
-            padding: 30px;
+            padding: 20px 40px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
-        }
-
-        .thermometer-wrapper {
-            display: flex;
+            flex-direction: row; /* Markeringer ved siden av rør */
             align-items: flex-end;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
             position: relative;
-            padding-right: 70px;
         }
 
-        .thermometer-container {
-            width: 60px;
-            height: 400px;
+        .thermometer-tube {
+            width: 50px;
+            height: 450px;
             background: #999;
             border: 3px inset var(--win-border-light);
             position: relative;
@@ -97,29 +88,38 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            /* Transition speed updated by JS depending on mode */
             transition: height 0.5s linear, background-color 0.5s linear;
         }
 
+        /* --- MARKERINGER (NÅ INNE I BOKSEN) --- */
+        .markings-container {
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-left: 15px;
+            padding-bottom: 5px;
+        }
+
         .marking {
-            position: absolute;
-            right: -75px;
             font-weight: bold;
             font-size: 14px;
-            width: 65px;
-            border-bottom: 2px solid #000;
+            border-bottom: 2px solid #555;
+            width: 100px;
+            padding-bottom: 2px;
         }
-        .marking.gas { top: 5%; color: #800000; }
-        .marking.ice { bottom: 5%; color: #000080; }
+        .marking.gas { color: #800000; }
+        .marking.water { color: #006400; transform: translateY(20px); }
+        .marking.ice { color: #000080; }
 
-        /* --- BUTTONS --- */
+        /* --- KNAPPER --- */
         .btn {
             background-color: var(--bg-color);
             border-top: 2px solid var(--win-border-light);
             border-left: 2px solid var(--win-border-light);
             border-right: 2px solid var(--win-border-black);
             border-bottom: 2px solid var(--win-border-black);
-            padding: 8px;
+            padding: 6px;
             font-size: 13px;
             font-weight: bold;
             cursor: pointer;
@@ -131,112 +131,121 @@
             border-left: 2px solid var(--win-border-black);
             border-right: 2px solid var(--win-border-light);
             border-bottom: 2px solid var(--win-border-light);
-            padding-left: 10px; /* Slight visual nudge */
         }
 
-        .btn.active-mode {
-            background-color: #d1d1d1;
-            color: #000080;
-            border: 2px inset #fff;
-        }
+        .btn-manual { background-color: #d1d1d1; }
 
         #status-display {
-            margin-top: 15px;
+            margin-top: 10px;
             font-family: "Courier New", Courier, monospace;
             background: #000;
             color: #0f0;
             padding: 5px;
             border: 2px inset var(--win-border-light);
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1><marquee scrollamount="2" width="50%">CLASSROOM THERMAL SIMULATOR v3.0</marquee></h1>
+    <h1><marquee scrollamount="3" width="60%">KLASSEROM-SIMULATOR: TERMOMETER v4.0</marquee></h1>
 </header>
 
 <div class="main-workspace">
     <div class="sidebar">
-        <div class="sidebar-title">Control Menu</div>
-        <button class="btn" onclick="startDemo()">1. Steady Demo</button>
-        <button class="btn" onclick="startRandom()">2. Random (3s)</button>
-        <hr>
-        <button class="btn" style="color: #a00;" onclick="pauseSim()">[ PAUSE ]</button>
+        <div class="sidebar-title">Kontrollmeny</div>
+        <button class="btn" onclick="startDemo()">1. Rolig demo (bølge)</button>
+        <button class="btn" onclick="startRandom(3000)">2. Tilfeldig (3 sek)</button>
+        <button class="btn" onclick="startRandom(800)">3. Kaos-modus (Rask)</button>
         
-        <div id="status-display">IDLE...</div>
+        <div class="sidebar-title">Manuell styring</div>
+        <button class="btn btn-manual" onclick="adjustTemp(10)">+ Varm opp</button>
+        <button class="btn btn-manual" onclick="adjustTemp(-10)">- Kjøl ned</button>
+        
+        <hr>
+        <button class="btn" style="color: #a00; text-align: center;" onclick="pauseSim()">[ PAUSE ]</button>
+        
+        <div id="status-display">KLAR...</div>
     </div>
 
     <div class="gauge-window">
-        <div class="thermometer-wrapper">
-            <div class="thermometer-container">
-                <div id="mercury"></div>
-            </div>
-            <div class="marking gas">HOT (Gas)</div>
-            <div class="marking ice">COLD (Ice)</div>
+        <div class="thermometer-tube">
+            <div id="mercury"></div>
+        </div>
+        
+        <div class="markings-container">
+            <div class="marking gas">DAMP (Gass)</div>
+            <div class="marking water">VANN (Væske)</div>
+            <div class="marking ice">IS (Fast form)</div>
         </div>
     </div>
 </div>
 
 <script>
     let interval = null;
-    let currentTemp = 50;
-    let demoDirection = 1; // 1 for up, -1 for down
+    let currentTemp = 10;
+    let demoDirection = 1;
     
     const mercury = document.getElementById('mercury');
     const status = document.getElementById('status-display');
 
     function updateVisuals(temp, transitionTime) {
-        mercury.style.transition = `height ${transitionTime}s linear, background-color ${transitionTime}s linear`;
+        mercury.style.transition = `height ${transitionTime}s ease-in-out, background-color ${transitionTime}s linear`;
         mercury.style.height = temp + "%";
         
-        // Color mapping
+        // Fargestyring: Blå (240) -> Grønn/Gul -> Rød (0)
         const hue = 240 - (temp * 2.4);
         mercury.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
         
-        // Status text
-        if (temp > 75) status.innerText = "MODE: SCORCHING";
-        else if (temp < 25) status.innerText = "MODE: FREEZING";
-        else status.innerText = "MODE: STABLE";
+        // Oppdater tekststatus
+        if (temp > 85) status.innerText = "STATUS: KOKER!";
+        else if (temp > 30 && temp < 70) status.innerText = "STATUS: FLYTENDE";
+        else if (temp < 15) status.innerText = "STATUS: FROST";
+        else status.innerText = "STATUS: VARIERER";
     }
 
     function pauseSim() {
         clearInterval(interval);
-        status.innerText = "STATUS: PAUSED";
+        status.innerText = "STATUS: PAUSET";
     }
 
-    // MODE 1: STEADY DEMO (Moves 1% every 100ms for a very smooth drift)
+    // MODE 1: Rolig bølge opp og ned
     function startDemo() {
         pauseSim();
-        status.innerText = "MODE: STEADY";
+        status.innerText = "MODUS: ROLIG";
         interval = setInterval(() => {
             currentTemp += (1 * demoDirection);
-            
             if (currentTemp >= 95) demoDirection = -1;
             if (currentTemp <= 5) demoDirection = 1;
-            
             updateVisuals(currentTemp, 0.1);
-        }, 100);
+        }, 150);
     }
 
-    // MODE 2: RANDOM (Jumps every 3 seconds)
-    function startRandom() {
+    // MODE 2 & 3: Tilfeldig hopping
+    function startRandom(speed) {
         pauseSim();
-        status.innerText = "MODE: RANDOM";
+        status.innerText = speed < 1000 ? "MODUS: KAOS!" : "MODUS: TILFELDIG";
         const jump = () => {
             currentTemp = Math.floor(Math.random() * 90) + 5;
-            updateVisuals(currentTemp, 2.5); // Smooth jump over 2.5 seconds
+            updateVisuals(currentTemp, speed/1500); 
         };
         jump();
-        interval = setInterval(jump, 3000);
+        interval = setInterval(jump, speed);
     }
 
-    // Initial State
-    updateVisuals(currentTemp, 0.5);
+    // Manuell justering
+    function adjustTemp(amount) {
+        pauseSim();
+        currentTemp += amount;
+        if (currentTemp > 100) currentTemp = 100;
+        if (currentTemp < 0) currentTemp = 0;
+        updateVisuals(currentTemp, 0.5);
+        status.innerText = "MANUELL MODUS";
+    }
 
+    // Startposisjon
+    updateVisuals(currentTemp, 0.5);
 </script>
 
 </body>
