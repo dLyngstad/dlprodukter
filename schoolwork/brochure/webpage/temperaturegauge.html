@@ -21,6 +21,7 @@
             align-items: center;
             margin: 0;
             height: 100vh;
+            overflow: hidden;
         }
 
         header {
@@ -30,14 +31,16 @@
             padding: 5px;
             text-align: center;
             border-bottom: 3px outset var(--win-border-light);
+            z-index: 10;
         }
 
         .main-workspace {
             display: flex;
             flex-direction: row;
-            margin-top: 20px;
+            margin-top: 30px;
             gap: 30px;
             align-items: flex-start;
+            transition: all 0.6s ease-in-out;
         }
 
         /* --- KONTROLLPANEL --- */
@@ -58,47 +61,56 @@
             padding: 3px 8px;
             font-size: 14px;
             font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        /* --- TERMOMETER --- */
+        /* --- TERMOMETER-BOKS (EKSPANDERBAR) --- */
         .gauge-window {
             background-color: var(--bg-color);
             border: 3px outset var(--win-border-light);
             padding: 20px 40px;
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: center; /* Sentrerer rør i boks */
             box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
-            min-height: 500px;
-            transition: all 0.5s ease;
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 450px; /* Standard høyde */
+        }
+
+        /* Når utforsk-modus er på, blir boksen større */
+        .gauge-window.expanded {
+            height: 650px;
+            margin-top: -50px;
         }
 
         .thermometer-tube {
             width: 50px;
-            height: 450px;
+            height: 100%; /* Følger høyden på boks */
             background: #999;
             border: 3px inset var(--win-border-light);
             position: relative;
-            /* Vi fjerner overflow:hidden så vi kan se ekstremene hvis de går utenfor i utforsk-modus */
-            overflow: hidden; 
+            overflow: hidden;
+            transition: all 0.6s ease-in-out;
         }
 
         #mercury {
             width: 100%;
-            height: 50%;
+            height: 10%;
             position: absolute;
             bottom: 0;
             left: 0;
             transition: height 0.5s linear, background-color 0.5s linear;
         }
 
+        /* --- MARKERINGER --- */
         .markings-container {
-            height: 450px;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             padding-left: 15px;
-            position: relative;
+            transition: all 0.6s ease-in-out;
         }
 
         .marking {
@@ -107,14 +119,16 @@
             border-bottom: 2px solid #555;
             width: 140px;
             padding-bottom: 2px;
-            opacity: 1;
-            transition: opacity 0.3s;
+            transition: opacity 0.4s ease;
         }
 
-        /* Ekstra markeringer for Utforsk-modus */
-        .extra-marking {
+        /* Ekstreme markeringer er usynlige som standard */
+        .extreme {
+            opacity: 0;
             color: #ff00ff;
-            display: none; /* Skjult som standard */
+        }
+        .expanded .extreme {
+            opacity: 1;
         }
 
         .marking.gas { color: #800000; }
@@ -141,88 +155,94 @@
             border-bottom: 2px solid var(--win-border-light);
         }
 
-        .btn-explore {
+        /* UTFROSK-KNAPP I HJØRNET */
+        #explore-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
             background-color: #ffff00;
             color: #000;
-            margin-top: 10px;
+            z-index: 100;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
         }
 
         #status-display {
-            margin-top: 5px;
+            margin-top: 10px;
             font-family: "Courier New", Courier, monospace;
             background: #000;
             color: #0f0;
             padding: 5px;
             border: 2px inset var(--win-border-light);
             font-size: 13px;
-            min-height: 40px;
+            min-height: 35px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1><marquee scrollamount="3">KLASSEROM-SIMULATOR v5.0: UTFORSK MODUS AKTIVERT?</marquee></h1>
+    <h1><marquee scrollamount="3" width="60%">KLASSEROM-SIMULATOR v5.0</marquee></h1>
 </header>
 
 <div class="main-workspace">
     <div class="sidebar">
-        <div class="sidebar-title">Standard Modus</div>
-        <button class="btn" onclick="startDemo()">Rolig bølge</button>
-        <button class="btn" onclick="startRandom(3000)">Tilfeldig (3s)</button>
+        <div class="sidebar-title">Kontrollmeny</div>
+        <button class="btn" onclick="startDemo()">1. Rolig demo (bølge)</button>
+        <button class="btn" onclick="startRandom(3000)">2. Tilfeldig (3 sek)</button>
         
-        <div class="sidebar-title">Ekstrem-kontroll</div>
-        <button class="btn btn-explore" id="exploreBtn" onclick="toggleExplore()">Aktiver Utforsk-modus</button>
-        <button class="btn" onclick="adjustTemp(20)">++ Super-varme</button>
-        <button class="btn" onclick="adjustTemp(-20)">-- Super-kulde</button>
+        <div class="sidebar-title">Manuell styring</div>
+        <button class="btn" onclick="adjustTemp(15)">++ Kraftig oppvarming</button>
+        <button class="btn" onclick="adjustTemp(-15)">-- Kraftig nedkjøling</button>
         
         <hr>
-        <button class="btn" style="color: #a00;" onclick="pauseSim()">[ PAUSE ]</button>
+        <button class="btn" style="color: #a00; text-align: center;" onclick="pauseSim()">[ PAUSE ]</button>
         
-        <div id="status-display">KLAR...</div>
+        <div id="status-display">SYSTEM KLAR...</div>
     </div>
 
-    <div class="gauge-window">
+    <div class="gauge-window" id="window">
         <div class="thermometer-tube">
             <div id="mercury"></div>
         </div>
         
         <div class="markings-container">
-            <div class="marking extra-marking" id="mark-plasma" style="position: absolute; top: -30px;">PLASMA (Ionisert)</div>
+            <div class="marking extreme">PLASMA (Ionisert)</div>
             <div class="marking gas">DAMP (Gass)</div>
             <div class="marking water">VANN (Væske)</div>
             <div class="marking ice">IS (Fast form)</div>
-            <div class="marking extra-marking" id="mark-zero" style="position: absolute; bottom: -30px;">ABSOLUTT NULLPUNKT</div>
+            <div class="marking extreme">ABSOLUTT NULLPUNKT</div>
         </div>
     </div>
 </div>
 
+<button class="btn" id="explore-toggle" onclick="toggleExplore()">UTFORSK-MODUS</button>
+
 <script>
     let interval = null;
-    let currentTemp = 50;
-    let isExploreMode = false;
+    let currentTemp = 10;
     let demoDirection = 1;
+    let isExpanded = false;
     
     const mercury = document.getElementById('mercury');
     const status = document.getElementById('status-display');
-    const exploreExtras = document.querySelectorAll('.extra-marking');
+    const windowEl = document.getElementById('window');
+    const exploreBtn = document.getElementById('explore-toggle');
 
     function toggleExplore() {
-        isExploreMode = !isExploreMode;
-        const btn = document.getElementById('exploreBtn');
+        isExpanded = !isExpanded;
+        windowEl.classList.toggle('expanded');
         
-        if (isExploreMode) {
-            btn.innerText = "Deaktiver Utforsk";
-            btn.style.backgroundColor = "#ff00ff";
-            btn.style.color = "#fff";
-            exploreExtras.forEach(el => el.style.display = 'block');
-            status.innerText = "UTFORSK-MODUS: EKSTREME TEMPERATURER LÅST OPP!";
+        if (isExpanded) {
+            exploreBtn.innerText = "STANDARD-MODUS";
+            exploreBtn.style.backgroundColor = "#ff00ff";
+            exploreBtn.style.color = "#fff";
+            status.innerText = "UTFORSK-MODUS: EKSTREMER SYNLIG";
         } else {
-            btn.innerText = "Aktiver Utforsk-modus";
-            btn.style.backgroundColor = "#ffff00";
-            btn.style.color = "#000";
-            exploreExtras.forEach(el => el.style.display = 'none');
-            // Reset temp hvis den var utenfor skalaen
+            exploreBtn.innerText = "UTFORSK-MODUS";
+            exploreBtn.style.backgroundColor = "#ffff00";
+            exploreBtn.style.color = "#000";
+            // Tving temperaturen tilbake hvis den er for høy/lav for standard boks
             if (currentTemp > 100) currentTemp = 100;
             if (currentTemp < 0) currentTemp = 0;
             updateVisuals(currentTemp, 0.5);
@@ -230,43 +250,45 @@
     }
 
     function updateVisuals(temp, transitionTime) {
-        // I utforsk-modus tillater vi verdier fra -15 til 115 for visuell effekt
-        let displayTemp = temp;
-        if (!isExploreMode) {
-            displayTemp = Math.max(0, Math.min(100, temp));
+        // Justerer høyden i % basert på om vi har ekstra plass i røret
+        let heightValue = temp;
+        
+        if (isExpanded) {
+            // I utforsk-modus er 0-100 skalaen trykket litt sammen for å gi plass til toppen og bunnen
+            // Vi mapper temp (-20 til 120) til en visuell høyde
+            heightValue = ((temp + 20) / 140) * 100;
         }
 
         mercury.style.transition = `height ${transitionTime}s ease-in-out, background-color ${transitionTime}s linear`;
-        mercury.style.height = displayTemp + "%";
+        mercury.style.height = heightValue + "%";
         
-        // Fargelogikk
-        let hue;
-        if (temp > 100) hue = 300; // Plasma-lilla
-        else if (temp < 0) hue = 180; // Dyp is-cyan/hvitaktig
-        else hue = 240 - (temp * 2.4);
+        // Farge: Blå -> Grønn -> Rød -> Lilla (Plasma)
+        let hue = 240 - (temp * 2.4);
+        if (temp > 100) hue = 300; // Lilla for plasma
+        if (temp < 0) hue = 200; // Lysere blå for ekstrem kulde
 
         mercury.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
         
-        // Statusmeldinger
-        if (temp > 105) status.innerText = "ADVARSEL: ATOMENE RIVES FRA HVERANDRE (PLASMA)!";
-        else if (temp > 85) status.innerText = "STATUS: DAMP / GASS";
-        else if (temp < -5) status.innerText = "STATUS: ABSOLUTT NULLPUNKT - INGEN BEVEGELSE!";
-        else if (temp < 15) status.innerText = "STATUS: FAST FORM (IS)";
-        else status.innerText = "STATUS: FLYTENDE / STABIL";
+        // Tekstoppdatering
+        if (temp > 110) status.innerText = "STATUS: PLASMA (EKSTREMT VARMT)";
+        else if (temp > 85) status.innerText = "STATUS: DAMP / KOKING";
+        else if (temp < -10) status.innerText = "STATUS: ABSOLUTT NULLPUNKT";
+        else if (temp < 15) status.innerText = "STATUS: IS / FROST";
+        else status.innerText = "STATUS: FLYTENDE VANN";
     }
 
     function adjustTemp(amount) {
         pauseSim();
         currentTemp += amount;
         
-        // Grenser basert på modus
-        const max = isExploreMode ? 120 : 100;
-        const min = isExploreMode ? -20 : 0;
+        // Grenser
+        const max = isExpanded ? 120 : 100;
+        const min = isExpanded ? -20 : 0;
         
         if (currentTemp > max) currentTemp = max;
         if (currentTemp < min) currentTemp = min;
         
-        updateVisuals(currentTemp, 0.8);
+        updateVisuals(currentTemp, 0.5);
     }
 
     function pauseSim() {
@@ -276,10 +298,14 @@
 
     function startDemo() {
         pauseSim();
+        status.innerText = "MODUS: ROLIG";
         interval = setInterval(() => {
             currentTemp += (1 * demoDirection);
-            if (currentTemp >= (isExploreMode ? 115 : 95)) demoDirection = -1;
-            if (currentTemp <= (isExploreMode ? -15 : 5)) demoDirection = 1;
+            const limit = isExpanded ? 115 : 95;
+            const bottom = isExpanded ? -15 : 5;
+            
+            if (currentTemp >= limit) demoDirection = -1;
+            if (currentTemp <= bottom) demoDirection = 1;
             updateVisuals(currentTemp, 0.1);
         }, 150);
     }
@@ -287,8 +313,8 @@
     function startRandom(speed) {
         pauseSim();
         const jump = () => {
-            const max = isExploreMode ? 115 : 95;
-            const min = isExploreMode ? -15 : 5;
+            const max = isExpanded ? 115 : 90;
+            const min = isExpanded ? -15 : 10;
             currentTemp = Math.floor(Math.random() * (max - min)) + min;
             updateVisuals(currentTemp, speed/1500); 
         };
@@ -296,6 +322,7 @@
         interval = setInterval(jump, speed);
     }
 
+    // Start
     updateVisuals(currentTemp, 0.5);
 </script>
 
