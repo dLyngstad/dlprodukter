@@ -2,7 +2,7 @@
 <html lang="no">
 <head>
     <meta charset="UTF-8">
-    <title>TERMOMETER-SIMULATOR v5.0 - UTFORSKER</title>
+    <title>TERMOMETER-SIMULATOR v6.0 - KRAFTVERKMODUS</title>
     <style>
         :root {
             --primary-color: #000080;
@@ -40,7 +40,6 @@
             margin-top: 30px;
             gap: 30px;
             align-items: flex-start;
-            transition: all 0.6s ease-in-out;
         }
 
         /* --- KONTROLLPANEL --- */
@@ -61,37 +60,34 @@
             padding: 3px 8px;
             font-size: 14px;
             font-weight: bold;
-            margin-bottom: 5px;
         }
 
-        /* --- TERMOMETER-BOKS (EKSPANDERBAR) --- */
+        /* --- TERMOMETER-BOKS --- */
         .gauge-window {
             background-color: var(--bg-color);
             border: 3px outset var(--win-border-light);
-            padding: 20px 40px;
+            padding: 30px 50px;
             display: flex;
             flex-direction: row;
-            align-items: center; /* Sentrerer rør i boks */
+            align-items: center;
             box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
             position: relative;
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            height: 450px; /* Standard høyde */
+            height: 450px;
         }
 
-        /* Når utforsk-modus er på, blir boksen større */
         .gauge-window.expanded {
-            height: 650px;
-            margin-top: -50px;
+            height: 600px;
+            margin-top: -30px;
         }
 
         .thermometer-tube {
             width: 50px;
-            height: 100%; /* Følger høyden på boks */
+            height: 100%;
             background: #999;
             border: 3px inset var(--win-border-light);
             position: relative;
             overflow: hidden;
-            transition: all 0.6s ease-in-out;
         }
 
         #mercury {
@@ -109,27 +105,21 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding-left: 15px;
-            transition: all 0.6s ease-in-out;
+            padding-left: 20px;
         }
 
         .marking {
             font-weight: bold;
             font-size: 14px;
             border-bottom: 2px solid #555;
-            width: 140px;
+            width: 180px;
             padding-bottom: 2px;
             transition: opacity 0.4s ease;
+            white-space: nowrap;
         }
 
-        /* Ekstreme markeringer er usynlige som standard */
-        .extreme {
-            opacity: 0;
-            color: #ff00ff;
-        }
-        .expanded .extreme {
-            opacity: 1;
-        }
+        .extreme { opacity: 0; display: none; color: #ff00ff; }
+        .expanded .extreme { opacity: 1; display: block; }
 
         .marking.gas { color: #800000; }
         .marking.water { color: #006400; }
@@ -155,15 +145,12 @@
             border-bottom: 2px solid var(--win-border-light);
         }
 
-        /* UTFROSK-KNAPP I HJØRNET */
         #explore-toggle {
             position: fixed;
             bottom: 20px;
             right: 20px;
             padding: 10px 20px;
             background-color: #ffff00;
-            color: #000;
-            z-index: 100;
             box-shadow: 4px 4px 0px rgba(0,0,0,0.5);
         }
 
@@ -175,30 +162,30 @@
             padding: 5px;
             border: 2px inset var(--win-border-light);
             font-size: 13px;
-            min-height: 35px;
+            min-height: 40px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1><marquee scrollamount="3" width="60%">KLASSEROM-SIMULATOR v5.0</marquee></h1>
+    <h1><marquee scrollamount="2" width="50%">TERMOMETER-SIMULATOR v6.0</marquee></h1>
 </header>
 
 <div class="main-workspace">
     <div class="sidebar">
-        <div class="sidebar-title">Kontrollmeny</div>
-        <button class="btn" onclick="startDemo()">1. Rolig demo (bølge)</button>
-        <button class="btn" onclick="startRandom(3000)">2. Tilfeldig (3 sek)</button>
+        <div class="sidebar-title">Modus</div>
+        <button class="btn" onclick="startDemo()">Bølge (Rolig)</button>
+        <button class="btn" onclick="startRandom(3000)">Tilfeldig (3s)</button>
         
-        <div class="sidebar-title">Manuell styring</div>
-        <button class="btn" onclick="adjustTemp(15)">++ Kraftig oppvarming</button>
-        <button class="btn" onclick="adjustTemp(-15)">-- Kraftig nedkjøling</button>
+        <div class="sidebar-title">Temperaturstyring</div>
+        <button class="btn" onclick="adjustTemp(20)">Varme ++</button>
+        <button class="btn" onclick="adjustTemp(-20)">Kulde --</button>
         
         <hr>
         <button class="btn" style="color: #a00; text-align: center;" onclick="pauseSim()">[ PAUSE ]</button>
         
-        <div id="status-display">SYSTEM KLAR...</div>
+        <div id="status-display">KLAR...</div>
     </div>
 
     <div class="gauge-window" id="window">
@@ -207,11 +194,11 @@
         </div>
         
         <div class="markings-container">
-            <div class="marking extreme">PLASMA (Ionisert)</div>
-            <div class="marking gas">DAMP (Gass)</div>
-            <div class="marking water">VANN (Væske)</div>
-            <div class="marking ice">IS (Fast form)</div>
-            <div class="marking extreme">ABSOLUTT NULLPUNKT</div>
+            <div class="marking extreme">200°C - Overopphetet damp</div>
+            <div class="marking gas">100°C - Damp (Gass)</div>
+            <div class="marking water">50°C - Vann (Væske)</div>
+            <div class="marking ice">0°C - Is (Fast form)</div>
+            <div class="marking extreme">-273°C - Absolutt nullpunkt</div>
         </div>
     </div>
 </div>
@@ -237,12 +224,11 @@
             exploreBtn.innerText = "STANDARD-MODUS";
             exploreBtn.style.backgroundColor = "#ff00ff";
             exploreBtn.style.color = "#fff";
-            status.innerText = "UTFORSK-MODUS: EKSTREMER SYNLIG";
+            status.innerText = "UTFORSK-MODUS: EKSTREMER AKTIVERT";
         } else {
             exploreBtn.innerText = "UTFORSK-MODUS";
             exploreBtn.style.backgroundColor = "#ffff00";
             exploreBtn.style.color = "#000";
-            // Tving temperaturen tilbake hvis den er for høy/lav for standard boks
             if (currentTemp > 100) currentTemp = 100;
             if (currentTemp < 0) currentTemp = 0;
             updateVisuals(currentTemp, 0.5);
@@ -250,44 +236,44 @@
     }
 
     function updateVisuals(temp, transitionTime) {
-        // Justerer høyden i % basert på om vi har ekstra plass i røret
         let heightValue = temp;
         
         if (isExpanded) {
-            // I utforsk-modus er 0-100 skalaen trykket litt sammen for å gi plass til toppen og bunnen
-            // Vi mapper temp (-20 til 120) til en visuell høyde
+            // Mapper -20 til 120 (vårt visuelle område) til 0-100% høyde
             heightValue = ((temp + 20) / 140) * 100;
         }
 
         mercury.style.transition = `height ${transitionTime}s ease-in-out, background-color ${transitionTime}s linear`;
         mercury.style.height = heightValue + "%";
         
-        // Farge: Blå -> Grønn -> Rød -> Lilla (Plasma)
-        let hue = 240 - (temp * 2.4);
-        if (temp > 100) hue = 300; // Lilla for plasma
-        if (temp < 0) hue = 200; // Lysere blå for ekstrem kulde
+        // Fargelogikk
+        let hue;
+        if (temp > 100) {
+            // Går mot hvitt/oransje for super-damp
+            hue = 20; 
+        } else if (temp < 0) {
+            hue = 200; 
+        } else {
+            hue = 240 - (temp * 2.4);
+        }
 
         mercury.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
         
-        // Tekstoppdatering
-        if (temp > 110) status.innerText = "STATUS: PLASMA (EKSTREMT VARMT)";
-        else if (temp > 85) status.innerText = "STATUS: DAMP / KOKING";
-        else if (temp < -10) status.innerText = "STATUS: ABSOLUTT NULLPUNKT";
-        else if (temp < 15) status.innerText = "STATUS: IS / FROST";
-        else status.innerText = "STATUS: FLYTENDE VANN";
+        // Statusmeldinger basert på temperatur
+        if (temp > 100) status.innerText = `STATUS: ${temp > 110 ? 'KRITISK DAMP-TRYKK!' : 'OVEROPPHETET DAMP'}`;
+        else if (temp >= 100) status.innerText = "STATUS: DAMP (GASS)";
+        else if (temp > 0) status.innerText = "STATUS: FLYTENDE VANN";
+        else if (temp === 0) status.innerText = "STATUS: FRYSEPUNKT";
+        else status.innerText = "STATUS: EKSTREM KULDE";
     }
 
     function adjustTemp(amount) {
         pauseSim();
         currentTemp += amount;
-        
-        // Grenser
         const max = isExpanded ? 120 : 100;
         const min = isExpanded ? -20 : 0;
-        
         if (currentTemp > max) currentTemp = max;
         if (currentTemp < min) currentTemp = min;
-        
         updateVisuals(currentTemp, 0.5);
     }
 
@@ -303,7 +289,6 @@
             currentTemp += (1 * demoDirection);
             const limit = isExpanded ? 115 : 95;
             const bottom = isExpanded ? -15 : 5;
-            
             if (currentTemp >= limit) demoDirection = -1;
             if (currentTemp <= bottom) demoDirection = 1;
             updateVisuals(currentTemp, 0.1);
@@ -322,7 +307,6 @@
         interval = setInterval(jump, speed);
     }
 
-    // Start
     updateVisuals(currentTemp, 0.5);
 </script>
 
