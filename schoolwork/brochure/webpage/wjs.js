@@ -78,9 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. DOM ELEMENTS ---
     const grid = document.getElementById('gesture-grid');
     const searchBar = document.getElementById('search-bar');
+    const searchClear = document.getElementById('search-clear');
     const filterBtns = document.querySelectorAll('.filter-btn');
     const noResultsMsg = document.getElementById('no-results');
-    
+    const resultCount = document.getElementById('result-count');
+    const backToTopBtn = document.getElementById('back-to-top');
+
     // Modal Elements
     const modal = document.getElementById('gesture-modal');
     const closeModalBtn = document.getElementById('close-modal');
@@ -94,53 +97,141 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const filteredData = gestureData.filter(item => {
             const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
-            const matchesSearch = item.title.toLowerCase().includes(searchQuery) || 
+            const matchesSearch = item.title.toLowerCase().includes(searchQuery) ||
                                   item.concept.toLowerCase().includes(searchQuery);
             return matchesCategory && matchesSearch;
         });
 
+        // Show/hide no-results message
         if (filteredData.length === 0) {
-            noResultsMsg.style.display = 'block';
+            noResultsMsg.classList.remove('hidden');
         } else {
-            noResultsMsg.style.display = 'none';
+            noResultsMsg.classList.add('hidden');
         }
 
+        // Update result count
+        updateResultCount(filteredData.length);
+
+        // Update filter badge counts
+        updateFilterCounts();
+
+        // Render cards
         filteredData.forEach(item => {
             const card = document.createElement('div');
             card.className = 'card';
+            card.setAttribute('role', 'listitem');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-label', `${item.title || 'Uten tittel'} – ${item.categoryName}. Klikk for detaljer.`);
+
             card.innerHTML = `
                 <span class="card-category">${item.categoryName}</span>
-                <h3>${item.title}</h3>
-                <p><strong>The Model:</strong> ${item.model}</p>
-                <p><strong>The Concept:</strong> ${item.concept}</p>
+                <h3>${item.title || '(Uten tittel)'}</h3>
+                <p><strong>Modellen:</strong> ${item.model || '–'}</p>
+                <p><strong>Konseptet:</strong> ${item.concept || '–'}</p>
             `;
-            
+
+            // Open modal on click or Enter/Space
             card.addEventListener('click', () => openModal(item));
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openModal(item);
+                }
+            });
+
             grid.appendChild(card);
         });
     }
 
-    // --- 4. MODAL LOGIC ---
+    // --- 4. RESULT COUNT ---
+    function updateResultCount(count) {
+        if (searchQuery || currentCategory !== 'all') {
+            resultCount.textContent = `${count} resultat${count !== 1 ? 'er' : ''} funnet`;
+        } else {
+            resultCount.textContent = '';
+        }
+    }
+
+    // --- 5. FILTER BADGE COUNTS ---
+    function updateFilterCounts() {
+        filterBtns.forEach(btn => {
+            const filter = btn.getAttribute('data-filter');
+
+            // Remove existing badge
+            const existingBadge = btn.querySelector('.filter-count');
+            if (existingBadge) existingBadge.remove();
+
+            // Count matching items for this filter
+            const count = filter === 'all'
+                ? gestureData.filter(i => i.title.toLowerCase().includes(searchQuery) || i.concept.toLowerCase().includes(searchQuery)).length
+                : gestureData.filter(i => i.category === filter && (i.title.toLowerCase().includes(searchQuery) || i.concept.toLowerCase().includes(searchQuery))).length;
+
+            const badge = document.createElement('span');
+            badge.className = 'filter-count';
+            badge.textContent = count;
+            btn.appendChild(badge);
+        });
+    }
+
+    // --- 6. MODAL LOGIC ---
+    let previouslyFocusedElement = null;
+
     function openModal(item) {
+        previouslyFocusedElement = document.activeElement;
+
         document.getElementById('modal-category').textContent = item.categoryName;
-        document.getElementById('modal-title').textContent = item.title;
-        document.getElementById('modal-model').textContent = item.model;
-        document.getElementById('modal-concept').textContent = item.concept;
-        document.getElementById('modal-extra').textContent = item.extraInfo;
+        document.getElementById('modal-title').textContent = item.title || '(Uten tittel)';
+        document.getElementById('modal-model').textContent = item.model || '–';
+        document.getElementById('modal-concept').textContent = item.concept || '–';
+        document.getElementById('modal-extra').textContent = item.extraInfo || '–';
 
         modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        // Focus the close button for accessibility
+        closeModalBtn.focus();
     }
 
     function closeModal() {
         modal.classList.add('hidden');
+        document.body.style.overflow = '';
+
+        // Return focus to the element that opened the modal
+        if (previouslyFocusedElement) {
+            previouslyFocusedElement.focus();
+        }
     }
 
     closeModalBtn.addEventListener('click', closeModal);
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
     });
 
-    // --- 5. FILTERING LOGIC ---
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+
+    // Trap focus within modal when open
+    modal.addEventListener('keydown', (e) => {
+        if (e.key !== 'Tab') return;
+        const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
+    });
+
+    // --- 7. FILTERING LOGIC ---
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
@@ -150,11 +241,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- 8. SEARCH LOGIC ---
     searchBar.addEventListener('input', (e) => {
         searchQuery = e.target.value.toLowerCase().trim();
+        searchClear.classList.toggle('hidden', searchQuery.length === 0);
         renderCards();
     });
 
-    // --- 6. INITIALIZATION ---
-    renderCards(); 
+    searchClear.addEventListener('click', () => {
+        searchBar.value = '';
+        searchQuery = '';
+        searchClear.classList.add('hidden');
+        searchBar.focus();
+        renderCards();
+    });
+
+    // --- 9. BACK TO TOP ---
+    window.addEventListener('scroll', () => {
+        backToTopBtn.classList.toggle('hidden', window.scrollY < 300);
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- 10. INITIALIZATION ---
+    renderCards();
 });
