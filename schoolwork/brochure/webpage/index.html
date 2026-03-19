@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="wstyle.css">
 </head>
 <body>
-
     <header>
         <h1>Gestikulering</h1>
         <p>BLANKT</p>
@@ -27,10 +26,15 @@
     </section>
 
     <div class="search-container">
-        <input type="text" id="search-bar" placeholder="BLANKT">
+        <div class="search-wrapper">
+            <span class="search-icon" aria-hidden="true">&#128269;</span>
+            <input type="text" id="search-bar" placeholder="BLANKT" aria-label="Søk etter gestikulering">
+            <button class="search-clear hidden" id="search-clear" aria-label="Tøm søk">&times;</button>
+        </div>
+        <p class="result-count" id="result-count" aria-live="polite"></p>
     </div>
 
-    <nav class="filters">
+    <nav class="filters" aria-label="Filtrer etter kategori">
         <button class="filter-btn active" data-filter="all">Alle</button>
         <button class="filter-btn" data-filter="physics">Fysikk</button>
         <button class="filter-btn" data-filter="chemistry">Kjemi</button>
@@ -39,13 +43,17 @@
     </nav>
 
     <div class="container">
-        <div class="grid" id="gesture-grid"></div>
-        <div id="no-results" style="display: none;">BLANKT</div>
+        <div class="grid" id="gesture-grid" role="list"></div>
+        <div id="no-results" class="no-results hidden">
+            <span class="no-results-icon" aria-hidden="true">&#128533;</span>
+            <p>Ingen resultater funnet.</p>
+            <p class="no-results-hint">Prøv et annet søkeord eller endre filter.</p>
+        </div>
     </div>
 
-    <div id="gesture-modal" class="modal-overlay hidden">
+    <div id="gesture-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-content">
-            <button class="close-btn" id="close-modal">&times;</button>
+            <button class="close-btn" id="close-modal" aria-label="Lukk">&times;</button>
             <span class="card-category" id="modal-category"></span>
             <h2 id="modal-title"></h2>
             <div class="modal-body">
@@ -57,6 +65,8 @@
             </div>
         </div>
     </div>
+
+    <button class="back-to-top hidden" id="back-to-top" aria-label="Tilbake til toppen">&#8679;</button>
 
     <script src="wjs.js"></script>
 </body>
