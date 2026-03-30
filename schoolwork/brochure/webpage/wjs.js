@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'physics',
             categoryName: 'Physics',
             title: 'Magnet Felt',
-            model: '<img src="images/Water_form.png">',
+            model: '<img src="images/magnetic Field.JPG">',
             concept: 'Håndmodellen viser retningen av kraften hvis to magnetfelt / partikler møter hverandre',
             extraInfo: ''
         },
