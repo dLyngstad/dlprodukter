@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'physics',
             categoryName: 'Physics',
             title: 'Magnet Felt',
-            model: '<img src="images/magnetic Field.JPG">',
+            model: '<br><img src="images/magnetic Field.JPG">',
             concept: 'Håndmodellen viser retningen av kraften hvis to magnetfelt / partikler møter hverandre',
             extraInfo: ''
         },
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'chemistry',
             categoryName: 'Chemistry',
             title: 'Vannform',
-            model: '<img src="images/Water_form.png">',
+            model: '<br><img src="images/Water_form.png">',
             concept: 'Nevene glir innom hverandre for å illustrere den dynamiske formen til vann.',
             extraInfo: ''
         },
