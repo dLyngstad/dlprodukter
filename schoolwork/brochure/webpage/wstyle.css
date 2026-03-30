@@ -409,3 +409,13 @@ header p {
         padding: 1rem;
     }
 }
+
+.card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.modal-body img {
+    max-width: 100%;
+    height: auto;
+}
