@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 'p1',
             category: 'physics',
             categoryName: 'Physics',
-            title: '',
-            model: '',
-            concept: '',
+            title: 'Magnet Felt',
+            model: '<img src="images/Water_form.png">',
+            concept: 'Håndmodellen viser retningen av kraften hvis to magnetfelt / partikler møter hverandre',
             extraInfo: ''
         },
         {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 'c1',
             category: 'chemistry',
             categoryName: 'Chemistry',
-            title: '',
+            title: 'Fast Form',
             model: '',
             concept: '',
             extraInfo: ''
