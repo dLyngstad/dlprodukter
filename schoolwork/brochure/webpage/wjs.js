@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'chemistry',
             categoryName: 'Chemistry',
             title: 'Vannform',
-            model: '<img src="images/Water_form.png"> </img>',
+            model: '<img src="images/Water_form.png">',
             concept: 'Nevene glir innom hverandre for å illustrere den dynamiske formen til vann.',
             extraInfo: ''
         },
