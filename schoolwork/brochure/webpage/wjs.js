@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('modal-category').textContent = item.categoryName;
         document.getElementById('modal-title').textContent = item.title || '(Uten tittel)';
-        document.getElementById('modal-model').textContent = item.model || '–';
+        document.getElementById('modal-model').innerHTML = item.model || '–';
         document.getElementById('modal-concept').textContent = item.concept || '–';
         document.getElementById('modal-extra').textContent = item.extraInfo || '–';
 
