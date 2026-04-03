@@ -47,6 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
             extraInfo: ''
         },
         {
+            id: 'c3',
+            category: 'chemistry',
+            categoryName: 'Chemistry',
+            title: 'Gassform',
+            model: '<br><img src="images/Water_form.png">',
+            concept: 'Nevene beveger seg raskt og sporadisk i store bevegelser',
+            extraInfo: ''
+        },
+        {
             id: 'b1',
             category: 'biology',
             categoryName: 'Biology',
