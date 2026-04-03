@@ -411,11 +411,11 @@ header p {
 }
 
 .card img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
 }
 
 .modal-body img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
 }
