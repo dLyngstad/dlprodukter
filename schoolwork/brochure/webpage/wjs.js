@@ -55,6 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
             concept: 'Nevene beveger seg raskt og sporadisk i store bevegelser',
             extraInfo: ''
         },
+         {
+            id: 'c4',
+            category: 'chemistry',
+            categoryName: 'Chemistry',
+            title: '',
+            model: '<br><img src="images/Water_form.png">',
+            concept: 'Nevene beveger seg raskt og sporadisk i store bevegelser',
+            extraInfo: ''
+        },
         {
             id: 'b1',
             category: 'biology',
