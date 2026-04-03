@@ -59,19 +59,28 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 'b1',
             category: 'biology',
             categoryName: 'Biology',
-            title: '',
-            model: '',
-            concept: '',
+            title: 'Eggstokker',
+            model: 'Image',
+            concept: 'Stå baklengs mot elevene, hold opp hendene på hver side. Høyre og venstre arm er eggledere mens hendene helt utstrakt er eggstokkene. ',
             extraInfo: ''
         },
         {
             id: 'b2',
             category: 'biology',
             categoryName: 'Biology',
-            title: '',
+            title: 'Dendritt',
             model: '',
-            concept: '',
+            concept: 'Hold ut armen og åpne hånden. Fingrene er dendritter som mottar signaler. Mens armen er aksonet.',
             extraInfo: ''
+        },
+          {
+            id: 'b3',
+            category: 'biology',
+            categoryName: 'Biology',
+            title: 'Hjerte',
+            model: '',
+            concept: 'Lag to "kopper" med nevene. Sett håndflatene sammen og la det være hulrom mellom hendene. ',
+            extraInfo: 'Man kan simulere "pump" med hjerte ved å klemme sammen hendene i rytmiske puls.'
         },
         {
             id: 'e1',
