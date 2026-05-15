@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <link rel="icon" type="image/png" href="Bilder/favicon2.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum - DLProdukter</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/forum/forum.css">
+</head>
+<body>
+
+    <header id="header-placeholder"></header>
+
+    <div class="window">
+        <div class="title-bar">
+            <h1>Forum</h1>
+        </div>
+        <main>
+            <div class="forum-layout">
+
+                <div class="forum-main-content">
+                    <div id="user-status" class="hidden">
+                        <p>Innlogget som: <strong id="username-display"></strong></p>
+                        <button id="logout-btn" class="submit-btn">Logg ut</button>
+                    </div>
+
+                    <!-- NY PLASSHOLDER FOR PROFILBOKS -->
+                    <div id="profile-link-container" class="hidden"></div>
+
+                    <div id="auth-container">
+                        <div class="group-box">
+                            <span class="group-box-legend">Logg inn</span>
+                            <form id="login-form">
+                                <div class="form-group">
+                                    <label for="login-username">Brukernavn:</label>
+                                    <input type="text" id="login-username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="login-password">Passord:</label>
+                                    <input type="password" id="login-password" required>
+                                </div>
+                                <button type="submit" class="submit-btn">Logg inn</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="breadcrumbs" style="margin-bottom: 15px;"></div>
+                    <div id="category-view"></div>
+                    <div id="thread-view" class="hidden"></div>
+                    <div id="post-view" class="hidden"></div>
+                </div>
+
+                <aside class="forum-sidebar">
+                    <div id="register-container">
+                        <div class="group-box">
+                            <span class="group-box-legend">Registrer ny bruker</span>
+                            <form id="register-form">
+                                <div class="form-group">
+                                    <label for="register-username">Brukernavn:</label>
+                                    <input type="text" id="register-username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-password">Passord:</label>
+                                    <input type="password" id="register-password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-password-confirm">Bekreft passord:</label>
+                                    <input type="password" id="register-password-confirm" required>
+                                </div>
+                                <p id="password-error" class="error-message hidden"></p>
+                                <button type="submit" class="submit-btn">Registrer</button>
+                            </form>
+                            <p>OBS!: Husk passordet ditt! <br>Det er ikke mulig å hente det opp <br>eller lage et nytt. </p>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+        </main>
+    </div>
+
+    <footer id="footer-placeholder"></footer>
+
+    <script type="module" src="js/forum/forum.js"></script>
+    <script>
+        // Laster header/footer
+        fetch('partials/header.html').then(r => r.text()).then(d => document.getElementById('header-placeholder').innerHTML = d);
+        fetch('partials/footer.html').then(r => r.text()).then(d => document.getElementById('footer-placeholder').innerHTML = d);
+    </script>
+</body>
+</html>
+
