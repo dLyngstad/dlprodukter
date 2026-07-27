@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Loading</title>
 <style>
-
 :root{
   --server-name: "DL PRODUCTIONS";
   --server-tag:  "CITY ROLEPLAY";
@@ -56,7 +55,7 @@ html,body{
   position:absolute; top:28px; left:32px; z-index:5;
   display:flex; align-items:center; gap:14px;
 }
-.logo-mark{ width:52px; height:52px; flex-shrink:0; }
+.logo-mark{ width:52px; height:52px; flex-shrink:0; border-radius:4px; }
 .logo-text{ display:flex; flex-direction:column; }
 .logo-name{
   font-size:26px; font-weight:700; letter-spacing:.02em;
@@ -155,71 +154,73 @@ html,body{
   letter-spacing:.05em; cursor:pointer; padding:0;
 }
 .footer-links button:hover{ color:var(--c-blue); }
-
-/* ============ RULES MODAL ============ */
-.modal-overlay{
-  position:fixed; inset:0; z-index:20;
-  background:rgba(28,29,31,.45); backdrop-filter:blur(4px);
-  display:none; align-items:center; justify-content:center;
-}
-.modal-overlay.open{ display:flex; }
-.modal{
-  width:min(720px, 88vw); max-height:80vh;
-  background:#ffffff; border:1px solid var(--c-line);
-  box-shadow:0 20px 60px rgba(28,29,31,.25);
-  border-radius:6px;
-  display:flex; flex-direction:column;
-}
-.modal-head{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:20px 26px; border-bottom:1px solid var(--c-line);
-  background:linear-gradient(180deg, rgba(168,121,31,.04), transparent);
-}
-.modal-head h2{
-  font-size:13px; letter-spacing:.28em; text-transform:uppercase;
-  color:var(--c-brass); font-weight:600;
-  font-family:"Consolas","Courier New",monospace;
-}
-.modal-close{
-  background:none; border:1px solid var(--c-line); color:var(--c-dim);
-  width:28px; height:28px; cursor:pointer; font-size:15px; line-height:1;
-  font-family:"Consolas",monospace; border-radius:3px;
-}
-.modal-close:hover{ color:var(--c-paper); border-color:var(--c-brass); }
-.modal-body{
-  padding:22px 26px 30px; overflow-y:auto;
-  font-size:13.5px; line-height:1.65; color:var(--c-paper);
-}
-.modal-body::-webkit-scrollbar{ width:8px; }
-.modal-body::-webkit-scrollbar-track{ background:#fff; }
-.modal-body::-webkit-scrollbar-thumb{ background:var(--c-line); border-radius:4px; }
-.modal-body h3{
-  font-family:"Consolas","Courier New",monospace;
-  font-size:11.5px; letter-spacing:.2em; text-transform:uppercase;
-  color:var(--c-brass); margin:22px 0 10px; padding-top:14px; border-top:1px solid var(--c-line);
-}
-.modal-body h3:first-child{ margin-top:0; padding-top:0; border-top:none; }
-.modal-body p{ margin-bottom:10px; opacity:.85; }
-.modal-body ul{ list-style:none; padding:0; margin-bottom:4px; }
-.modal-body li{ position:relative; padding-left:16px; margin-bottom:8px; opacity:.9; }
-.modal-body li::before{ content:"\2014"; position:absolute; left:0; color:var(--c-brick); }
-.modal-body table{ width:100%; border-collapse:collapse; margin:8px 0 4px; font-size:12.5px; }
-.modal-body th, .modal-body td{ border:1px solid var(--c-line); padding:8px 10px; text-align:left; }
-.modal-body th{
-  font-family:"Consolas","Courier New",monospace; font-size:10.5px;
-  letter-spacing:.1em; text-transform:uppercase; color:var(--c-brass);
-  background:rgba(168,121,31,.06);
-}
-
 </style>
 </head>
 <body>
 
 <div id="stage">
+  <!-- OVERLAYS & BACKGROUND -->
   <div class="carousel" id="carousel">
-    <div class="slide active" style="background-image:url('logo_dl.png');"></div>
-  </div> <!-- closes #carousel -->
-</div> <!-- closes #stage -->
+    <!-- I swapped logo_dl.png for a web image so you can see it working immediately. You can change it back later! -->
+    <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1496442226666-8d4d0e2815cb?q=80&w=2070');"></div>
+  </div> 
+  <div class="grade"></div>
+  <div class="grain"></div>
+
+  <!-- HEADER / LOGO -->
+  <div class="logo-row">
+    <!-- Replaced with placeholder logo -->
+    <img class="logo-mark" src="https://placehold.co/100x100/1c1d1f/a8791f?text=DL" alt="DL Logo">
+    <div class="logo-text">
+      <div class="logo-name">DL <span class="accent">PRODUCTIONS</span></div>
+      <div class="logo-tag">City Roleplay</div>
+    </div>
+  </div>
+
+  <!-- MAIN WELCOME PANEL -->
+  <div class="welcome-panel">
+    <div class="welcome-title">Welcome to the City</div>
+    <div class="welcome-body">
+      <p>Connecting to <b>DL PRODUCTIONS</b> server network.</p>
+      <p>Please wait while we establish a secure connection, retrieve your character data, and download the required custom assets for the city.</p>
+    </div>
+    
+    <div class="loading-line">
+      <div class="loading-text">Loading Assets...</div>
+      <div class="loading-dots">
+        <span class="on"></span>
+        <span class="on"></span>
+        <span class="on"></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDE INFO PANELS -->
+  <div class="side-panels">
+    <div class="info-panel">
+      <div class="info-title">Server Status</div>
+      <div class="info-body">
+        Online Players: <b>64 / 128</b><br>
+        Ping: <span class="highlight">24ms</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE CAPTION -->
+  <div class="scene-caption">Downtown District</div>
+
+  <!-- FOOTER BAR -->
+  <div class="footer-bar">
+    <div>ESTABLISHED 2024 &mdash; PLAY FAIR, HAVE FUN</div>
+    <div class="footer-links">
+      <button>VIEW RULES</button>
+      <a href="#">DISCORD SERVER</a>
+    </div>
+  </div>
+
+</div>
 
 </body>
 </html>
