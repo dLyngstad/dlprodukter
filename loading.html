@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <title>Loading</title>
 <style>
+
 :root{
-  --server-name: "dL Productions";
-  --server-tag:  "ROLEPLAY";
+  --server-name: "DL PRODUCTIONS";
+  --server-tag:  "CITY ROLEPLAY";
   --c-bg:        #faf8f2;
   --c-paper:     #1c1d1f;
   --c-brass:     #a8791f;
@@ -55,7 +56,7 @@ html,body{
   position:absolute; top:28px; left:32px; z-index:5;
   display:flex; align-items:center; gap:14px;
 }
-.logo-mark{ width:52px; height:52px; flex-shrink:0; border-radius:4px; }
+.logo-mark{ width:52px; height:52px; flex-shrink:0; }
 .logo-text{ display:flex; flex-direction:column; }
 .logo-name{
   font-size:26px; font-weight:700; letter-spacing:.02em;
@@ -154,74 +155,323 @@ html,body{
   letter-spacing:.05em; cursor:pointer; padding:0;
 }
 .footer-links button:hover{ color:var(--c-blue); }
+
+/* ============ RULES MODAL ============ */
+.modal-overlay{
+  position:fixed; inset:0; z-index:20;
+  background:rgba(28,29,31,.45); backdrop-filter:blur(4px);
+  display:none; align-items:center; justify-content:center;
+}
+.modal-overlay.open{ display:flex; }
+.modal{
+  width:min(720px, 88vw); max-height:80vh;
+  background:#ffffff; border:1px solid var(--c-line);
+  box-shadow:0 20px 60px rgba(28,29,31,.25);
+  border-radius:6px;
+  display:flex; flex-direction:column;
+}
+.modal-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 26px; border-bottom:1px solid var(--c-line);
+  background:linear-gradient(180deg, rgba(168,121,31,.04), transparent);
+}
+.modal-head h2{
+  font-size:13px; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--c-brass); font-weight:600;
+  font-family:"Consolas","Courier New",monospace;
+}
+.modal-close{
+  background:none; border:1px solid var(--c-line); color:var(--c-dim);
+  width:28px; height:28px; cursor:pointer; font-size:15px; line-height:1;
+  font-family:"Consolas",monospace; border-radius:3px;
+}
+.modal-close:hover{ color:var(--c-paper); border-color:var(--c-brass); }
+.modal-body{
+  padding:22px 26px 30px; overflow-y:auto;
+  font-size:13.5px; line-height:1.65; color:var(--c-paper);
+}
+.modal-body::-webkit-scrollbar{ width:8px; }
+.modal-body::-webkit-scrollbar-track{ background:#fff; }
+.modal-body::-webkit-scrollbar-thumb{ background:var(--c-line); border-radius:4px; }
+.modal-body h3{
+  font-family:"Consolas","Courier New",monospace;
+  font-size:11.5px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--c-brass); margin:22px 0 10px; padding-top:14px; border-top:1px solid var(--c-line);
+}
+.modal-body h3:first-child{ margin-top:0; padding-top:0; border-top:none; }
+.modal-body p{ margin-bottom:10px; opacity:.85; }
+.modal-body ul{ list-style:none; padding:0; margin-bottom:4px; }
+.modal-body li{ position:relative; padding-left:16px; margin-bottom:8px; opacity:.9; }
+.modal-body li::before{ content:"\2014"; position:absolute; left:0; color:var(--c-brick); }
+.modal-body table{ width:100%; border-collapse:collapse; margin:8px 0 4px; font-size:12.5px; }
+.modal-body th, .modal-body td{ border:1px solid var(--c-line); padding:8px 10px; text-align:left; }
+.modal-body th{
+  font-family:"Consolas","Courier New",monospace; font-size:10.5px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--c-brass);
+  background:rgba(168,121,31,.06);
+}
+
 </style>
 </head>
 <body>
 
 <div id="stage">
-  <!-- OVERLAYS & BACKGROUND -->
+
   <div class="carousel" id="carousel">
-    <!-- I swapped logo_dl.png for a web image so you can see it working immediately. You can change it back later! -->
-    <div class="slide active" style="background-image:url('Bilder/logo_dl.png');"></div>
-  </div> 
+    <div class="slide active" style="background-image:url('scene1.jpg')"></div>
+    <div class="slide" style="background-image:url('scene2.jpg')"></div>
+    <div class="slide" style="background-image:url('scene3.jpg')"></div>
+    <div class="slide" style="background-image:url('scene4.jpg')"></div>
+    <div class="slide" style="background-image:url('scene5.jpg')"></div>
+  </div>
   <div class="grade"></div>
   <div class="grain"></div>
 
-  <!-- HEADER / LOGO -->
+  <!-- header / logo -->
   <div class="logo-row">
-    <!-- Replaced with placeholder logo -->
-    <img class="logo-mark" src="https://placehold.co/100x100/1c1d1f/a8791f?text=DL" alt="DL Logo">
+    <svg class="logo-mark" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="lgStarGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#7ec8e3" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#7ec8e3" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="lgStarFace" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#a9dcf0"/>
+          <stop offset="55%" stop-color="#7ec8e3"/>
+          <stop offset="100%" stop-color="#4f9fc4"/>
+        </linearGradient>
+      </defs>
+      <g transform="translate(200,205)">
+        <g fill="none" stroke-width="3">
+          <path d="M 0,-155 A 155,155 0 0 1 134,-77.5" stroke="#c9a24b" opacity="0.45" transform="rotate(0)"/>
+          <path d="M 0,-155 A 155,155 0 0 1 134,-77.5" stroke="#7ec8e3" opacity="0.4" transform="rotate(60)"/>
+          <path d="M 0,-155 A 155,155 0 0 1 134,-77.5" stroke="#c9a24b" opacity="0.45" transform="rotate(120)"/>
+          <path d="M 0,-155 A 155,155 0 0 1 134,-77.5" stroke="#7ec8e3" opacity="0.4" transform="rotate(180)"/>
+          <path d="M 0,-155 A 155,155 0 0 1 134,-77.5" stroke="#c9a24b" opacity="0.45" transform="rotate(240)"/>
+          <path d="M 0,-155 A 155,155 0 0 1 134,-77.5" stroke="#7ec8e3" opacity="0.4" transform="rotate(300)"/>
+        </g>
+      </g>
+      <g transform="translate(200,218)" fill="#1c1d1f">
+        <circle cx="-88" cy="22" r="46" fill="none" stroke="#1c1d1f" stroke-width="26"/>
+        <rect x="-58" y="-98" width="26" height="178" rx="1"/>
+        <path d="M 8,-128 L 62,-128 L 62,72 L 158,72 L 158,128 L 8,128 Z"/>
+      </g>
+      <g transform="translate(200,150)">
+        <circle cx="0" cy="0" r="70" fill="url(#lgStarGlow)"/>
+        <g stroke="#7ec8e3" stroke-linecap="round" opacity="0.65">
+          <path d="M -22,15 L -56,41" stroke-width="3.5"/>
+          <path d="M -9,24 L -36,51" stroke-width="2.5"/>
+        </g>
+        <path d="M 0,-52 L 14.6,-16.1 L 53.4,-16.1 L 22.4,6.1 L 34.1,42.9 L 0,20.7 L -34.1,42.9 L -22.4,6.1 L -53.4,-16.1 L -14.6,-16.1 Z" fill="url(#lgStarFace)"/>
+        <path d="M 0,-52 L -14.6,-16.1 L -53.4,-16.1 L -22.4,6.1 L 0,20.7 Z" fill="#c3ecfa" opacity="0.6"/>
+        <path d="M 0,-52 L 14.6,-16.1 L 53.4,-16.1 L 22.4,6.1 L 0,20.7 Z" fill="#3a7fa0" opacity="0.4"/>
+        <g stroke="#1c1d1f" stroke-width="0.9" opacity="0.25">
+          <line x1="0" y1="-52" x2="0" y2="20.7"/>
+          <line x1="-53.4" y1="-16.1" x2="0" y2="20.7"/>
+          <line x1="53.4" y1="-16.1" x2="0" y2="20.7"/>
+        </g>
+      </g>
+    </svg>
     <div class="logo-text">
-      <div class="logo-name">dL <span class="accent">PRODUCTIONS</span></div>
-      <div class="logo-tag">Roleplay</div>
+      <div class="logo-name">DL <span class="accent">Productions</span></div>
+      <div class="logo-tag">CITY ROLEPLAY &middot; EST. 2026</div>
     </div>
   </div>
 
-  <!-- MAIN WELCOME PANEL -->
+  <!-- main welcome panel -->
   <div class="welcome-panel">
-    <div class="welcome-title">Welcome to the City</div>
+    <div class="welcome-title">Welcome to DL Productions CityRP</div>
     <div class="welcome-body">
-      <p>Connecting to <b>dL PRODUCTIONS</b> server network.</p>
-      <p>Please wait while we retrieve your character data, and download the required files.</p>
-       <p>This should take about 3 minutes.</p>
+      <p>This is a <b>serious roleplay</b> community. Please read the rules before playing &mdash; ignorance of a rule is never a valid excuse for breaking it.</p>
+      <p><b>Stay in character.</b> Keep IC and OOC separate at all times, and avoid metagaming or powergaming other players.</p>
+      <p><b>RDM, RDA, and FailRP are prohibited.</b> Always have a valid in-character reason before harming, arresting, or raiding another player, and respect raid timers and NLR after a death.</p>
+      <p>Once in-game, press <b>F1</b> to open the menu &mdash; it's the only menu key, and it has your character info, jobs, server rules, and binds all in one place. Join our Discord for whitelist applications, job openings, and announcements.</p>
     </div>
-    
     <div class="loading-line">
-      <div class="loading-text">Loading Assets...</div>
-      <div class="loading-dots">
-        <span class="on"></span>
-        <span class="on"></span>
-        <span class="on"></span>
-        <span></span>
-        <span></span>
+      <span class="loading-text" id="loadingText">Loading CityRP&hellip;</span>
+      <div class="loading-dots" id="loadingDots">
+        <span class="on"></span><span></span><span></span><span></span>
       </div>
     </div>
   </div>
 
-  <!-- SIDE INFO PANELS -->
+  <!-- side info panels -->
   <div class="side-panels">
     <div class="info-panel">
-      <div class="info-title">Server Status</div>
+      <div class="info-title">Did You Know?</div>
+      <div class="info-body" id="didYouKnow">&hellip;the F1 menu is the only menu you need &mdash; it covers your character, jobs, rules, and binds.</div>
+    </div>
+    <div class="info-panel">
+      <div class="info-title">Server Info</div>
       <div class="info-body">
-        Online Players: <b>6 / 32</b><br>
-        Ping: <span class="highlight">24ms</span>
+        Map: <span class="highlight">rp_evocity_v2d</span><br>
+        Whitelist: <span class="highlight">Closed Beta</span><br>
+        Discord: <a href="https://discord.gg/NH2YBTzu4N" target="_blank" rel="noopener" style="color:#4f9fc4;">discord.gg/NH2YBTzu4N</a>
       </div>
     </div>
   </div>
 
-  <!-- SCENE CAPTION -->
-  <div class="scene-caption">Downtown District</div>
+  <!-- scene caption -->
+  <div class="scene-caption" id="sceneCaption">THE FAMILY, ALL ACCOUNTED FOR</div>
 
-  <!-- FOOTER BAR -->
+  <!-- footer -->
   <div class="footer-bar">
-    <div>ESTABLISHED 2026 &mdash; Thank you to Soulripper</div>
+    <div>Copyright &copy; 2026 DL Productions | All rights reserved.</div>
     <div class="footer-links">
-      <button>VIEW RULES</button>
-      <a href="#">DISCORD SERVER</a>
+      <a href="https://discord.gg/NH2YBTzu4N" target="_blank" rel="noopener">Discord</a>
+      <button type="button" id="rulesBtn">Full Rules</button>
     </div>
   </div>
 
 </div>
+
+<!-- rules modal -->
+<div class="modal-overlay" id="rulesOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>CityRP Server Rules</h2>
+      <button class="modal-close" id="rulesClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Welcome to our CityRP community! Please read all rules carefully before playing. Ignorance of the rules is not a valid excuse for breaking them. Breaking any rule may result in a warning, kick, or ban depending on severity.</p>
+
+      <h3>General Rules</h3>
+      <ul>
+        <li>Respect Staff &amp; Players &mdash; Treat everyone with respect. Harassment, hate speech, and discrimination will not be tolerated.</li>
+        <li>No Mic/Chat Spamming &mdash; Keep voice and text chat clean. Excessive spam will result in a mute.</li>
+        <li>No Advertising &mdash; Do not advertise other servers, Discords, or communities.</li>
+        <li>Follow Staff Instructions &mdash; Staff decisions are final. If you disagree, submit a ticket/report instead of arguing in-game.</li>
+        <li>No NSFW/Racist/Offensive Content &mdash; This includes names, sprays, models, and chat messages.</li>
+        <li>Stay In Character (IC) &mdash; Keep IC and OOC (out of character) separate at all times.</li>
+      </ul>
+
+      <h3>Roleplay Rules</h3>
+      <ul>
+        <li>RDM (Random Death Match) is Prohibited &mdash; You must have valid IC reason to harm another player.</li>
+        <li>RDA (Random Arrest) is Prohibited &mdash; Police/gang enforcers need valid IC reason to detain someone.</li>
+        <li>NLR (New Life Rule) &mdash; After death, you forget the events leading to it and cannot return to the scene for a set amount of time (typically 5&ndash;10 minutes).</li>
+        <li>FailRP is Prohibited &mdash; Always act realistically according to your job/character. No random or nonsensical behavior.</li>
+        <li>RDM Raiding/Mugging Rules &mdash; Must have valid RP reason, proper warnings (where required), and follow raid timers.</li>
+        <li>No Metagaming &mdash; Do not use OOC information (Discord, streams, etc.) for IC advantage.</li>
+        <li>No Powergaming &mdash; Don't force unrealistic actions onto other players without giving them a chance to respond.</li>
+      </ul>
+
+      <h3>Job &amp; Faction Rules</h3>
+      <ul>
+        <li>Police/Government Jobs &mdash; Must enforce laws fairly and roleplay professionally. Abuse of power will be punished.</li>
+        <li>Criminal Jobs (Gangs, Mafia, etc.) &mdash; Must have proper reasons for raids, kidnappings, and illegal activity. No mass RDM raids.</li>
+        <li>Medical Jobs &mdash; Must respond to and roleplay medical emergencies appropriately.</li>
+        <li>Civilian Jobs &mdash; Free to build businesses, houses, and engage in legal roleplay activities.</li>
+      </ul>
+
+      <h3>Base &amp; Raiding Rules</h3>
+      <ul>
+        <li>Base Building &mdash; Bases must be raidable; no unfair or un-raidable builds (fading doors abuse, prop-blocking, etc.).</li>
+        <li>Raid Timers &mdash; Raids have cooldowns; check server-specific timers before re-raiding.</li>
+        <li>Fading Doors &mdash; Only use fading doors as intended; do not abuse mechanics to block legitimate raids.</li>
+      </ul>
+
+      <h3>Chat &amp; Communication Rules</h3>
+      <ul>
+        <li>OOC Chat &mdash; Use only for out-of-character clarification, not for RP purposes.</li>
+        <li>IC Chat/Voice &mdash; All roleplay interactions should happen here.</li>
+        <li>PA System Abuse &mdash; Do not spam or misuse PA announcements.</li>
+      </ul>
+
+      <h3>Punishments</h3>
+      <table>
+        <tr><th>Offense</th><th>1st Warning</th><th>2nd Warning</th><th>3rd Warning</th></tr>
+        <tr><td>Minor RDM/FailRP</td><td>Verbal Warning</td><td>Short Ban (1hr&ndash;1 day)</td><td>Longer Ban (3&ndash;7 days)</td></tr>
+        <tr><td>Metagaming/Powergaming</td><td>Verbal Warning</td><td>Kick</td><td>Ban (1&ndash;3 days)</td></tr>
+        <tr><td>Toxicity/Harassment</td><td>Mute</td><td>Ban (1&ndash;7 days)</td><td>Permanent Ban</td></tr>
+        <tr><td>Exploiting/Cheating</td><td colspan="3">Immediate Permanent Ban</td></tr>
+      </table>
+      <p style="margin-top:8px; opacity:.7; font-size:12px;">Staff reserve the right to adjust punishments based on severity and context.</p>
+
+      <h3>Reporting Issues</h3>
+      <p>If you witness a rule violation:</p>
+      <ul>
+        <li>Take a screenshot or video as evidence.</li>
+        <li>Submit a report via Discord or the in-game report system.</li>
+        <li>Wait for staff to review &mdash; do not retaliate in-game.</li>
+      </ul>
+
+      <div style="margin-top:18px; padding-top:14px; border-top:1px solid var(--c-line); font-style:italic; opacity:.75;">
+        Have fun and roleplay creatively! Respect the community and staff team. Rules may be updated at any time &mdash; check back regularly. Enjoy your time in the city!
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var SLIDE_CAPTIONS = [
+  "THE FAMILY, ALL ACCOUNTED FOR",
+  "LAST CALL AT THE SAFEHOUSE",
+  "FILLING UP BEFORE THE JOB",
+  "QUIET NIGHT BY THE DRIVE-THRU",
+  "OUT PAST THE CITY LIMITS"
+];
+
+var FACTS = [
+  "&hellip;the F1 menu is the only menu you need &mdash; it covers your character, jobs, rules, and binds.",
+  "&hellip;police and government jobs can make laws, set taxes, and issue warrants.",
+  "&hellip;gun dealers and black market dealers can sell illegal goods with the right job.",
+  "&hellip;doctors and medics can revive and treat injured players around the city.",
+  "&hellip;staff are watching the logs &mdash; use /report if you witness rule breaking."
+];
+
+document.title = "DL Productions \u2014 Loading";
+
+/* carousel */
+(function(){
+  var slides = document.querySelectorAll('.slide');
+  var caption = document.getElementById('sceneCaption');
+  var i = 0;
+  function show(n){
+    slides.forEach(function(s,idx){ s.classList.toggle('active', idx===n); });
+    caption.textContent = SLIDE_CAPTIONS[n % SLIDE_CAPTIONS.length];
+  }
+  setInterval(function(){ i = (i+1) % slides.length; show(i); }, 6000);
+})();
+
+/* loading dots */
+(function(){
+  var dots = document.querySelectorAll('#loadingDots span');
+  var i = 0;
+  setInterval(function(){
+    dots.forEach(function(d,idx){ d.classList.toggle('on', idx<=i); });
+    i = (i+1) % dots.length;
+  }, 500);
+})();
+
+/* did you know rotation */
+(function(){
+  var el = document.getElementById('didYouKnow');
+  var i = 0;
+  function show(){
+    el.style.opacity = 0;
+    setTimeout(function(){
+      el.innerHTML = FACTS[i % FACTS.length];
+      el.style.opacity = 1;
+      i++;
+    }, 400);
+  }
+  el.style.transition = 'opacity .4s ease';
+  show();
+  setInterval(show, 6000);
+})();
+
+/* rules modal */
+(function(){
+  var overlay = document.getElementById('rulesOverlay');
+  var openBtn = document.getElementById('rulesBtn');
+  var closeBtn = document.getElementById('rulesClose');
+  openBtn.addEventListener('click', function(){ overlay.classList.add('open'); });
+  closeBtn.addEventListener('click', function(){ overlay.classList.remove('open'); });
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) overlay.classList.remove('open'); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') overlay.classList.remove('open'); });
+})();
+</script>
 
 </body>
 </html>
