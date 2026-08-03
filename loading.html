@@ -30,16 +30,12 @@ html,body{
 
 #stage{ position:relative; width:100vw; height:100vh; overflow:hidden; }
 
-/* photo carousel background */
-.carousel{ position:absolute; inset:0; z-index:0; }
-.slide{
-  position:absolute; inset:0;
+/* static background image */
+.static-bg { 
+  position:absolute; inset:0; z-index:0; 
   background-size:cover; background-position:center;
-  opacity:0; transform:scale(1.05);
-  transition:opacity 1.8s ease, transform 11s linear;
   filter:saturate(0.95) brightness(1.02) contrast(1.01);
 }
-.slide.active{ opacity:1; transform:scale(1); }
 
 .grade{
   position:absolute; inset:0; z-index:1; pointer-events:none;
@@ -217,11 +213,9 @@ html,body{
 
 <div id="stage">
 
-  <div class="carousel" id="carousel">
-    <div class="slide active" style="background-image:url('Bilder/suits.png')"></div>
-    <div class="slide" style="background-image:url('Bilder/bmw.png')"></div>
-    <div class="slide" style="background-image:url('Bilder/contra.png')"></div>
-  </div>
+  <!-- static background image -->
+  <div class="static-bg" style="background-image:url('Bilder/suits.png')"></div>
+
   <div class="grade"></div>
   <div class="grain"></div>
 
@@ -283,6 +277,7 @@ html,body{
 <p> Thank you for joining the server!</p>
       <p> Join time should be short. Please wait while we download all the files.</p>
       <p> Put [dL] infront of your name if you want to help us.</p>
+       <p> Hold CTRL and spam TAB to go into thirdperson.</p>
       
     </div>
     <div class="loading-line">
@@ -351,14 +346,6 @@ html,body{
 </div>
 
 <script>
-var SLIDE_CAPTIONS = [
-  "THE FAMILY, ALL ACCOUNTED FOR",
-  "LAST CALL AT THE SAFEHOUSE",
-  "FILLING UP BEFORE THE JOB",
-  "QUIET NIGHT BY THE DRIVE-THRU",
-  "OUT PAST THE CITY LIMITS"
-];
-
 var FACTS = [
   "&hellip; This gamemode is inspired from FL in 2011",
   "&hellip; There has been major changes to the gundealer position",
@@ -368,18 +355,6 @@ var FACTS = [
 ];
 
 document.title = "DL Productions \u2014 Loading";
-
-/* carousel */
-(function(){
-  var slides = document.querySelectorAll('.slide');
-  var caption = document.getElementById('sceneCaption');
-  var i = 0;
-  function show(n){
-    slides.forEach(function(s,idx){ s.classList.toggle('active', idx===n); });
-    caption.textContent = SLIDE_CAPTIONS[n % SLIDE_CAPTIONS.length];
-  }
-  setInterval(function(){ i = (i+1) % slides.length; show(i); }, 6000);
-})();
 
 /* loading dots */
 (function(){
